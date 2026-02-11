@@ -1,0 +1,42 @@
+@import 'tailwindcss';
+
+:root {
+  --background: #ffffff;
+  --foreground: #ffffff;
+  --brand-orange: #ff5a3c;
+  --brand-dark: #0b0f14;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --font-sans: var(--font-roboto);
+  --font-kanit: var(--font-kanit);
+  --color-brand-orange: var(--brand-orange);
+  --color-brand-dark: var(--brand-dark);
+  --shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-transform: uppercase;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --background: #000000;
+    --foreground: #ffffff;
+  }
+}
+
+html,
+body {
+  background-color: #000000;
+  color: var(--foreground);
+  font-family: var(--font-roboto), sans-serif;
+  text-transform: capitalize;
+}
