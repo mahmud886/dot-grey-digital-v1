@@ -1,0 +1,44 @@
+{
+  "testimonials": [
+    {
+      "id": "george-el-nachar",
+      "quote": "Finding the right team was a challenge until we found DotGrey. They onboarded quickly, worked within our budget, and delivered high-quality design at a pace we did not expect.",
+      "author": "George El Nachar",
+      "role": "Founder, Trainmate",
+      "location": "Dubai, United Arab Emirates",
+      "rating": 5
+    },
+    {
+      "id": "val-kobal",
+      "quote": "They removed more of our product than they added, and it is the best thing that ever happened to it. Support tickets dropped 41% in the first quarter.",
+      "author": "Val Kobal",
+      "role": "Product Lead, Northline",
+      "location": "Ljubljana, Slovenia",
+      "rating": 5
+    },
+    {
+      "id": "sarah-jenkins",
+      "quote": "The team exceeded our expectations on detail and on ideas. A genuinely collaborative partner rather than a vendor waiting for a brief.",
+      "author": "Sarah Jenkins",
+      "role": "CEO, TechStart",
+      "location": "San Francisco, USA",
+      "rating": 5
+    },
+    {
+      "id": "imran-chowdhury",
+      "quote": "Our campaigns used to take a full day and break in Outlook anyway. Now they take an hour and they just work.",
+      "author": "Imran Chowdhury",
+      "role": "Marketing Director, Aurora Health",
+      "location": "Dhaka, Bangladesh",
+      "rating": 5
+    },
+    {
+      "id": "elena-rossi",
+      "quote": "The accessibility work was not a bolt-on. It changed the design, and the design got better for every user we have.",
+      "author": "Elena Rossi",
+      "role": "Head of Brand, Medicove",
+      "location": "Milan, Italy",
+      "rating": 5
+    }
+  ]
+}

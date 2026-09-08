@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef } from "react";
+import { useRef, type ElementType } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { cn } from "@/lib/cn";
@@ -8,12 +8,14 @@ import { cn } from "@/lib/cn";
 /** Words fade from subtle to full colour as the block scrolls through the viewport [13]. */
 export function ScrollHighlightText({
   text,
+  as: Tag = "p",
   className,
 }: {
   text: string;
+  as?: ElementType;
   className?: string;
 }) {
-  const ref = useRef<HTMLParagraphElement>(null);
+  const ref = useRef<HTMLElement>(null);
   const reduced = useReducedMotion();
   const words = text.split(" ");
 
@@ -36,13 +38,13 @@ export function ScrollHighlightText({
   );
 
   return (
-    <p ref={ref} className={cn("text-fg", className)}>
+    <Tag ref={ref} className={cn("text-fg", className)}>
       {words.map((word, i) => (
         <span key={`${word}-${i}`} data-hl className="text-fg-subtle">
           {word}
           {i < words.length - 1 ? " " : ""}
         </span>
       ))}
-    </p>
+    </Tag>
   );
 }

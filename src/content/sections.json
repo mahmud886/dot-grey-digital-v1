@@ -1,0 +1,73 @@
+{
+  "featureRows": {
+    "rows": [
+      {
+        "eyebrow": "New",
+        "title": "Your first custom email template is",
+        "accent": "on us!",
+        "lead": "Get a high-converting, responsive email template designed to match your brand. Perfect for welcome flows and promotions.",
+        "bullets": ["Mobile-first and inbox-friendly", "Clean, modular layout", "Fast turnaround"],
+        "cta": { "label": "Get a free template", "href": "/contact" },
+        "icon": "Mail"
+      },
+      {
+        "eyebrow": "Free",
+        "title": "Your first UI/UX design screen is",
+        "accent": "free!",
+        "lead": "Get a modern, conversion-focused screen design to kickstart your product, landing page or web app.",
+        "bullets": ["Modern layout and typography", "Reusable components", "Mobile and desktop versions"],
+        "cta": { "label": "Claim free screen", "href": "/contact" },
+        "icon": "Layout"
+      },
+      {
+        "eyebrow": "Dev",
+        "title": "Your first web development task is",
+        "accent": "on us!",
+        "lead": "Need a landing page section, a bug fix, a performance improvement or a responsive cleanup? Send it over.",
+        "bullets": ["Clean Tailwind, HTML and CSS", "Responsive across devices", "Performance-minded"],
+        "cta": { "label": "Submit a task", "href": "/contact" },
+        "icon": "Code"
+      }
+    ]
+  },
+  "works": {
+    "eyebrow": "Selected work",
+    "title": "Our works",
+    "lead": "We deliver transformative digital journeys for brands by combining creativity, research and modern technology.",
+    "ctaLabel": "See all works"
+  },
+  "services": {
+    "eyebrow": "360° award winning digital services",
+    "title": "We offer services that transform businesses and help them grow",
+    "ctaLabel": "See all services"
+  },
+  "innovative": {
+    "eyebrow": "About us",
+    "statement": "Innovative design is our tool to reshape business. We turn ideas into seamless, beautiful products that look stunning and deliver real results.",
+    "body": [
+      "We are a team of designers and engineers dedicated to creating intuitive digital experiences. We blend creativity and strategy to design solutions that engage users and drive business success.",
+      "The people who pitch the work do the work. No account layer, no handoff to a junior team — just a small studio accountable for the whole outcome."
+    ],
+    "ctaLabel": "More about us"
+  },
+  "testimonials": {
+    "eyebrow": "Testimonials",
+    "title": "What our clients say"
+  },
+  "faq": {
+    "eyebrow": "Questions",
+    "title": "Frequently asked questions",
+    "cardTitle": "Still not sure where to start?",
+    "cardBody": "Book fifteen minutes. We will tell you honestly whether we are the right studio for what you are trying to do.",
+    "ctaLabel": "Book a quick call"
+  },
+  "projectForm": {
+    "eyebrow": "Start a project",
+    "titleLines": ["Have a project", "in mind? Let's", "get started"],
+    "lead": "Tell us what you are building and when you need it. We reply within one working day.",
+    "submitLabel": "Send project brief"
+  },
+  "marquee": {
+    "items": ["UI/UX Design", "Web Development", "Email Templates", "Banner Ads", "Veeva Services", "Motion & Video"]
+  }
+}

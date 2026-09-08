@@ -3,6 +3,8 @@
  * src/content/**, so components read strings from this module rather than hardcoding
  * them — otherwise editors cannot change them.
  */
+import sectionsJson from "@/content/sections.json";
 import home from "@/content/pages/home.json";
 
+export const sections = sectionsJson;
 export const pages = { home };

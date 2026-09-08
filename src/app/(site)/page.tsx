@@ -1,20 +1,27 @@
 import { Hero } from "@/components/sections/Hero";
-import { Marquee } from "@/components/ui/Marquee";
-import { Section } from "@/components/ui/Section";
-import { services } from "@/data/services";
+import { FeatureRows } from "@/components/sections/FeatureRows";
+import { MarqueeBand } from "@/components/sections/MarqueeBand";
+import { Works } from "@/components/sections/Works";
+import { Services } from "@/components/sections/Services";
+import { InnovativeDesign } from "@/components/sections/InnovativeDesign";
+import { StatsStrip } from "@/components/sections/StatsStrip";
+import { Testimonials } from "@/components/sections/Testimonials";
+import { Faq } from "@/components/sections/Faq";
+import { ProjectForm } from "@/components/sections/ProjectForm";
 
 export default function HomePage() {
   return (
     <>
       <Hero />
-
-      <Section spacing="sm" bordered>
-        <Marquee
-          items={services.map((service) => service.title)}
-          className="font-display text-display-2 leading-none font-bold"
-          outlined
-        />
-      </Section>
+      <FeatureRows />
+      <MarqueeBand />
+      <Works />
+      <Services />
+      <InnovativeDesign />
+      <StatsStrip />
+      <Testimonials />
+      <Faq />
+      <ProjectForm />
     </>
   );
 }
