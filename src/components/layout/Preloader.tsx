@@ -42,7 +42,17 @@ export function Preloader() {
       if (t < 1) frame = requestAnimationFrame(step);
       else setLeaving(true);
     });
-    return () => cancelAnimationFrame(frame);
+    // Background tabs pause rAF, so the counter would never reach 100 and this sheet would
+    // sit over the page blocking every click. A timer is not throttled the same way, so it
+    // always dismisses even if the visitor opened us in a tab they never looked at.
+    const failsafe = setTimeout(() => {
+      setProgress(100);
+      setLeaving(true);
+    }, DURATION + 100);
+    return () => {
+      cancelAnimationFrame(frame);
+      clearTimeout(failsafe);
+    };
   }, [active]);
 
   useEffect(() => {

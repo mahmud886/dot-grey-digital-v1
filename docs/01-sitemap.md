@@ -36,9 +36,9 @@ Also generated: `sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, `icon.tsx`.
 `email-templates` · `ui-ux-design` · `web-development` · `veeva-services` · `banner-ads` ·
 `motion-video`
 
-**Works** — v1's four, plus two so the filter has something to do
+**Works** — v1's four, plus five so every filter lands on at least two projects
 `workday` · `hakkas-dine` · `medicove-intl` · `fintech-pro` · `northline-logistics` ·
-`aurora-health`
+`aurora-health` · `verda-botanics` · `kestrel-athletics` · `parallel-labs`
 
 **Team** — new in v2
 `arif-hasan` · `nusrat-jahan` · `tanvir-ahmed` · `mahdi-rahman` · `sadia-islam` · `rifat-khan`

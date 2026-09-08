@@ -88,6 +88,165 @@
       "outcome": "Approvals now take two taps from a cold open. The team ships new features into the browse mode instead of the home screen, which is what stops the problem returning."
     },
     {
+      "slug": "verda-botanics",
+      "title": "Verda Botanics",
+      "year": "2025",
+      "category": "Email",
+      "client": "Verda",
+      "summary": "A seasonal campaign system for a skincare brand sending to nine segments.",
+      "tags": [
+        "Email",
+        "Klaviyo",
+        "Retail"
+      ],
+      "services": [
+        "Email Templates",
+        "Modular System",
+        "Dark Mode"
+      ],
+      "cover": "/img/works/verda-botanics.svg",
+      "gallery": [
+        "/img/works/verda-botanics-1.svg",
+        "/img/works/verda-botanics-2.svg",
+        "/img/works/verda-botanics-3.svg"
+      ],
+      "challenge": "Nine segments, four seasonal drops a year, and a designer rebuilding every send by hand. Dark mode inverted the brand's pale greens into something closer to grey sludge.",
+      "solution": "A seasonal module set with explicit dark-mode variants, so the palette survives inversion, plus a swatch system the team swaps per drop without touching markup.",
+      "stats": [
+        {
+          "value": "9",
+          "label": "Segments, one template set"
+        },
+        {
+          "value": "-85%",
+          "label": "Time per campaign"
+        },
+        {
+          "value": "+24%",
+          "label": "Revenue per send"
+        }
+      ],
+      "quote": {
+        "text": "Dark mode used to turn our greens to mud. Now the brand looks like the brand in every inbox.",
+        "author": "Elena Rossi",
+        "role": "Brand Lead, Verda"
+      },
+      "duration": "4 weeks",
+      "team": "2 people",
+      "role": "Email system design & build",
+      "tools": [
+        "Klaviyo",
+        "Litmus",
+        "Figma",
+        "MJML"
+      ],
+      "deliverables": [
+        "Seasonal module set",
+        "Dark-mode variants",
+        "Swatch system",
+        "Client test report",
+        "Editor guide"
+      ],
+      "approach": [
+        {
+          "title": "Audited a year of sends",
+          "body": "Four drops, nine segments, and almost no reuse between them. The work was being redone rather than composed."
+        },
+        {
+          "title": "Designed for inversion first",
+          "body": "We picked the palette by testing what survives a forced dark-mode conversion, not by picking swatches and hoping."
+        },
+        {
+          "title": "Built swappable seasons",
+          "body": "One structure, a swatch set per drop. A seasonal refresh is now a colour change, not a rebuild."
+        },
+        {
+          "title": "Handed over properly",
+          "body": "A short guide and one session with the team who send it."
+        }
+      ],
+      "outcome": "A campaign that took the best part of a day now takes under an hour, and revenue per send is up 24% on the same list."
+    },
+    {
+      "slug": "kestrel-athletics",
+      "title": "Kestrel Athletics",
+      "year": "2025",
+      "category": "Branding",
+      "client": "Kestrel",
+      "summary": "An identity for a running brand that needed to work at 40mph and on a label.",
+      "tags": [
+        "Branding",
+        "Packaging",
+        "Print"
+      ],
+      "services": [
+        "Brand Strategy",
+        "Identity",
+        "Packaging"
+      ],
+      "cover": "/img/works/kestrel-athletics.svg",
+      "gallery": [
+        "/img/works/kestrel-athletics-1.svg",
+        "/img/works/kestrel-athletics-2.svg",
+        "/img/works/kestrel-athletics-3.svg"
+      ],
+      "challenge": "Kestrel's mark was drawn for a website and then stretched onto everything else. On a shoe it turned to mush; on a race bib it disappeared.",
+      "solution": "A mark built from the smallest application up — a bib number at ten metres — then scaled, with a weight set for print, embroidery and screen rather than one file forced everywhere.",
+      "stats": [
+        {
+          "value": "4",
+          "label": "Weights for four substrates"
+        },
+        {
+          "value": "10 m",
+          "label": "Legibility target"
+        },
+        {
+          "value": "+41%",
+          "label": "Prompted brand recall"
+        }
+      ],
+      "quote": {
+        "text": "They started with the hardest place it had to work and everything else fell out of that.",
+        "author": "George El Nachar",
+        "role": "Founder, Kestrel"
+      },
+      "duration": "6 weeks",
+      "team": "2 people",
+      "role": "Brand strategy & identity",
+      "tools": [
+        "Illustrator",
+        "Figma",
+        "InDesign"
+      ],
+      "deliverables": [
+        "Positioning statement",
+        "Primary and responsive marks",
+        "Four-weight mark set",
+        "Packaging artwork",
+        "Brand guidelines"
+      ],
+      "approach": [
+        {
+          "title": "Started at the worst case",
+          "body": "A race bib seen at ten metres, in rain. Anything that survives that survives a website."
+        },
+        {
+          "title": "Drew weights, not sizes",
+          "body": "Embroidery, screen print, foil and screen each need different stroke weights. One file scaled does not work."
+        },
+        {
+          "title": "Tested on the actual substrates",
+          "body": "Printed, stitched and photographed before signing anything off."
+        },
+        {
+          "title": "Wrote rules for the suppliers",
+          "body": "Guidelines aimed at the factory, not at a design team."
+        }
+      ],
+      "outcome": "One mark that holds from an embroidered chest logo to a stadium banner, and prompted recall up 41% after the first season."
+    },
+    {
       "slug": "hakkas-dine",
       "title": "Hakka's Dine",
       "year": "2025",
@@ -166,6 +325,85 @@
         }
       ],
       "outcome": "Direct orders are up 64% and the commission line is gone. The kitchen screen has not needed a change since launch."
+    },
+    {
+      "slug": "northline-logistics",
+      "title": "Northline Logistics",
+      "year": "2024",
+      "category": "Branding",
+      "client": "Northline",
+      "summary": "A quiet, durable identity for a freight business that did not want a loud one.",
+      "tags": [
+        "Branding",
+        "Print",
+        "Web"
+      ],
+      "services": [
+        "Brand Strategy",
+        "Identity",
+        "Web Design"
+      ],
+      "cover": "/img/works/northline-logistics.svg",
+      "gallery": [
+        "/img/works/northline-logistics-1.svg",
+        "/img/works/northline-logistics-2.svg",
+        "/img/works/northline-logistics-3.svg"
+      ],
+      "challenge": "Northline had three logos in active use and materials that looked like a template, which read as small to the enterprise clients they were pitching.",
+      "solution": "A typographic identity with no illustrative mark at all — a custom wordmark, a strict grid, and vehicle livery treated as part of the system.",
+      "stats": [
+        {
+          "value": "3 → 1",
+          "label": "Identity systems"
+        },
+        {
+          "value": "+29%",
+          "label": "Inbound enquiries"
+        },
+        {
+          "value": "15 yr",
+          "label": "Design horizon"
+        }
+      ],
+      "quote": {
+        "text": "They talked us out of a logo. It was the right call and we would not have got there alone.",
+        "author": "George El Nachar",
+        "role": "Managing Director, Northline"
+      },
+      "duration": "7 weeks",
+      "team": "2 people",
+      "role": "Brand strategy & identity",
+      "tools": [
+        "Figma",
+        "Illustrator",
+        "InDesign"
+      ],
+      "deliverables": [
+        "Positioning and messaging",
+        "Custom wordmark",
+        "Typographic system and grid",
+        "Vehicle livery specification",
+        "Brand guidelines"
+      ],
+      "approach": [
+        {
+          "title": "Asked what was actually wrong",
+          "body": "The work was respected. The materials looked like a template, and enterprise buyers read that as small."
+        },
+        {
+          "title": "Argued against a logo",
+          "body": "A mark would have dated. A wordmark and a strict grid would not."
+        },
+        {
+          "title": "Designed for a lorry first",
+          "body": "If it works at fifty metres on a moving vehicle, it works on a business card."
+        },
+        {
+          "title": "Wrote the rules down",
+          "body": "Guidelines their print supplier could follow without calling us."
+        }
+      ],
+      "outcome": "Three identity systems became one. Inbound enquiries rose 29%, and the system has needed no revisions since."
     },
     {
       "slug": "medicove-intl",
@@ -328,83 +566,84 @@
       "outcome": "Support tickets dropped 41% in a quarter and time to first insight more than halved. Nobody has asked for the old dashboard."
     },
     {
-      "slug": "northline-logistics",
-      "title": "Northline Logistics",
-      "year": "2024",
-      "category": "Branding",
-      "client": "Northline",
-      "summary": "A quiet, durable identity for a freight business that did not want a loud one.",
+      "slug": "parallel-labs",
+      "title": "Parallel Labs",
+      "year": "2023",
+      "category": "UI/UX",
+      "client": "Parallel",
+      "summary": "A research tool redesigned around the two hours a week people actually spend in it.",
       "tags": [
-        "Branding",
-        "Print",
-        "Web"
+        "SaaS",
+        "Dashboard",
+        "UX Research"
       ],
       "services": [
-        "Brand Strategy",
-        "Identity",
-        "Web Design"
+        "User Research",
+        "Product Design",
+        "Design System"
       ],
-      "cover": "/img/works/northline-logistics.svg",
+      "cover": "/img/works/parallel-labs.svg",
       "gallery": [
-        "/img/works/northline-logistics-1.svg",
-        "/img/works/northline-logistics-2.svg",
-        "/img/works/northline-logistics-3.svg"
+        "/img/works/parallel-labs-1.svg",
+        "/img/works/parallel-labs-2.svg",
+        "/img/works/parallel-labs-3.svg"
       ],
-      "challenge": "Northline had three logos in active use and materials that looked like a template, which read as small to the enterprise clients they were pitching.",
-      "solution": "A typographic identity with no illustrative mark at all — a custom wordmark, a strict grid, and vehicle livery treated as part of the system.",
+      "challenge": "Parallel had built for the power user who lives in the tool. Analytics said the median user opened it twice a week for an hour, and spent most of that reorienting.",
+      "solution": "A workspace that remembers where you were, surfaces what changed since, and puts the two recurring tasks one click from the door.",
       "stats": [
         {
-          "value": "3 → 1",
-          "label": "Identity systems"
+          "value": "-64%",
+          "label": "Time to resume work"
         },
         {
-          "value": "+29%",
-          "label": "Inbound enquiries"
+          "value": "2 clicks",
+          "label": "To the common task, from 7"
         },
         {
-          "value": "15 yr",
-          "label": "Design horizon"
+          "value": "+19%",
+          "label": "Weekly retention"
         }
       ],
       "quote": {
-        "text": "They talked us out of a logo. It was the right call and we would not have got there alone.",
-        "author": "George El Nachar",
-        "role": "Managing Director, Northline"
+        "text": "We had designed for the person who never leaves. Almost nobody is that person.",
+        "author": "Sarah Jenkins",
+        "role": "Head of Product, Parallel"
       },
-      "duration": "7 weeks",
-      "team": "2 people",
-      "role": "Brand strategy & identity",
+      "duration": "11 weeks",
+      "team": "3 people",
+      "role": "Research & product design",
       "tools": [
         "Figma",
-        "Illustrator",
-        "InDesign"
+        "Amplitude",
+        "Maze",
+        "Storybook"
       ],
       "deliverables": [
-        "Positioning and messaging",
-        "Custom wordmark",
-        "Typographic system and grid",
-        "Vehicle livery specification",
-        "Brand guidelines"
+        "Research report",
+        "Session-resume model",
+        "Redesigned workspace",
+        "Component library",
+        "Usability test results"
       ],
       "approach": [
         {
-          "title": "Asked what was actually wrong",
-          "body": "The work was respected. The materials looked like a template, and enterprise buyers read that as small."
+          "title": "Read the analytics first",
+          "body": "The gap between who they designed for and who actually used it was the whole brief."
         },
         {
-          "title": "Argued against a logo",
-          "body": "A mark would have dated. A wordmark and a strict grid would not."
+          "title": "Designed for returning, not arriving",
+          "body": "Most sessions are a resumption. The interface now treats that as the default case."
         },
         {
-          "title": "Designed for a lorry first",
-          "body": "If it works at fifty metres on a moving vehicle, it works on a business card."
+          "title": "Made change visible",
+          "body": "A what-changed-since-you-left view removed most of the reorienting time."
         },
         {
-          "title": "Wrote the rules down",
-          "body": "Guidelines their print supplier could follow without calling us."
+          "title": "Kept the power features",
+          "body": "Nothing was taken away from the heavy users; it stopped being the first thing everyone else saw."
         }
       ],
-      "outcome": "Three identity systems became one. Inbound enquiries rose 29%, and the system has needed no revisions since."
+      "outcome": "Time to resume work fell by nearly two thirds, and weekly retention rose 19% without a single new feature."
     },
     {
       "slug": "aurora-health",

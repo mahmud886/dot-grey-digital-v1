@@ -48,10 +48,13 @@ invented results. Publishing invented client outcomes is a real problem, not a c
 | Project | Client | Invented figures that must go |
 | --- | --- | --- |
 | Workday | Workday | -58% Taps to approve, +31% Weekly active users, 4.7 App store rating |
+| Verda Botanics | Verda | 9 Segments, one template set, -85% Time per campaign, +24% Revenue per send |
+| Kestrel Athletics | Kestrel | 4 Weights for four substrates, 10 m Legibility target, +41% Prompted brand recall |
 | Hakka's Dine | Hakka's | +64% Direct orders, 0.9s Largest contentful paint, -100% Third-party commission |
+| Northline Logistics | Northline | 3 → 1 Identity systems, +29% Inbound enquiries, 15 yr Design horizon |
 | Medicove Intl | Medicove | -31% Onboarding drop-off, AA WCAG 2.2 conformance, 4 Steps, down from 11 |
 | Fintech Pro | Fintech Pro | -41% Support tickets, -58% Time to first insight, +27% Daily active accounts |
-| Northline Logistics | Northline | 3 → 1 Identity systems, +29% Inbound enquiries, 15 yr Design horizon |
+| Parallel Labs | Parallel | -64% Time to resume work, 2 clicks To the common task, from 7, +19% Weekly retention |
 | Aurora Health | Aurora | 12 Reusable modules, +38% Click-through rate, 0 Broken sends since |
 
 Each project also needs: cover image, 3 gallery images, challenge, solution, approach

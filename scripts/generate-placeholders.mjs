@@ -121,6 +121,9 @@ const works = [
   ["fintech-pro", "Fintech Pro", "FP"],
   ["northline-logistics", "Northline Logistics", "NL"],
   ["aurora-health", "Aurora Health", "AH"],
+  ["verda-botanics", "Verda Botanics", "VB"],
+  ["kestrel-athletics", "Kestrel Athletics", "KA"],
+  ["parallel-labs", "Parallel Labs", "PL"],
 ];
 
 const services = [

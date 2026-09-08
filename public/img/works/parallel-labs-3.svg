@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" width="1600" height="1000" role="img" aria-label="Parallel Labs — image 3">
+  <defs>
+    <linearGradient id="bparallellabs3" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="hsl(13 16% 12%)"/>
+      <stop offset="55%" stop-color="hsl(33 14% 8%)"/>
+      <stop offset="100%" stop-color="hsl(58 18% 6%)"/>
+    </linearGradient>
+    <radialGradient id="g1parallellabs3" cx="38%" cy="0%" r="58%">
+      <stop offset="0%" stop-color="hsl(23 70% 55%)" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="hsl(23 70% 55%)" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2parallellabs3" cx="25%" cy="31%" r="48%">
+      <stop offset="0%" stop-color="hsl(313 55% 45%)" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="hsl(313 55% 45%)" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lparallellabs3" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#fff" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blparallellabs3"><feGaussianBlur stdDeviation="62"/></filter>
+    <filter id="grparallellabs3"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+
+  <rect width="1600" height="1000" fill="url(#bparallellabs3)"/>
+  <rect width="1600" height="1000" fill="url(#g1parallellabs3)"/>
+  <rect width="1600" height="1000" fill="url(#g2parallellabs3)"/>
+
+  <g filter="url(#blparallellabs3)" opacity="0.85">
+    <rect x="-320" y="220" width="2240" height="90" fill="url(#lparallellabs3)" transform="rotate(13 800 500)"/>
+    <rect x="-320" y="660" width="2240" height="50" fill="url(#lparallellabs3)" transform="rotate(13 800 500)"/>
+  </g>
+
+  
+
+  <rect width="1600" height="1000" filter="url(#grparallellabs3)" opacity="0.05" style="mix-blend-mode:overlay"/>
+  <rect width="1600" height="1000" fill="none" stroke="#ffffff" stroke-opacity="0.07"/>
+</svg>

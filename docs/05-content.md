@@ -46,6 +46,12 @@ v1's `Lorem ipsum` feature descriptions are replaced with real sentences.
 | `fintech-pro` | Fintech Pro | 2024 | Web | Fintech Pro |
 | `northline-logistics` | Northline Logistics | 2024 | Branding | Northline |
 | `aurora-health` | Aurora Health | 2023 | Email | Aurora |
+| `verda-botanics` | Verda Botanics | 2025 | Email | Verda |
+| `kestrel-athletics` | Kestrel Athletics | 2025 | Branding | Kestrel |
+| `parallel-labs` | Parallel Labs | 2023 | UI/UX | Parallel |
+
+Sorted newest first, and balanced so each filter tab (UI/UX 3, Web 2, Email 2, Branding 2)
+shows more than a single card.
 
 The first four keep v1's titles, descriptions and tags. Each gains: cover, 3-image gallery,
 services list, challenge, solution, 3 result stats and a client quote.
