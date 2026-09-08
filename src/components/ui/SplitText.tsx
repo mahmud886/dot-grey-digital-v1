@@ -18,6 +18,8 @@ export function SplitText({
   delay = 0,
   stagger = 0.045,
   trigger = "scroll",
+  highlight,
+  highlightClassName = "text-accent",
   className,
   lineClassName,
 }: {
@@ -28,6 +30,10 @@ export function SplitText({
   stagger?: number;
   /** "scroll" animates on entering the viewport; "mount" animates immediately. */
   trigger?: "scroll" | "mount";
+  /** Word to pick out in the accent colour. Matched on the word itself, not its position,
+   *  so editing the copy cannot leave the wrong word highlighted. */
+  highlight?: string;
+  highlightClassName?: string;
   className?: string;
   lineClassName?: string;
 }) {
@@ -36,6 +42,9 @@ export function SplitText({
 
   const parts = Array.isArray(text) ? text : by === "line" ? [text] : text.split(" ");
   const label = Array.isArray(text) ? text.join(" ") : text;
+
+  const normalise = (value: string) => value.toLowerCase().replace(/[^a-z0-9]/gi, "");
+  const target = highlight ? normalise(highlight) : null;
 
   useGSAP(
     () => {
@@ -70,7 +79,13 @@ export function SplitText({
               lineClassName,
             )}
           >
-            <span data-split-inner className="inline-block will-change-transform">
+            <span
+              data-split-inner
+              className={cn(
+                "inline-block will-change-transform",
+                target && normalise(part) === target && highlightClassName,
+              )}
+            >
               {part}
             </span>
           </span>

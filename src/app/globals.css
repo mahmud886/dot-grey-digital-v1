@@ -80,7 +80,7 @@
   --font-body: var(--font-roboto), "Roboto", system-ui, sans-serif;
 
   /* Fluid type scale */
-  --text-display-1: clamp(2.75rem, 7vw, 6rem);
+  --text-display-1: clamp(2.75rem, 5.6vw, 4.75rem);
   --text-display-1--line-height: 0.98;
   --text-display-1--letter-spacing: -0.025em;
 

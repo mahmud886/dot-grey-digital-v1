@@ -5,6 +5,8 @@ import { AmbientBackground } from "./AmbientBackground";
 import { ScrollProgress } from "./ScrollProgress";
 import { Cursor } from "./Cursor";
 import { Preloader } from "./Preloader";
+import { Header } from "./Header";
+import { Footer } from "./Footer";
 import { site } from "@/data/site";
 
 const organizationJsonLd = {
@@ -42,9 +44,11 @@ export function SiteChrome({ children }: { children: ReactNode }) {
           >
             Skip to content
           </a>
+          <Header />
           <main id="main" className="flex-1">
             {children}
           </main>
+          <Footer />
         </SmoothScroll>
       </ThemeProvider>
     </div>

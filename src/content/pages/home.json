@@ -1,0 +1,10 @@
+{
+  "hero": {
+    "eyebrow": "Digital product studio",
+    "titleLines": ["We create stunning", "digital experiences"],
+    "accentWord": "stunning",
+    "lead": "Specialising in UI/UX design, web development, banner ads and email templates to help your business stand out in the digital landscape.",
+    "primaryCta": { "label": "Get started", "href": "/contact" },
+    "secondaryCta": { "label": "Our services", "href": "/services" }
+  }
+}
