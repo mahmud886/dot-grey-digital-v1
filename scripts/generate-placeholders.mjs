@@ -132,6 +132,13 @@ const services = [
   "motion-video",
 ];
 
+const insights = [
+  ["why-we-delete-features", "Why we delete features", "DF"],
+  ["email-still-runs-on-tables", "Email still runs on tables", "ET"],
+  ["animation-that-earns-its-place", "Animation that earns its place", "AN"],
+  ["what-a-workshop-is-for", "What a workshop is for", "WS"],
+];
+
 const team = [
   ["arif-hasan", "Arif Hasan"],
   ["nusrat-jahan", "Nusrat Jahan"],
@@ -144,6 +151,7 @@ const team = [
 mkdirSync(join(OUT, "works"), { recursive: true });
 mkdirSync(join(OUT, "team"), { recursive: true });
 mkdirSync(join(OUT, "services"), { recursive: true });
+mkdirSync(join(OUT, "insights"), { recursive: true });
 
 writeFileSync(join(OUT, "grain.svg"), grain());
 writeFileSync(join(OUT, "page-backdrop.svg"), plate({ w: 1920, h: 600, seed: "dg-page", accent: true }));
@@ -164,8 +172,15 @@ for (const slug of services) {
   writeFileSync(join(OUT, "services", `${slug}.svg`), plate({ w: 1200, h: 1200, seed: `svc-${slug}`, accent: true }));
 }
 
+for (const [slug, title, initials] of insights) {
+  writeFileSync(
+    join(OUT, "insights", `${slug}.svg`),
+    plate({ w: 1600, h: 900, seed: `post-${slug}`, label: title, initials }),
+  );
+}
+
 for (const [slug, name] of team) {
   writeFileSync(join(OUT, "team", `${slug}.svg`), portrait({ w: 800, h: 1000, seed: slug, name }));
 }
 
-console.log(`Generated ${works.length * 4 + services.length + team.length + 4} placeholder assets in public/img`);
+console.log(`Generated ${works.length * 4 + services.length + team.length + insights.length + 4} placeholder assets in public/img`);

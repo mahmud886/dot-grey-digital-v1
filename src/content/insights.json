@@ -1,0 +1,104 @@
+{
+  "categories": ["All", "Design", "Engineering", "Email", "Studio"],
+  "posts": [
+    {
+      "slug": "why-we-delete-features",
+      "title": "Why we delete features before we add them",
+      "category": "Design",
+      "date": "2026-08-14",
+      "readingMinutes": 5,
+      "author": "arif-hasan",
+      "excerpt": "Most product problems are decision problems wearing a UI costume. The fix is usually subtraction, and it is the hardest thing to sell.",
+      "cover": "/img/insights/why-we-delete-features.svg",
+      "blocks": [
+        { "type": "paragraph", "text": "Every dashboard we have been asked to fix had the same history. It started with three numbers people needed. Then a customer asked for a fourth, and asking was cheaper than deciding, so it was added. Two years later it has forty, a search box nobody uses, and a support queue full of people asking where one number lives." },
+        { "type": "heading", "text": "Addition is a decision nobody has to defend" },
+        { "type": "paragraph", "text": "Adding a widget costs one sprint and upsets nobody. Removing one costs a conversation with whoever asked for it. So products accumulate, and the accumulation is never anyone's fault in particular." },
+        { "type": "paragraph", "text": "On the Fintech Pro dashboard we sorted four hundred support tickets before touching a pixel. Most asked where a single figure lived. That is not a discoverability problem you solve with better labels — it is forty things competing for one screen." },
+        { "type": "quote", "text": "They removed more of our product than they added, and it is the best thing that ever happened to it.", "attribution": "Val Kobal, Product Lead" },
+        { "type": "heading", "text": "What we actually do" },
+        { "type": "list", "items": [
+          "Map every element to a job someone is trying to do",
+          "Anything with no job moves behind an explicit browse or search mode",
+          "Nothing is deleted outright — it stops competing for the same attention",
+          "The three most common jobs get the screen"
+        ]},
+        { "type": "paragraph", "text": "The result is not a smaller product. It is the same product with a point of view about what matters most, which is the thing a list of features cannot give you." }
+      ]
+    },
+    {
+      "slug": "email-still-runs-on-tables",
+      "title": "Email still runs on tables, and that is fine",
+      "category": "Email",
+      "date": "2026-07-02",
+      "readingMinutes": 6,
+      "author": "mahdi-rahman",
+      "excerpt": "Email is the last corner of the web where a decade of client quirks decides whether your design survives. Building for that reality beats fighting it.",
+      "cover": "/img/insights/email-still-runs-on-tables.svg",
+      "blocks": [
+        { "type": "paragraph", "text": "Every few years someone announces that modern CSS has finally arrived in email. Then a campaign goes out, Outlook renders it as a single column of stacked images, and the announcement is quietly forgotten." },
+        { "type": "heading", "text": "The constraint is the brief" },
+        { "type": "paragraph", "text": "Outlook on Windows still uses Word to render HTML. Gmail clips messages over 102KB. Dark mode inverts colours you did not ask it to invert. None of this is going to change because we would prefer it to." },
+        { "type": "paragraph", "text": "So we design for it up front. Layouts that survive a single column. Real text instead of text in images, because a third of recipients see images blocked. Backgrounds that still work when the client decides to invert them." },
+        { "type": "heading", "text": "Modules, not emails" },
+        { "type": "paragraph", "text": "The Aurora Health work was five weeks and produced twelve sections rather than twelve emails. Each one tested once across forty client and device combinations, then composed into campaigns by their own team." },
+        { "type": "list", "items": [
+          "A campaign went from a day to an hour",
+          "Click-through rose 38%",
+          "Nothing has broken in Outlook since launch"
+        ]},
+        { "type": "paragraph", "text": "None of that came from clever CSS. It came from accepting the platform and building something reusable inside it." }
+      ]
+    },
+    {
+      "slug": "animation-that-earns-its-place",
+      "title": "Animation that earns its place",
+      "category": "Engineering",
+      "date": "2026-05-21",
+      "readingMinutes": 7,
+      "author": "sadia-islam",
+      "excerpt": "Motion is easy to add and hard to justify. The test we use: does it tell you something a static frame could not?",
+      "cover": "/img/insights/animation-that-earns-its-place.svg",
+      "blocks": [
+        { "type": "paragraph", "text": "A site with animation everywhere reads the same as a site with none: your eye stops registering it. Motion works by contrast, so spending it evenly is the same as not spending it." },
+        { "type": "heading", "text": "Four things motion can say" },
+        { "type": "list", "items": [
+          "This is new — something arrived that was not here before",
+          "These are related — this came from that",
+          "This is progress — something is happening and here is how far along",
+          "This is state — the thing you just did worked"
+        ]},
+        { "type": "paragraph", "text": "If a movement is not saying one of those, it is decoration, and decoration has a cost measured in milliseconds and motion sickness." },
+        { "type": "heading", "text": "The cost is real" },
+        { "type": "paragraph", "text": "On this site, the hero headline originally animated with JavaScript. That meant the largest text on the page sat invisible until the bundle had loaded, parsed and run — 2.7 seconds of render delay on a throttled phone, measured. The same effect from a stylesheet paints on the first frame." },
+        { "type": "quote", "text": "If the animation delays the thing it is animating, it is not an enhancement.", "attribution": "A lesson we relearn regularly" },
+        { "type": "heading", "text": "And it has to be optional" },
+        { "type": "paragraph", "text": "Everything here checks prefers-reduced-motion. Not a lighter version — off. Content renders in its final state, smooth scrolling never initialises, pinned sections stop pinning. Someone who gets motion sick from a parallax should get a site, not an apology." }
+      ]
+    },
+    {
+      "slug": "what-a-workshop-is-for",
+      "title": "What a kickoff workshop is actually for",
+      "category": "Studio",
+      "date": "2026-03-09",
+      "readingMinutes": 4,
+      "author": "nusrat-jahan",
+      "excerpt": "Not alignment, not sticky notes. It is where you find out which decision has not been made yet.",
+      "cover": "/img/insights/what-a-workshop-is-for.svg",
+      "blocks": [
+        { "type": "paragraph", "text": "Most kickoff workshops are theatre. Everyone agrees the goal is growth, the sticky notes go in a folder, and the project starts exactly where it would have started anyway." },
+        { "type": "heading", "text": "Look for the unmade decision" },
+        { "type": "paragraph", "text": "In every stuck project there is one question nobody has answered, usually because answering it means telling someone no. Who is this for, when we cannot serve everyone. What are we willing to be bad at. Which number are we actually moving." },
+        { "type": "paragraph", "text": "Design cannot resolve that. It can only make the consequences visible, which is useful but expensive when it happens in month three." },
+        { "type": "heading", "text": "How we run it" },
+        { "type": "list", "items": [
+          "One decision-maker in the room, not five stakeholders",
+          "Written brief out of it the same week, not a deck",
+          "Explicit list of what we are choosing not to do",
+          "Agreement on the one measure that says this worked"
+        ]},
+        { "type": "paragraph", "text": "If we cannot get those four things, that is worth knowing on day one rather than in the second round of revisions." }
+      ]
+    }
+  ]
+}

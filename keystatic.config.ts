@@ -78,7 +78,7 @@ export default config({
     navigation: {
       Site: ["site"],
       "Home page": ["home", "sections"],
-      Content: ["services", "works", "team", "testimonials", "values", "stats"],
+      Content: ["services", "works", "insights", "team", "testimonials", "values", "stats"],
       Commercial: ["pricing", "faq", "jobs"],
       "Page copy": ["innerPages", "legalPages"],
     },
@@ -281,6 +281,67 @@ export default config({
             }),
           }),
           { label: "Projects", itemLabel: (item) => item.fields.title.value || "Project" },
+        ),
+      },
+    }),
+
+    insights: singleton({
+      label: "Insights",
+      path: "src/content/insights",
+      format: { data: "json" },
+      schema: {
+        categories: stringList("Filter categories", "Category"),
+        posts: fields.array(
+          fields.object({
+            slug: text("URL slug", "Changing this changes the post URL"),
+            title: text("Title"),
+            category: text("Category", "Must match one of the categories above"),
+            date: text("Date", "YYYY-MM-DD — posts are ordered newest first"),
+            readingMinutes: fields.integer({
+              label: "Reading time (minutes)",
+              validation: { isRequired: true, min: 1, max: 60 },
+            }),
+            author: text("Author", "A team member's URL slug, so the byline links to their page"),
+            excerpt: multiline("Excerpt"),
+            cover: fields.image({
+              label: "Cover image",
+              description: "16:9 works best",
+              directory: "public/img/insights",
+              publicPath: "/img/insights",
+              validation: { isRequired: true },
+            }),
+            blocks: fields.array(
+              // A flat object with a `type` select rather than fields.conditional:
+              // conditional serialises as { discriminant, value }, which would not match
+              // the shape src/data/insights.ts reads. Editors see one or two unused
+              // fields per block; the site and the CMS agree on the file, which matters more.
+              fields.object({
+                type: fields.select({
+                  label: "Block type",
+                  options: [
+                    { label: "Paragraph", value: "paragraph" },
+                    { label: "Heading", value: "heading" },
+                    { label: "Quote", value: "quote" },
+                    { label: "List", value: "list" },
+                  ],
+                  defaultValue: "paragraph",
+                }),
+                text: fields.text({
+                  label: "Text",
+                  description: "Paragraph, heading or quote text",
+                  multiline: true,
+                }),
+                attribution: fields.text({ label: "Attribution", description: "Quote blocks only" }),
+                items: stringList("List items", "Item"),
+              }),
+              {
+                label: "Body",
+                itemLabel: (item) =>
+                  `${item.fields.type.value}: ${(item.fields.text.value || "").slice(0, 40)}`,
+              },
+            ),
+          }),
+          { label: "Posts", itemLabel: (item) => item.fields.title.value || "Post" },
         ),
       },
     }),

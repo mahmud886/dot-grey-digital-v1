@@ -4,6 +4,7 @@ import { services } from "@/data/services";
 import { works } from "@/data/works";
 import { team } from "@/data/team";
 import { jobs } from "@/data/jobs";
+import { posts } from "@/data/insights";
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
@@ -15,6 +16,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/works", priority: 0.9 },
     { path: "/team", priority: 0.7 },
     { path: "/pricing", priority: 0.8 },
+    { path: "/insights", priority: 0.8 },
     { path: "/faq", priority: 0.6 },
     { path: "/careers", priority: 0.7 },
     { path: "/contact", priority: 0.8 },
@@ -27,6 +29,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ...works.map((w) => `/works/${w.slug}`),
     ...team.map((m) => `/team/${m.slug}`),
     ...jobs.map((j) => `/careers/${j.slug}`),
+    ...posts.map((p) => `/insights/${p.slug}`),
   ];
 
   return [

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" width="1600" height="900" role="img" aria-label="Animation that earns its place">
+  <defs>
+    <linearGradient id="bpostanimationthatearnsitsplace" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="hsl(19 16% 12%)"/>
+      <stop offset="55%" stop-color="hsl(39 14% 8%)"/>
+      <stop offset="100%" stop-color="hsl(64 18% 6%)"/>
+    </linearGradient>
+    <radialGradient id="g1postanimationthatearnsitsplace" cx="44%" cy="18%" r="58%">
+      <stop offset="0%" stop-color="hsl(29 70% 55%)" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="hsl(29 70% 55%)" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2postanimationthatearnsitsplace" cx="87%" cy="84%" r="48%">
+      <stop offset="0%" stop-color="hsl(319 55% 45%)" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="hsl(319 55% 45%)" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lpostanimationthatearnsitsplace" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#fff" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blpostanimationthatearnsitsplace"><feGaussianBlur stdDeviation="62"/></filter>
+    <filter id="grpostanimationthatearnsitsplace"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+
+  <rect width="1600" height="900" fill="url(#bpostanimationthatearnsitsplace)"/>
+  <rect width="1600" height="900" fill="url(#g1postanimationthatearnsitsplace)"/>
+  <rect width="1600" height="900" fill="url(#g2postanimationthatearnsitsplace)"/>
+
+  <g filter="url(#blpostanimationthatearnsitsplace)" opacity="0.85">
+    <rect x="-320" y="198" width="2240" height="81" fill="url(#lpostanimationthatearnsitsplace)" transform="rotate(19 800 450)"/>
+    <rect x="-320" y="594" width="2240" height="45" fill="url(#lpostanimationthatearnsitsplace)" transform="rotate(19 800 450)"/>
+  </g>
+
+  <text x="50%" y="50%" text-anchor="middle" dominant-baseline="central" font-family="Kanit, system-ui, sans-serif" font-weight="700" font-size="288" fill="#ffffff" fill-opacity="0.08" letter-spacing="-0.03em">AN</text>
+
+  <rect width="1600" height="900" filter="url(#grpostanimationthatearnsitsplace)" opacity="0.05" style="mix-blend-mode:overlay"/>
+  <rect width="1600" height="900" fill="none" stroke="#ffffff" stroke-opacity="0.07"/>
+</svg>
