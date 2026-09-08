@@ -108,6 +108,22 @@ inside one screen rather than as separate documents.
 - **Image shapes matter.** Work covers read best at 16:10, team portraits at 4:5. Other
   ratios will be cropped to fit.
 
+## Editing a list item
+
+Clicking a row in any list opens an **Edit item** dialog. Keystatic ships that dialog with
+**Done** as its only control, and Done does not "save" — it just closes. Everything you type
+is already in the form the moment you type it, and nothing reaches the files until you press
+**Save** at the top of the screen.
+
+That dialog now has a second button:
+
+- **Cancel** — puts the fields back the way you found them, then closes. It appears on simple
+  items (a single value, or a set of plain text fields).
+- **Close** — just closes, changing nothing back. It appears where a full revert is not
+  possible: items containing their own lists, or an image.
+
+If you see **Close** and want to undo what you did, leave the screen without pressing Save.
+
 ## Adding a new editable field
 
 1. Add it to the JSON file in `src/content/`.
