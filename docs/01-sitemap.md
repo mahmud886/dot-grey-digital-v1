@@ -26,7 +26,21 @@ in a `(site)` route group so `/keystatic` can opt out of the header and footer.
 | 17 | `/docs/[slug]` | SSG | Rendered markdown doc (noindex) |
 | — | `*` | Static | 404 |
 
-Also generated: `sitemap.ts`, `robots.ts`, `opengraph-image.tsx`, `icon.tsx`.
+Also generated: `sitemap.ts`, `robots.ts`, `icon.tsx`, and share cards.
+
+**Share cards.** `src/lib/og.tsx` renders every link preview at 1200×630. The site-wide card
+lives at `src/app/opengraph-image.tsx`; `works`, `services`, `insights` and `team` each have
+their own under `[slug]/opengraph-image.tsx`, so a shared case study previews as that case
+study rather than as the homepage. Everything else falls back to the site card.
+
+Two things about it are easy to break:
+
+- The display face is vendored as **TTF** under `src/assets/fonts`. Satori cannot read the
+  `.woff2` files `next/font` emits and will not fetch at build time, so without those files
+  every card silently falls back to the host's system sans.
+- The root layout deliberately sets **no `openGraph.title` or `description`**. Metadata merges
+  field by field, so a title set there is inherited whole by every child route — put one back
+  and every case study's preview reads "DotGrey Digital" again.
 
 `/keystatic` and `/api/keystatic/*` sit outside the `(site)` group.
 

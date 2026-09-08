@@ -38,11 +38,13 @@ export const metadata: Metadata = {
     "banner ads",
     "Veeva",
   ],
+  // No title/description here on purpose. Metadata objects are merged field by field, so a
+  // title set at this level is inherited whole by every child route — every case study and
+  // article would share a link preview reading "DotGrey Digital". Left unset, Next fills
+  // og:title and og:description from each page's own title and description.
   openGraph: {
     type: "website",
     siteName: site.name,
-    title: `${site.name} — ${site.tagline}`,
-    description: site.description,
     url: site.url,
   },
   twitter: { card: "summary_large_image" },
