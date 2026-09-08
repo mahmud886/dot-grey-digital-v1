@@ -19,6 +19,8 @@ export function Header() {
   const { direction, scrolled } = useScrollDirection();
   const pathname = usePathname();
 
+  const hidden = direction === "down" && !menuOpen;
+
   const isActive = (item: NavItem) =>
     item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
@@ -26,11 +28,19 @@ export function Header() {
     <>
       <header
         className={cn(
-          "fixed inset-x-0 top-0 z-80 transition-[transform,background-color,backdrop-filter,border-color] duration-400",
+          "fixed inset-x-0 top-0 z-80 will-change-[translate,opacity]",
+          // `translate`, not `transform`: Tailwind v4's -translate-y-* utilities set the
+          // standalone `translate` property, so transitioning `transform` animated nothing
+          // and the header simply vanished the instant the direction flipped.
+          "transition-[translate,opacity,background-color,backdrop-filter,border-color]",
           scrolled
             ? "border-b border-line bg-bg/95 lg:bg-bg/80 lg:backdrop-blur-xl"
             : "border-b border-transparent bg-transparent",
-          direction === "down" && !menuOpen ? "-translate-y-full" : "translate-y-0",
+          // Asymmetric on purpose: it lifts away on an ease-in curve, so it gathers speed and
+          // reads as leaving, and comes back on expo-out, which arrives fast and settles.
+          hidden
+            ? "-translate-y-full opacity-0 duration-[420ms] ease-[cubic-bezier(0.55,0,0.85,0.4)]"
+            : "translate-y-0 opacity-100 duration-[620ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
         )}
       >
         <Container className="flex h-16 items-center justify-between gap-6 lg:h-20">

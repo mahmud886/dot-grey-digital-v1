@@ -12,7 +12,7 @@ export function TeamCard({ member }: { member: Member }) {
             alt={member.name}
             fill
             sizes="(max-width: 767px) 100vw, (max-width: 1023px) 50vw, 33vw"
-            className="object-cover grayscale transition-[transform,filter] duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105 group-hover:grayscale-0"
+            className="object-cover grayscale transition-[scale,filter] duration-600 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105 group-hover:grayscale-0"
           />
           <div className="absolute inset-x-0 bottom-0 flex translate-y-full items-center gap-4 bg-accent px-5 py-3.5 transition-transform duration-400 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-y-0">
             {member.socials.map((social) => (

@@ -203,7 +203,7 @@ export default async function WorkDetailPage({ params }: PageProps<"/works/[slug
           alt=""
           fill
           sizes="100vw"
-          className="object-cover opacity-25 transition-[transform,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105 group-hover:opacity-40"
+          className="object-cover opacity-25 transition-[scale,opacity] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-105 group-hover:opacity-40"
         />
         <div aria-hidden className="absolute inset-0 bg-bg/70" />
         <Container className="relative text-center">

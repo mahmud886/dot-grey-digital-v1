@@ -39,7 +39,7 @@ export function Accordion({
                 <span
                   aria-hidden
                   className={cn(
-                    "grid size-9 shrink-0 place-items-center rounded-full border border-line transition-[transform,background-color,color,border-color] duration-400",
+                    "grid size-9 shrink-0 place-items-center rounded-full border border-line transition-[rotate,background-color,color,border-color] duration-400",
                     open ? "rotate-45 border-accent bg-accent text-accent-fg" : "text-fg-muted",
                   )}
                 >
