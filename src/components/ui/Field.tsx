@@ -25,7 +25,14 @@ export function Field({
   error,
   className,
   placeholder,
-}: BaseProps & { type?: string; as?: "input" | "textarea"; rows?: number; placeholder?: string }) {
+  defaultValue,
+}: BaseProps & {
+  type?: string;
+  as?: "input" | "textarea";
+  rows?: number;
+  placeholder?: string;
+  defaultValue?: string;
+}) {
   const id = useId();
   const errorId = `${id}-error`;
   const shared = cn(
@@ -46,6 +53,7 @@ export function Field({
           name={name}
           rows={rows}
           required={required}
+          defaultValue={defaultValue}
           placeholder={placeholder}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
@@ -57,6 +65,7 @@ export function Field({
           name={name}
           type={type}
           required={required}
+          defaultValue={defaultValue}
           placeholder={placeholder}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
@@ -81,7 +90,8 @@ export function SelectField({
   required,
   error,
   className,
-}: BaseProps & { options: string[]; placeholder?: string }) {
+  defaultValue = "",
+}: BaseProps & { options: string[]; placeholder?: string; defaultValue?: string }) {
   const id = useId();
   const errorId = `${id}-error`;
 
@@ -97,7 +107,7 @@ export function SelectField({
           id={id}
           name={name}
           required={required}
-          defaultValue=""
+          defaultValue={defaultValue}
           aria-invalid={error ? true : undefined}
           aria-describedby={error ? errorId : undefined}
           className={cn(

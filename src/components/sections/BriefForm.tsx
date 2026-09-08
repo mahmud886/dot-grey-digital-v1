@@ -12,21 +12,31 @@ const initial: BriefState = { status: "idle" };
 export function BriefForm() {
   const [state, formAction] = useActionState(submitBrief, initial);
   const errors = state.fieldErrors ?? {};
+  // After a rejected submit the inputs would otherwise come back empty, throwing away
+  // everything the visitor typed. Text inputs keep their DOM value across a re-render,
+  // but React ignores a changed `defaultValue` on an uncontrolled <select> — so the
+  // selects are keyed on their restored value, which remounts just those two.
+  const prev = state.values ?? {};
 
   return (
     <form action={formAction} className="relative flex flex-col gap-7" noValidate>
       <Honeypot />
 
       <div className="grid gap-7 sm:grid-cols-2">
-        <Field name="fullName" label="Full name" required error={errors.fullName} placeholder="Jane Doe" />
-        <Field name="email" label="Email" type="email" required error={errors.email} placeholder="jane@company.com" />
+        <Field name="fullName"
+        defaultValue={prev.fullName} label="Full name" required error={errors.fullName} placeholder="Jane Doe" />
+        <Field name="email"
+        defaultValue={prev.email} label="Email" type="email" required error={errors.email} placeholder="jane@company.com" />
       </div>
 
-      <Field name="company" label="Company" error={errors.company} placeholder="Acme Inc." />
+      <Field name="company"
+        defaultValue={prev.company} label="Company" error={errors.company} placeholder="Acme Inc." />
 
       <div className="grid gap-7 sm:grid-cols-2">
         <SelectField
+          key={`service-${prev.service ?? ""}`}
           name="service"
+          defaultValue={prev.service}
           label="Service required"
           options={serviceOptions}
           placeholder="Select a service"
@@ -34,7 +44,9 @@ export function BriefForm() {
           error={errors.service}
         />
         <SelectField
+          key={`budget-${prev.budget ?? ""}`}
           name="budget"
+          defaultValue={prev.budget}
           label="Project budget"
           options={budgetOptions}
           placeholder="Select a range"
@@ -44,6 +56,7 @@ export function BriefForm() {
       </div>
 
       <SelectField
+        key={`timeline-${prev.timeline ?? ""}`}
         name="timeline"
         label="Timeline"
         options={timelineOptions}
@@ -53,6 +66,7 @@ export function BriefForm() {
 
       <Field
         name="message"
+        defaultValue={prev.message}
         label="Project details"
         as="textarea"
         rows={4}

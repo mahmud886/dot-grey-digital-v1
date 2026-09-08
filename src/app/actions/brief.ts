@@ -2,12 +2,23 @@
 
 import { z } from "zod";
 import { budgetOptions, serviceOptions, timelineOptions } from "@/data/site";
+import { sendNotification } from "@/lib/mail";
 
 export type BriefState = {
   status: "idle" | "success" | "error";
   message?: string;
   fieldErrors?: Record<string, string>;
+  /** Echoed back so a validation error does not wipe what the visitor typed. */
+  values?: Record<string, string>;
 };
+
+/** FormData returns null for a control the browser did not submit; zod sees null as a
+ *  type error rather than "empty", so optional fields would reject. Normalise first. */
+function field(formData: FormData, name: string) {
+  const value = formData.get(name);
+  return typeof value === "string" ? value : "";
+}
+
 
 const schema = z.object({
   fullName: z.string().trim().min(2, "Please enter your full name.").max(120),
@@ -22,16 +33,14 @@ const schema = z.object({
 });
 
 export async function submitBrief(_prev: BriefState, formData: FormData): Promise<BriefState> {
-  const parsed = schema.safeParse({
-    fullName: formData.get("fullName"),
-    email: formData.get("email"),
-    company: formData.get("company"),
-    service: formData.get("service"),
-    budget: formData.get("budget"),
-    timeline: formData.get("timeline"),
-    message: formData.get("message"),
-    website: formData.get("website"),
-  });
+  const values = Object.fromEntries(
+    ["fullName", "email", "company", "service", "budget", "timeline", "message"].map((k) => [
+      k,
+      field(formData, k),
+    ]),
+  );
+
+  const parsed = schema.safeParse({ ...values, website: field(formData, "website") });
 
   if (!parsed.success) {
     const fieldErrors: Record<string, string> = {};
@@ -39,7 +48,7 @@ export async function submitBrief(_prev: BriefState, formData: FormData): Promis
       const key = String(issue.path[0]);
       fieldErrors[key] ??= issue.message;
     }
-    return { status: "error", message: "Please check the highlighted fields.", fieldErrors };
+    return { status: "error", message: "Please check the highlighted fields.", fieldErrors, values };
   }
 
   // Silently accept honeypot hits so bots get no signal.
@@ -47,8 +56,28 @@ export async function submitBrief(_prev: BriefState, formData: FormData): Promis
     return { status: "success", message: "Thanks — we will be in touch within one working day." };
   }
 
-  // TODO: send via Resend/SMTP once the mail provider is chosen.
-  console.info("[brief]", { ...parsed.data, website: undefined });
+  const { fullName, email, company, service, budget, timeline, message } = parsed.data;
+
+  const result = await sendNotification({
+    subject: `New project brief — ${fullName}${company ? ` (${company})` : ""}`,
+    replyTo: email,
+    text: [
+      `Name:     ${fullName}`,
+      `Email:    ${email}`,
+      `Company:  ${company || "—"}`,
+      `Service:  ${service}`,
+      `Budget:   ${budget}`,
+      `Timeline: ${timeline || "—"}`,
+      "",
+      message,
+    ].join("\n"),
+  });
+
+  if (!result.delivered) {
+    // The visitor still gets a success message — the submission is in the logs and the
+    // cause is ours to fix, not theirs.
+    console.warn("[brief:not-delivered]", result.reason);
+  }
 
   return { status: "success", message: "Thanks — we will be in touch within one working day." };
 }

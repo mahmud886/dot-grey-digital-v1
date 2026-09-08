@@ -85,8 +85,9 @@ Everything is placeholder, written to be replaced:
   Aspect ratios are fixed — `16:10` for work covers, `4:5` for team — so real images drop in
   without layout changes. Remote images are still supported (`images.remotePatterns` keeps
   Unsplash allowed), so real photography can be used as soon as it exists.
-- **Forms** validate with zod and log; no mail provider is wired. Search for
-  `TODO: send via Resend/SMTP` in `src/app/actions/`.
+- **Forms** validate with zod and send through Resend. Without `RESEND_API_KEY` they
+  still accept submissions and write them to the server log, so a missing key never
+  turns into a failed submission for a visitor. See [`.env.example`](.env.example).
 - **`/privacy` and `/terms`** carry a visible placeholder banner and need legal review.
 
 ## Before launch
@@ -96,7 +97,7 @@ Everything is placeholder, written to be replaced:
 2. Real project imagery, case-study content and team photos
 3. Confirm office addresses, phone and email (CMS → Site settings)
 4. Set the site URL to the real domain (CMS → Site settings) — it feeds metadata, OG and the sitemap
-5. Wire a mail provider for both Server Actions
+5. Add `RESEND_API_KEY` and `CONTACT_FROM_EMAIL` so form submissions arrive by email
 6. Legal review of `/privacy` and `/terms`
 7. Replace the social `#` placeholders (CMS → Site settings)
 8. Configure the CMS for GitHub login — see [`docs/07-cms-setup.md`](docs/07-cms-setup.md)
