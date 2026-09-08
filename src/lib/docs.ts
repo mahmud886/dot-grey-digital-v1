@@ -35,6 +35,7 @@ const SOURCES = [
   { slug: "05-content", file: "docs/05-content.md", label: "Content", read: () => readDoc("05-content.md") },
   { slug: "06-cms", file: "docs/06-cms.md", label: "CMS", read: () => readDoc("06-cms.md") },
   { slug: "07-cms-setup", file: "docs/07-cms-setup.md", label: "CMS setup", read: () => readDoc("07-cms-setup.md") },
+  { slug: "08-golive-checklist", file: "docs/08-golive-checklist.md", label: "Go-live checklist", read: () => readDoc("08-golive-checklist.md") },
 ] as const;
 
 export const DOC_SOURCES: DocMeta[] = SOURCES.map(({ slug, file, label }) => ({ slug, file, label }));

@@ -92,6 +92,9 @@ Everything is placeholder, written to be replaced:
 
 ## Before launch
 
+[`docs/08-golive-checklist.md`](docs/08-golive-checklist.md) lists every placeholder that
+has to be replaced, field by field. The short version:
+
 1. Real logo as SVG — the wordmark is currently set as type, because v1's `logo.png` is
    white artwork that disappears on the light theme
 2. Real project imagery, case-study content and team photos

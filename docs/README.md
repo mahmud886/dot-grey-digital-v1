@@ -13,6 +13,7 @@ Scope documents for the animated rebuild of the DotGrey Digital website, on the
 | [05-content.md](05-content.md) | All placeholder content |
 | [06-cms.md](06-cms.md) | The `/keystatic` CMS — what is editable and how it is wired |
 | [07-cms-setup.md](07-cms-setup.md) | Click-by-click guide to turning the CMS on for the team |
+| [08-golive-checklist.md](08-golive-checklist.md) | Everything that must be replaced before launch, field by field |
 
 
 ## What changes from v1
