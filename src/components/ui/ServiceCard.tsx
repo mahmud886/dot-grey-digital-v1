@@ -20,7 +20,7 @@ export function ServiceCard({
       href={`/services/${service.slug}`}
       data-cursor="VIEW"
       className={cn(
-        "group flex h-full flex-col rounded-3xl p-8 transition-[border-color,background-color,transform] duration-400 md:p-9",
+        "group flex h-full flex-col rounded-3xl p-8 transition-[border-color,background-color,translate] duration-400 md:p-9",
         featured
           ? "border border-accent-strong bg-accent-strong text-accent-fg"
           : "card-glass hover:border-accent",

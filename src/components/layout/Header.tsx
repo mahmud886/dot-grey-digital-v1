@@ -36,10 +36,12 @@ export function Header() {
           scrolled
             ? "border-b border-line bg-bg/95 lg:bg-bg/80 lg:backdrop-blur-xl"
             : "border-b border-transparent bg-transparent",
-          // Asymmetric on purpose: it lifts away on an ease-in curve, so it gathers speed and
-          // reads as leaving, and comes back on expo-out, which arrives fast and settles.
+          // Leaving uses an even in-out curve rather than an ease-in: an ease-in spends its
+          // first half almost stationary and then covers most of the distance in the last
+          // few frames, which reads as a snap, not a slide. Coming back is expo-out, which
+          // arrives quickly and settles — a header you are reaching for should feel eager.
           hidden
-            ? "-translate-y-full opacity-0 duration-[420ms] ease-[cubic-bezier(0.55,0,0.85,0.4)]"
+            ? "-translate-y-full opacity-0 duration-[460ms] ease-[cubic-bezier(0.33,1,0.68,1)]"
             : "translate-y-0 opacity-100 duration-[620ms] ease-[cubic-bezier(0.16,1,0.3,1)]",
         )}
       >

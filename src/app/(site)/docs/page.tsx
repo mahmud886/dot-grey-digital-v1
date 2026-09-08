@@ -40,7 +40,7 @@ export default function DocsIndexPage() {
                   </span>
                   <span
                     aria-hidden
-                    className="grid size-10 place-items-center rounded-full border border-line text-fg-muted transition-[transform,background-color,color,border-color] duration-400 group-hover:border-accent group-hover:bg-accent group-hover:text-accent-fg"
+                    className="grid size-10 place-items-center rounded-full border border-line text-fg-muted transition-[translate,background-color,color,border-color] duration-400 group-hover:border-accent group-hover:bg-accent group-hover:text-accent-fg"
                   >
                     <svg viewBox="0 0 16 16" className="size-3.5" fill="none" stroke="currentColor" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round">
                       <path d="M2 8h12M9 3l5 5-5 5" />

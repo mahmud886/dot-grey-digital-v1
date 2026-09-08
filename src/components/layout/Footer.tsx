@@ -16,7 +16,7 @@ function FooterLink({ href, children }: { href: string; children: React.ReactNod
   return (
     <Link
       href={href}
-      className="inline-block text-fg-muted transition-[color,transform] duration-300 hover:translate-x-1 hover:text-accent"
+      className="inline-block text-fg-muted transition-[color,translate] duration-300 hover:translate-x-1 hover:text-accent"
     >
       {children}
     </Link>
@@ -76,7 +76,7 @@ export function Footer() {
                 <li key={social.label}>
                   <a
                     href={social.href}
-                    className="inline-block text-fg-muted transition-[color,transform] duration-300 hover:translate-x-1 hover:text-accent"
+                    className="inline-block text-fg-muted transition-[color,translate] duration-300 hover:translate-x-1 hover:text-accent"
                   >
                     {social.label}
                   </a>

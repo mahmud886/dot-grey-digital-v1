@@ -121,7 +121,7 @@ export function NavDropdown({
                 href={child.href}
                 tabIndex={open ? 0 : -1}
                 onClick={() => setOpen(false)}
-                className="block rounded-xl px-3.5 py-2.5 text-[0.9375rem] text-fg-muted transition-[background-color,color,transform] duration-200 hover:translate-x-1 hover:bg-accent-dim hover:text-fg"
+                className="block rounded-xl px-3.5 py-2.5 text-[0.9375rem] text-fg-muted transition-[background-color,color,translate] duration-200 hover:translate-x-1 hover:bg-accent-dim hover:text-fg"
                 style={{
                   transitionDelay: open ? `${i * 30}ms` : "0ms",
                 }}
