@@ -1,0 +1,77 @@
+{
+  "about": {
+    "title": "A small studio, on purpose",
+    "lead": "We started DotGrey in 2019 because we kept watching good work get diluted on its way from the pitch room to the people actually building it.",
+    "storyTitle": "How we got here",
+    "storyImage": "/img/about-story.svg",
+    "storyParagraphs": [
+      "Between us we had spent years inside network agencies and in-house product teams. Both taught the same lesson from opposite directions: the distance between the person who understands the problem and the person who solves it is where quality goes to die.",
+      "So we built the studio around removing that distance. The designer in the pitch is the designer on the file. The engineer who scoped the build is the one who ships it.",
+      "Seven years and 320-odd projects later we are eighteen people across Dhaka and four time zones, and the rule has not changed."
+    ],
+    "valuesLabel": "What drives us",
+    "valuesTitle": "How we work"
+  },
+  "services": {
+    "title": "What we do",
+    "lead": "Six services, one team. Most engagements use two or three of them together, which is rather the point.",
+    "processLabel": "How we work",
+    "processTitle": "A process you can plan around",
+    "process": [
+      { "title": "Discover", "body": "A workshop, an audit and a written brief we both agree on before anything starts." },
+      { "title": "Design", "body": "Concepts, refinement and a system — reviewed weekly, never sprung on you at the end." },
+      { "title": "Build", "body": "Engineering from day one of design handoff, with a preview deploy you can click." },
+      { "title": "Launch", "body": "Migration, measurement and thirty days of support while it settles." }
+    ]
+  },
+  "works": {
+    "title": "Selected work",
+    "lead": "A cross-section of what we have shipped. Every case study says what the problem actually was, not just what it ended up looking like.",
+    "emptyState": "Nothing in this category yet — try another filter."
+  },
+  "team": {
+    "title": "The people doing the work",
+    "lead": "No account layer, no handoff to a junior team. Everyone here is on the tools.",
+    "hiringTitle": "We are hiring",
+    "hiringBody": "open roles across design, engineering and production.",
+    "hiringCtaLabel": "See open roles"
+  },
+  "pricing": {
+    "title": "Simple, honest pricing",
+    "lead": "Retainers are billed monthly with no minimum term. Fixed-scope projects are quoted up front. Either way, you know the number before we start.",
+    "comparisonLabel": "Compare",
+    "comparisonTitle": "What each plan includes"
+  },
+  "faq": {
+    "title": "Frequently asked questions",
+    "lead": "If the answer you need is not here, ask us directly — we reply within one working day.",
+    "stillTitle": "Still have questions?",
+    "stillBody": "Book fifteen minutes and ask them. No deck, no pitch.",
+    "stillCtaLabel": "Book a quick call"
+  },
+  "careers": {
+    "title": "Work with us",
+    "lead": "We hire slowly and keep teams small. That means more ownership, fewer meetings, and your name actually attached to the work.",
+    "whyTitle": "Why it is different here",
+    "whyParagraphs": [
+      "There is no layer between you and the client. You will present your own work, hear the feedback first-hand, and decide how to act on it. That is uncomfortable for about a month and then it is the only way you want to work.",
+      "We keep project counts low on purpose, so nobody is spread across six things at once. When something ships badly we look at the process, not the person."
+    ],
+    "cultureImage": "/img/culture.svg",
+    "rolesLabel": "Open roles",
+    "applyTitle": "Apply",
+    "applyBody": "We read every application and reply either way, usually within a week."
+  },
+  "contact": {
+    "title": "Let's talk",
+    "lead": "Tell us what you are building and when you need it. We reply within one working day — usually with questions rather than a proposal.",
+    "mapLabel": "Dhaka · Remote"
+  },
+  "notFound": {
+    "code": "404",
+    "title": "Page not found",
+    "body": "That link has moved, or it never existed. Both happen. Here are two better places to be.",
+    "primaryCtaLabel": "Back to home",
+    "secondaryCtaLabel": "See our work"
+  }
+}

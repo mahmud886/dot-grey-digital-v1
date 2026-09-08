@@ -5,6 +5,9 @@
  */
 import sectionsJson from "@/content/sections.json";
 import home from "@/content/pages/home.json";
+import inner from "@/content/pages/inner.json";
+import legal from "@/content/pages/legal.json";
 
 export const sections = sectionsJson;
-export const pages = { home };
+export const pages = { home, ...inner };
+export const legalPages = legal;

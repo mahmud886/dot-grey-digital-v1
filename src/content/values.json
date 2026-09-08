@@ -1,0 +1,10 @@
+{
+  "values": [
+    { "title": "Clarity over cleverness", "body": "If it needs explaining twice, it is not finished. We would rather ship the obvious answer than the interesting one." },
+    { "title": "Ship, then refine", "body": "Real feedback comes from real use. We get something in front of people early and improve it with what we learn." },
+    { "title": "Own the outcome", "body": "Not the deliverable — the result it was supposed to produce. If the work is not doing its job, that is our problem too." },
+    { "title": "Design with constraints", "body": "Budget, timeline and platform limits are part of the brief. Pretending otherwise just moves the problem to the end." },
+    { "title": "Say the hard thing early", "body": "Bad news does not improve with age. If something is slipping or wrong, you hear it the week it happens." },
+    { "title": "Leave it maintainable", "body": "Documented code, a real design system, no lock-in. The work should outlive the engagement." }
+  ]
+}
