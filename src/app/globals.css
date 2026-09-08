@@ -14,7 +14,7 @@
   --bg-card: #1b1715;
   --fg: #ffffff;
   --fg-muted: #a8a29e;
-  --fg-subtle: #78716c;
+  --fg-subtle: #a09a95;
   --border: rgb(255 255 255 / 0.1);
   --border-strong: rgb(255 255 255 / 0.2);
 
@@ -40,7 +40,7 @@
   --bg-card: #ffffff;
   --fg: #0c0a09;
   --fg-muted: #57534e;
-  --fg-subtle: #78716c;
+  --fg-subtle: #6b635d;
   --border: rgb(0 0 0 / 0.1);
   --border-strong: rgb(0 0 0 / 0.2);
 
@@ -260,4 +260,43 @@
 @keyframes ring-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
+}
+
+/* --- Above-the-fold entrance -------------------------------------------------
+   The hero must not wait for JavaScript to become visible. GSAP's `from` tweens set
+   opacity 0 at mount, so anything above the fold stays invisible until the bundle has
+   loaded, parsed and run — which showed up as a 2.7s LCP render delay on mobile.
+   These run from the stylesheet instead, so the text paints on the first frame and
+   animates in regardless of when (or whether) JS arrives. */
+@keyframes rise-in {
+  from { opacity: 0; transform: translate3d(0, 24px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes mask-rise {
+  from { transform: translate3d(0, 110%, 0); }
+  to { transform: none; }
+}
+
+.hero-rise {
+  animation: rise-in 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation-delay: var(--rise-delay, 0s);
+}
+
+/* The mask reveal starts the text translated fully out of its clip, so nothing paints
+   until the animation lands — which makes it the Largest Contentful Paint and pushes LCP
+   out by the whole delay plus duration. On phones, where LCP is measured hardest and the
+   flourish is least visible, the headline simply renders in place. */
+@media (min-width: 1024px) {
+  .hero-mask-rise > [data-split-inner] {
+    animation: mask-rise 0.9s cubic-bezier(0.22, 1, 0.36, 1) both;
+    animation-delay: var(--rise-delay, 0s);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-rise,
+  .hero-mask-rise > [data-split-inner] {
+    animation: none;
+  }
 }

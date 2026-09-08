@@ -109,11 +109,16 @@ export function HeroCardStack({ items = services }: { items?: Service[] }) {
               onClick={() => setIndex(i)}
               aria-label={`Show ${service.title}`}
               aria-current={i === index}
-              className={cn(
-                "h-2.5 rounded-full border border-accent transition-[width,background-color] duration-400",
-                i === index ? "w-8 bg-accent" : "w-2.5 bg-transparent hover:bg-accent/30",
-              )}
-            />
+              className="grid size-6 place-items-center"
+            >
+              <span
+                aria-hidden
+                className={cn(
+                  "block h-2.5 rounded-full border border-accent transition-[width,background-color] duration-400",
+                  i === index ? "w-8 bg-accent" : "w-2.5 bg-transparent hover:bg-accent/30",
+                )}
+              />
+            </button>
           ))}
         </div>
       ) : null}

@@ -22,7 +22,7 @@ export function ServiceCard({
       className={cn(
         "group flex h-full flex-col rounded-3xl p-8 transition-[border-color,background-color,transform] duration-400 md:p-9",
         featured
-          ? "border border-accent bg-accent text-accent-fg"
+          ? "border border-accent-strong bg-accent-strong text-accent-fg"
           : "card-glass hover:border-accent",
         className,
       )}
@@ -40,7 +40,7 @@ export function ServiceCard({
         <span
           className={cn(
             "font-display text-sm",
-            featured ? "text-accent-fg/70" : "text-fg-subtle",
+            featured ? "text-accent-fg" : "text-fg-subtle",
           )}
         >
           {service.number}
@@ -56,7 +56,7 @@ export function ServiceCard({
         {service.title}
       </h3>
 
-      <p className={cn("mt-3 flex-1 text-sm", featured ? "text-accent-fg/85" : "text-fg-muted")}>
+      <p className={cn("mt-3 flex-1 text-sm", featured ? "text-accent-fg" : "text-fg-muted")}>
         {service.blurb}
       </p>
 

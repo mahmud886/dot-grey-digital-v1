@@ -83,11 +83,16 @@ export function Testimonials() {
                 aria-label={`Go to testimonial ${i + 1}`}
                 aria-current={i === selected}
                 onClick={() => embla?.scrollTo(i)}
-                className={cn(
-                  "h-1.5 rounded-full transition-[width,background-color] duration-400",
-                  i === selected ? "w-10 bg-accent" : "w-4 bg-line-strong hover:bg-fg-subtle",
-                )}
-              />
+                className="grid h-6 place-items-center px-1"
+              >
+                <span
+                  aria-hidden
+                  className={cn(
+                    "block h-1.5 rounded-full transition-[width,background-color] duration-400",
+                    i === selected ? "w-10 bg-accent" : "w-4 bg-line-strong hover:bg-fg-subtle",
+                  )}
+                />
+              </button>
             ))}
           </div>
         </div>

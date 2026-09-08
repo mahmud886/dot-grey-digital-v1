@@ -10,6 +10,8 @@ import { useReducedMotion } from "@/hooks/useReducedMotion";
  */
 export function Marquee({
   items,
+  /** Purely decorative rows opt out of the accessibility tree entirely. */
+  decorative = false,
   speed = 35,
   direction = "left",
   outlined = false,
@@ -23,6 +25,7 @@ export function Marquee({
   direction?: "left" | "right";
   outlined?: boolean;
   pauseOnHover?: boolean;
+  decorative?: boolean;
   separator?: string;
   className?: string;
   itemClassName?: string;
@@ -49,16 +52,16 @@ export function Marquee({
 
   if (reduced) {
     return (
-      <div className={cn("flex overflow-hidden", className)}>
-        <span className="sr-only">{items.join(", ")}</span>
+      <div aria-hidden={decorative || undefined} className={cn("flex overflow-hidden", className)}>
+        {decorative ? null : <span className="sr-only">{items.join(", ")}</span>}
         {track("static")}
       </div>
     );
   }
 
   return (
-    <div className={cn("group flex overflow-hidden", className)}>
-      <span className="sr-only">{items.join(", ")}</span>
+    <div aria-hidden={decorative || undefined} className={cn("group flex overflow-hidden", className)}>
+      {decorative ? null : <span className="sr-only">{items.join(", ")}</span>}
       <div
         className={cn(
           "flex will-change-transform",

@@ -3,7 +3,7 @@ import type { Testimonial } from "@/data/testimonials";
 export function TestimonialCard({ item }: { item: Testimonial }) {
   return (
     <figure className="card-glass flex h-full flex-col rounded-3xl p-8 md:p-10">
-      <div className="flex gap-1" aria-label={`${item.rating} out of 5`}>
+      <div role="img" className="flex gap-1" aria-label={`${item.rating} out of 5`}>
         {Array.from({ length: item.rating }, (_, i) => (
           <svg key={i} aria-hidden viewBox="0 0 20 20" className="size-4 text-accent" fill="currentColor">
             <path d="M10 1.5l2.6 5.3 5.9.9-4.2 4.1 1 5.8-5.3-2.8-5.3 2.8 1-5.8L1.5 7.7l5.9-.9L10 1.5Z" />

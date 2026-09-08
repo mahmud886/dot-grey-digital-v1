@@ -15,7 +15,7 @@ export function Hero() {
       <Container>
         <div className="grid items-center gap-14 lg:grid-cols-[1.05fr_1fr] lg:gap-20">
           <div className="min-w-0">
-            <Reveal y={20}>
+            <Reveal css y={20}>
               <Eyebrow>{hero.eyebrow}</Eyebrow>
             </Reveal>
 
@@ -25,8 +25,8 @@ export function Hero() {
                   key={line}
                   text={line}
                   by="word"
-                  trigger="mount"
-                  delay={0.25 + i * 0.12}
+                  trigger="css"
+                  delay={0.15 + i * 0.1}
                   stagger={0.07}
                   highlight={hero.accentWord}
                   className="block"
@@ -34,11 +34,11 @@ export function Hero() {
               ))}
             </h1>
 
-            <Reveal delay={0.6} className="mt-7 max-w-xl">
+            <Reveal css delay={0.35} className="mt-7 max-w-xl">
               <p className="text-body-lg text-fg-muted">{hero.lead}</p>
             </Reveal>
 
-            <Reveal delay={0.72} className="mt-10 flex flex-wrap items-center gap-4">
+            <Reveal css delay={0.45} className="mt-10 flex flex-wrap items-center gap-4">
               <Magnetic>
                 <ButtonLink href={hero.primaryCta.href} size="lg">
                   {hero.primaryCta.label}
@@ -52,7 +52,7 @@ export function Hero() {
             </Reveal>
           </div>
 
-          <Reveal delay={0.5}>
+          <Reveal css delay={0.3}>
             <HeroCardStack />
           </Reveal>
         </div>

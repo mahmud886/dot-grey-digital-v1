@@ -89,7 +89,7 @@ export function Footer() {
 
       {/* Oversized wordmark, clipped by the section edge. */}
       <div aria-hidden className="mt-16 overflow-hidden md:mt-24">
-        <p className="px-5 text-center font-display leading-[0.78] font-bold tracking-[0.01em] whitespace-nowrap text-fg/[0.06] uppercase [font-size:clamp(4rem,16vw,16rem)]">
+        <p aria-hidden className="px-5 text-center font-display leading-[0.78] font-bold tracking-[0.01em] whitespace-nowrap text-fg/[0.06] uppercase [font-size:clamp(4rem,16vw,16rem)]">
           DotGrey
         </p>
       </div>

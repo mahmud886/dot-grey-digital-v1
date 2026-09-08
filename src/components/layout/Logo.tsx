@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { cn } from "@/lib/cn";
-import { site } from "@/data/site";
 
 /**
  * Set as type rather than v1's logo.png: the PNG is white artwork on transparent, so it
@@ -11,7 +10,6 @@ export function Logo({ className }: { className?: string }) {
   return (
     <Link
       href="/"
-      aria-label={`${site.name} — home`}
       className={cn("group inline-flex items-center gap-2", className)}
     >
       <span

@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useRef, type ElementType } from "react";
+import { Fragment, useRef, type CSSProperties, type ElementType } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { cn } from "@/lib/cn";
@@ -28,8 +28,12 @@ export function SplitText({
   by?: "word" | "line";
   delay?: number;
   stagger?: number;
-  /** "scroll" animates on entering the viewport; "mount" animates immediately. */
-  trigger?: "scroll" | "mount";
+  /**
+   * "scroll" animates on entering the viewport, "mount" animates immediately via GSAP,
+   * and "css" animates from the stylesheet — the only option that does not leave the
+   * text invisible until the JS bundle has run, so it is what above-the-fold copy uses.
+   */
+  trigger?: "scroll" | "mount" | "css";
   /** Word to pick out in the accent colour. Matched on the word itself, not its position,
    *  so editing the copy cannot leave the wrong word highlighted. */
   highlight?: string;
@@ -49,7 +53,7 @@ export function SplitText({
   useGSAP(
     () => {
       const el = ref.current;
-      if (reduced || !el) return;
+      if (reduced || trigger === "css" || !el) return;
       const targets = el.querySelectorAll<HTMLElement>("[data-split-inner]");
       if (!targets.length) return;
 
@@ -68,7 +72,14 @@ export function SplitText({
   );
 
   return (
-    <Tag ref={ref} className={className} aria-label={label}>
+    <Tag
+      ref={ref}
+      className={cn(trigger === "css" && "hero-mask-rise", className)}
+      style={trigger === "css" ? ({ "--rise-delay": `${delay}s` } as CSSProperties) : undefined}
+    >
+      {/* The split fragments are decorative; the accessible name comes from this node.
+          An aria-label on a <span> with no role is prohibited ARIA and axe flags it. */}
+      <span className="sr-only">{label}</span>
       {parts.map((part, i) => (
         <Fragment key={`${part}-${i}`}>
           <span

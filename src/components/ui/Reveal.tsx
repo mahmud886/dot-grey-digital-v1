@@ -1,20 +1,27 @@
 "use client";
 
-import { useRef, type ElementType, type ReactNode } from "react";
+import { useRef, type CSSProperties, type ElementType, type ReactNode } from "react";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { cn } from "@/lib/cn";
 
 /** Scroll entrance [10]. Renders in its final state under reduced motion. */
 export function Reveal({
   as: Tag = "div",
   delay = 0,
   y = 40,
+  /**
+   * Animate from the stylesheet instead of GSAP. Above-the-fold content should use this:
+   * a GSAP `from` tween holds opacity 0 until the bundle runs, which delays LCP.
+   */
+  css = false,
   className,
   children,
 }: {
   as?: ElementType;
   delay?: number;
   y?: number;
+  css?: boolean;
   className?: string;
   children: ReactNode;
 }) {
@@ -23,7 +30,7 @@ export function Reveal({
 
   useGSAP(
     () => {
-      if (reduced || !ref.current) return;
+      if (reduced || css || !ref.current) return;
       gsap.from(ref.current, {
         opacity: 0,
         y,
@@ -33,11 +40,15 @@ export function Reveal({
         scrollTrigger: { trigger: ref.current, start: "top 85%", once: true },
       });
     },
-    { scope: ref, dependencies: [reduced, delay, y] },
+    { scope: ref, dependencies: [reduced, css, delay, y] },
   );
 
   return (
-    <Tag ref={ref} className={className}>
+    <Tag
+      ref={ref}
+      className={cn(css && "hero-rise", className)}
+      style={css ? ({ "--rise-delay": `${delay}s` } as CSSProperties) : undefined}
+    >
       {children}
     </Tag>
   );
