@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1200" width="1200" height="1200" role="img" aria-label="svc-web-development">
+  <defs>
+    <linearGradient id="bsvcwebdevelopment" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="hsl(0 16% 12%)"/>
+      <stop offset="55%" stop-color="hsl(20 14% 8%)"/>
+      <stop offset="100%" stop-color="hsl(45 18% 6%)"/>
+    </linearGradient>
+    <radialGradient id="g1svcwebdevelopment" cx="25%" cy="31%" r="58%">
+      <stop offset="0%" stop-color="#ff5a3c" stop-opacity="0.34"/>
+      <stop offset="100%" stop-color="#ff5a3c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="g2svcwebdevelopment" cx="77%" cy="68%" r="48%">
+      <stop offset="0%" stop-color="hsl(300 55% 45%)" stop-opacity="0.24"/>
+      <stop offset="100%" stop-color="hsl(300 55% 45%)" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="lsvcwebdevelopment" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#fff" stop-opacity="0"/>
+      <stop offset="50%" stop-color="#fff" stop-opacity="0.13"/>
+      <stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+    </linearGradient>
+    <filter id="blsvcwebdevelopment"><feGaussianBlur stdDeviation="46"/></filter>
+    <filter id="grsvcwebdevelopment"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" stitchTiles="stitch"/><feColorMatrix type="saturate" values="0"/></filter>
+  </defs>
+
+  <rect width="1200" height="1200" fill="url(#bsvcwebdevelopment)"/>
+  <rect width="1200" height="1200" fill="url(#g1svcwebdevelopment)"/>
+  <rect width="1200" height="1200" fill="url(#g2svcwebdevelopment)"/>
+
+  <g filter="url(#blsvcwebdevelopment)" opacity="0.85">
+    <rect x="-240" y="264" width="1680" height="108" fill="url(#lsvcwebdevelopment)" transform="rotate(0 600 600)"/>
+    <rect x="-240" y="792" width="1680" height="60" fill="url(#lsvcwebdevelopment)" transform="rotate(0 600 600)"/>
+  </g>
+
+  
+
+  <rect width="1200" height="1200" filter="url(#grsvcwebdevelopment)" opacity="0.05" style="mix-blend-mode:overlay"/>
+  <rect width="1200" height="1200" fill="none" stroke="#ffffff" stroke-opacity="0.07"/>
+</svg>

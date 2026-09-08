@@ -1,0 +1,60 @@
+{
+  "modes": [
+    { "id": "monthly", "label": "Monthly retainer", "suffix": "/ month" },
+    { "id": "project", "label": "Fixed project", "suffix": "to start" }
+  ],
+  "plans": [
+    {
+      "id": "starter",
+      "name": "Starter",
+      "price": { "monthly": 1200, "project": 2500 },
+      "blurb": "One active request at a time. For founders validating an idea.",
+      "features": [
+        "One active request",
+        "UI/UX design or email templates",
+        "Responsive, mobile-friendly delivery",
+        "Two revisions per request",
+        "Email support"
+      ]
+    },
+    {
+      "id": "growth",
+      "name": "Growth",
+      "price": { "monthly": 2400, "project": 6000 },
+      "blurb": "Two active requests, priority turnaround and a dedicated designer.",
+      "featured": true,
+      "features": [
+        "Everything in Starter",
+        "Two active requests at a time",
+        "Dedicated designer and Slack channel",
+        "Design system and component library",
+        "Unlimited revisions"
+      ]
+    },
+    {
+      "id": "scale",
+      "name": "Scale",
+      "price": { "monthly": 4500, "project": 12000 },
+      "blurb": "Unlimited queue with design, engineering and motion together.",
+      "features": [
+        "Everything in Growth",
+        "Unlimited request queue",
+        "Development and motion included",
+        "Weekly strategy call",
+        "Same-day support SLA"
+      ]
+    }
+  ],
+  "comparison": [
+    { "label": "Active requests", "values": { "starter": "1", "growth": "2", "scale": "Unlimited" } },
+    { "label": "Turnaround", "values": { "starter": "3–5 days", "growth": "2–3 days", "scale": "1–2 days" } },
+    { "label": "Revisions", "values": { "starter": "2 per request", "growth": "Unlimited", "scale": "Unlimited" } },
+    { "label": "Design system", "values": { "starter": "—", "growth": "Included", "scale": "Included" } },
+    { "label": "Web development", "values": { "starter": "—", "growth": "Add-on", "scale": "Included" } },
+    { "label": "Email templates", "values": { "starter": "Included", "growth": "Included", "scale": "Included" } },
+    { "label": "Motion & video", "values": { "starter": "—", "growth": "Add-on", "scale": "Included" } },
+    { "label": "Dedicated channel", "values": { "starter": "—", "growth": "Slack", "scale": "Slack + calls" } },
+    { "label": "Strategy call", "values": { "starter": "—", "growth": "Monthly", "scale": "Weekly" } },
+    { "label": "Support SLA", "values": { "starter": "48 hours", "growth": "24 hours", "scale": "Same day" } }
+  ]
+}

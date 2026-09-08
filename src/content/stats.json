@@ -1,0 +1,8 @@
+{
+  "stats": [
+    { "value": 7, "suffix": "", "label": "Years in business" },
+    { "value": 320, "suffix": "+", "label": "Projects delivered" },
+    { "value": 18, "suffix": "", "label": "People on the team" },
+    { "value": 40, "suffix": "+", "label": "Clients worldwide" }
+  ]
+}

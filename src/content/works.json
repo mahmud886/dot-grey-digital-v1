@@ -1,0 +1,729 @@
+{
+  "categories": [
+    "All",
+    "UI/UX",
+    "Web",
+    "Email",
+    "Branding"
+  ],
+  "works": [
+    {
+      "slug": "workday",
+      "title": "Workday",
+      "year": "2025",
+      "category": "UI/UX",
+      "client": "Workday",
+      "summary": "Create intuitive and visually stunning user experiences that engage and convert.",
+      "tags": [
+        "Agency",
+        "Mobile",
+        "SaaS"
+      ],
+      "services": [
+        "UX Research",
+        "Product Design",
+        "Design System"
+      ],
+      "cover": "/img/works/workday.svg",
+      "gallery": [
+        "/img/works/workday-1.svg",
+        "/img/works/workday-2.svg",
+        "/img/works/workday-3.svg"
+      ],
+      "challenge": "Workday's mobile experience had grown feature by feature until the core task — checking and approving requests — took four taps and two screens nobody could name.",
+      "solution": "We rebuilt the app around the three things people actually opened it for, moved everything else behind an explicit browse mode, and shipped a component library so new features stop accreting on the home screen.",
+      "stats": [
+        {
+          "value": "-58%",
+          "label": "Taps to approve"
+        },
+        {
+          "value": "+31%",
+          "label": "Weekly active users"
+        },
+        {
+          "value": "4.7",
+          "label": "App store rating"
+        }
+      ],
+      "quote": {
+        "text": "They removed more than they added, and the product got dramatically better for it.",
+        "author": "Val Kobal",
+        "role": "Product Lead, Workday"
+      },
+      "duration": "10 weeks",
+      "team": "3 people",
+      "role": "Product design & design system",
+      "tools": [
+        "Figma",
+        "Maze",
+        "Storybook",
+        "React Native"
+      ],
+      "deliverables": [
+        "Research findings and personas",
+        "Rebuilt information architecture",
+        "Full UI across 40+ screens",
+        "Component library with tokens",
+        "Usability test report"
+      ],
+      "approach": [
+        {
+          "title": "Watched people use it",
+          "body": "Twelve sessions with real approvers. The pattern was immediate: nobody browsed, everyone arrived with one task."
+        },
+        {
+          "title": "Cut the surface",
+          "body": "We mapped every widget to a job. Twenty-eight had no job, so they moved behind an explicit browse mode."
+        },
+        {
+          "title": "Rebuilt around three tasks",
+          "body": "Approve, check status, submit. Everything else got out of their way."
+        },
+        {
+          "title": "Shipped a system, not screens",
+          "body": "A component library with real states, so new features stop landing on the home screen."
+        }
+      ],
+      "outcome": "Approvals now take two taps from a cold open. The team ships new features into the browse mode instead of the home screen, which is what stops the problem returning."
+    },
+    {
+      "slug": "verda-botanics",
+      "title": "Verda Botanics",
+      "year": "2025",
+      "category": "Email",
+      "client": "Verda",
+      "summary": "A seasonal campaign system for a skincare brand sending to nine segments.",
+      "tags": [
+        "Email",
+        "Klaviyo",
+        "Retail"
+      ],
+      "services": [
+        "Email Templates",
+        "Modular System",
+        "Dark Mode"
+      ],
+      "cover": "/img/works/verda-botanics.svg",
+      "gallery": [
+        "/img/works/verda-botanics-1.svg",
+        "/img/works/verda-botanics-2.svg",
+        "/img/works/verda-botanics-3.svg"
+      ],
+      "challenge": "Nine segments, four seasonal drops a year, and a designer rebuilding every send by hand. Dark mode inverted the brand's pale greens into something closer to grey sludge.",
+      "solution": "A seasonal module set with explicit dark-mode variants, so the palette survives inversion, plus a swatch system the team swaps per drop without touching markup.",
+      "stats": [
+        {
+          "value": "9",
+          "label": "Segments, one template set"
+        },
+        {
+          "value": "-85%",
+          "label": "Time per campaign"
+        },
+        {
+          "value": "+24%",
+          "label": "Revenue per send"
+        }
+      ],
+      "quote": {
+        "text": "Dark mode used to turn our greens to mud. Now the brand looks like the brand in every inbox.",
+        "author": "Elena Rossi",
+        "role": "Brand Lead, Verda"
+      },
+      "duration": "4 weeks",
+      "team": "2 people",
+      "role": "Email system design & build",
+      "tools": [
+        "Klaviyo",
+        "Litmus",
+        "Figma",
+        "MJML"
+      ],
+      "deliverables": [
+        "Seasonal module set",
+        "Dark-mode variants",
+        "Swatch system",
+        "Client test report",
+        "Editor guide"
+      ],
+      "approach": [
+        {
+          "title": "Audited a year of sends",
+          "body": "Four drops, nine segments, and almost no reuse between them. The work was being redone rather than composed."
+        },
+        {
+          "title": "Designed for inversion first",
+          "body": "We picked the palette by testing what survives a forced dark-mode conversion, not by picking swatches and hoping."
+        },
+        {
+          "title": "Built swappable seasons",
+          "body": "One structure, a swatch set per drop. A seasonal refresh is now a colour change, not a rebuild."
+        },
+        {
+          "title": "Handed over properly",
+          "body": "A short guide and one session with the team who send it."
+        }
+      ],
+      "outcome": "A campaign that took the best part of a day now takes under an hour, and revenue per send is up 24% on the same list."
+    },
+    {
+      "slug": "kestrel-athletics",
+      "title": "Kestrel Athletics",
+      "year": "2025",
+      "category": "Branding",
+      "client": "Kestrel",
+      "summary": "An identity for a running brand that needed to work at 40mph and on a label.",
+      "tags": [
+        "Branding",
+        "Packaging",
+        "Print"
+      ],
+      "services": [
+        "Brand Strategy",
+        "Identity",
+        "Packaging"
+      ],
+      "cover": "/img/works/kestrel-athletics.svg",
+      "gallery": [
+        "/img/works/kestrel-athletics-1.svg",
+        "/img/works/kestrel-athletics-2.svg",
+        "/img/works/kestrel-athletics-3.svg"
+      ],
+      "challenge": "Kestrel's mark was drawn for a website and then stretched onto everything else. On a shoe it turned to mush; on a race bib it disappeared.",
+      "solution": "A mark built from the smallest application up — a bib number at ten metres — then scaled, with a weight set for print, embroidery and screen rather than one file forced everywhere.",
+      "stats": [
+        {
+          "value": "4",
+          "label": "Weights for four substrates"
+        },
+        {
+          "value": "10 m",
+          "label": "Legibility target"
+        },
+        {
+          "value": "+41%",
+          "label": "Prompted brand recall"
+        }
+      ],
+      "quote": {
+        "text": "They started with the hardest place it had to work and everything else fell out of that.",
+        "author": "George El Nachar",
+        "role": "Founder, Kestrel"
+      },
+      "duration": "6 weeks",
+      "team": "2 people",
+      "role": "Brand strategy & identity",
+      "tools": [
+        "Illustrator",
+        "Figma",
+        "InDesign"
+      ],
+      "deliverables": [
+        "Positioning statement",
+        "Primary and responsive marks",
+        "Four-weight mark set",
+        "Packaging artwork",
+        "Brand guidelines"
+      ],
+      "approach": [
+        {
+          "title": "Started at the worst case",
+          "body": "A race bib seen at ten metres, in rain. Anything that survives that survives a website."
+        },
+        {
+          "title": "Drew weights, not sizes",
+          "body": "Embroidery, screen print, foil and screen each need different stroke weights. One file scaled does not work."
+        },
+        {
+          "title": "Tested on the actual substrates",
+          "body": "Printed, stitched and photographed before signing anything off."
+        },
+        {
+          "title": "Wrote rules for the suppliers",
+          "body": "Guidelines aimed at the factory, not at a design team."
+        }
+      ],
+      "outcome": "One mark that holds from an embroidered chest logo to a stadium banner, and prompted recall up 41% after the first season."
+    },
+    {
+      "slug": "hakkas-dine",
+      "title": "Hakka's Dine",
+      "year": "2025",
+      "category": "Web",
+      "client": "Hakka's",
+      "summary": "Modern restaurant booking and food delivery platform design.",
+      "tags": [
+        "User Research",
+        "Web Design",
+        "Consumer"
+      ],
+      "services": [
+        "Web Design",
+        "Next.js Build",
+        "Performance"
+      ],
+      "cover": "/img/works/hakkas-dine.svg",
+      "gallery": [
+        "/img/works/hakkas-dine-1.svg",
+        "/img/works/hakkas-dine-2.svg",
+        "/img/works/hakkas-dine-3.svg"
+      ],
+      "challenge": "Bookings and delivery lived on two different platforms with two different logins, and the restaurant was paying commission on both.",
+      "solution": "One site handling both, built on Next.js with the kitchen's own order flow, so Hakka's keeps the margin and the customer keeps one account.",
+      "stats": [
+        {
+          "value": "+64%",
+          "label": "Direct orders"
+        },
+        {
+          "value": "0.9s",
+          "label": "Largest contentful paint"
+        },
+        {
+          "value": "-100%",
+          "label": "Third-party commission"
+        }
+      ],
+      "quote": {
+        "text": "We stopped paying two platforms to stand between us and our own customers.",
+        "author": "Imran Chowdhury",
+        "role": "Owner, Hakka's Dine"
+      },
+      "duration": "8 weeks",
+      "team": "3 people",
+      "role": "Web design & Next.js build",
+      "tools": [
+        "Next.js",
+        "TypeScript",
+        "Sanity",
+        "Stripe"
+      ],
+      "deliverables": [
+        "Unified booking and delivery flow",
+        "Menu management in a CMS",
+        "Payment integration",
+        "Kitchen-facing order view",
+        "Performance budget in CI"
+      ],
+      "approach": [
+        {
+          "title": "Followed the money",
+          "body": "Two platforms, two commissions, two logins. We costed what each was actually buying them — it was not much."
+        },
+        {
+          "title": "One account, both jobs",
+          "body": "Booking and delivery share a customer, so they share a login and a history."
+        },
+        {
+          "title": "Built for the kitchen too",
+          "body": "The order screen was designed with the staff who read it at 8pm on a Friday."
+        },
+        {
+          "title": "Made it fast on purpose",
+          "body": "A performance budget checked on every pull request, because a slow menu is an abandoned order."
+        }
+      ],
+      "outcome": "Direct orders are up 64% and the commission line is gone. The kitchen screen has not needed a change since launch."
+    },
+    {
+      "slug": "northline-logistics",
+      "title": "Northline Logistics",
+      "year": "2024",
+      "category": "Branding",
+      "client": "Northline",
+      "summary": "A quiet, durable identity for a freight business that did not want a loud one.",
+      "tags": [
+        "Branding",
+        "Print",
+        "Web"
+      ],
+      "services": [
+        "Brand Strategy",
+        "Identity",
+        "Web Design"
+      ],
+      "cover": "/img/works/northline-logistics.svg",
+      "gallery": [
+        "/img/works/northline-logistics-1.svg",
+        "/img/works/northline-logistics-2.svg",
+        "/img/works/northline-logistics-3.svg"
+      ],
+      "challenge": "Northline had three logos in active use and materials that looked like a template, which read as small to the enterprise clients they were pitching.",
+      "solution": "A typographic identity with no illustrative mark at all — a custom wordmark, a strict grid, and vehicle livery treated as part of the system.",
+      "stats": [
+        {
+          "value": "3 → 1",
+          "label": "Identity systems"
+        },
+        {
+          "value": "+29%",
+          "label": "Inbound enquiries"
+        },
+        {
+          "value": "15 yr",
+          "label": "Design horizon"
+        }
+      ],
+      "quote": {
+        "text": "They talked us out of a logo. It was the right call and we would not have got there alone.",
+        "author": "George El Nachar",
+        "role": "Managing Director, Northline"
+      },
+      "duration": "7 weeks",
+      "team": "2 people",
+      "role": "Brand strategy & identity",
+      "tools": [
+        "Figma",
+        "Illustrator",
+        "InDesign"
+      ],
+      "deliverables": [
+        "Positioning and messaging",
+        "Custom wordmark",
+        "Typographic system and grid",
+        "Vehicle livery specification",
+        "Brand guidelines"
+      ],
+      "approach": [
+        {
+          "title": "Asked what was actually wrong",
+          "body": "The work was respected. The materials looked like a template, and enterprise buyers read that as small."
+        },
+        {
+          "title": "Argued against a logo",
+          "body": "A mark would have dated. A wordmark and a strict grid would not."
+        },
+        {
+          "title": "Designed for a lorry first",
+          "body": "If it works at fifty metres on a moving vehicle, it works on a business card."
+        },
+        {
+          "title": "Wrote the rules down",
+          "body": "Guidelines their print supplier could follow without calling us."
+        }
+      ],
+      "outcome": "Three identity systems became one. Inbound enquiries rose 29%, and the system has needed no revisions since."
+    },
+    {
+      "slug": "medicove-intl",
+      "title": "Medicove Intl",
+      "year": "2024",
+      "category": "UI/UX",
+      "client": "Medicove",
+      "summary": "Healthcare platform streamlining patient-doctor interactions.",
+      "tags": [
+        "Healthcare",
+        "App",
+        "UX/UI"
+      ],
+      "services": [
+        "User Research",
+        "Accessibility",
+        "Product Design"
+      ],
+      "cover": "/img/works/medicove-intl.svg",
+      "gallery": [
+        "/img/works/medicove-intl-1.svg",
+        "/img/works/medicove-intl-2.svg",
+        "/img/works/medicove-intl-3.svg"
+      ],
+      "challenge": "Nearly a third of patients abandoned onboarding, and the drop-off was concentrated among older users and anyone using a screen reader.",
+      "solution": "We shortened the flow to four steps, made every field recoverable, and rebuilt it to WCAG 2.2 AA with real assistive-technology testing rather than an audit checklist.",
+      "stats": [
+        {
+          "value": "-31%",
+          "label": "Onboarding drop-off"
+        },
+        {
+          "value": "AA",
+          "label": "WCAG 2.2 conformance"
+        },
+        {
+          "value": "4",
+          "label": "Steps, down from 11"
+        }
+      ],
+      "quote": {
+        "text": "The accessibility work changed the design, and the design got better for everybody.",
+        "author": "Elena Rossi",
+        "role": "Head of Product, Medicove"
+      },
+      "duration": "12 weeks",
+      "team": "4 people",
+      "role": "Research, accessibility & product design",
+      "tools": [
+        "Figma",
+        "NVDA",
+        "VoiceOver",
+        "Axe"
+      ],
+      "deliverables": [
+        "Accessibility audit and remediation plan",
+        "Four-step onboarding flow",
+        "WCAG 2.2 AA conformance",
+        "Assistive-technology test report",
+        "Component library"
+      ],
+      "approach": [
+        {
+          "title": "Tested with the people failing",
+          "body": "Not a general sample — older patients and screen-reader users, because that is where the drop-off was."
+        },
+        {
+          "title": "Shortened before styling",
+          "body": "Eleven steps became four. Most of what was removed existed for internal reporting, not for the patient."
+        },
+        {
+          "title": "Made every field recoverable",
+          "body": "Nothing is lost on a mistake, a timeout or a back button. That alone fixed a third of the abandonment."
+        },
+        {
+          "title": "Verified with real tools",
+          "body": "NVDA and VoiceOver, not an automated checker signing off on its own work."
+        }
+      ],
+      "outcome": "Drop-off fell 31% and the flow now conforms to WCAG 2.2 AA. The accessibility patterns became the studio's internal reference."
+    },
+    {
+      "slug": "fintech-pro",
+      "title": "Fintech Pro",
+      "year": "2024",
+      "category": "Web",
+      "client": "Fintech Pro",
+      "summary": "Secure and intuitive financial management dashboard.",
+      "tags": [
+        "Fintech",
+        "Dashboard",
+        "Web"
+      ],
+      "services": [
+        "Product Design",
+        "Next.js Build",
+        "Data Visualisation"
+      ],
+      "cover": "/img/works/fintech-pro.svg",
+      "gallery": [
+        "/img/works/fintech-pro-1.svg",
+        "/img/works/fintech-pro-2.svg",
+        "/img/works/fintech-pro-3.svg"
+      ],
+      "challenge": "Forty widgets on one dashboard, and a support queue full of people asking where to find a single number.",
+      "solution": "A dashboard built around three questions the data actually answers, with everything else moved into a searchable explore mode.",
+      "stats": [
+        {
+          "value": "-41%",
+          "label": "Support tickets"
+        },
+        {
+          "value": "-58%",
+          "label": "Time to first insight"
+        },
+        {
+          "value": "+27%",
+          "label": "Daily active accounts"
+        }
+      ],
+      "quote": {
+        "text": "Our customers stopped emailing us to ask where things were.",
+        "author": "Sarah Jenkins",
+        "role": "CEO, Fintech Pro"
+      },
+      "duration": "9 weeks",
+      "team": "3 people",
+      "role": "Product design & data visualisation",
+      "tools": [
+        "Figma",
+        "Next.js",
+        "D3",
+        "Storybook"
+      ],
+      "deliverables": [
+        "Redesigned dashboard",
+        "Searchable explore mode",
+        "Chart component library",
+        "Empty and error states",
+        "Support-ticket analysis"
+      ],
+      "approach": [
+        {
+          "title": "Read the support queue",
+          "body": "Four hundred tickets, sorted. Most asked where one number lived."
+        },
+        {
+          "title": "Answered three questions",
+          "body": "We built the dashboard around the three the data actually answers, and moved the rest into search."
+        },
+        {
+          "title": "Designed the charts as components",
+          "body": "One vocabulary for axes, empty states and loading, so nothing reads as a different product."
+        },
+        {
+          "title": "Kept the depth, hid the clutter",
+          "body": "Nothing was deleted. It stopped competing for the same screen."
+        }
+      ],
+      "outcome": "Support tickets dropped 41% in a quarter and time to first insight more than halved. Nobody has asked for the old dashboard."
+    },
+    {
+      "slug": "parallel-labs",
+      "title": "Parallel Labs",
+      "year": "2023",
+      "category": "UI/UX",
+      "client": "Parallel",
+      "summary": "A research tool redesigned around the two hours a week people actually spend in it.",
+      "tags": [
+        "SaaS",
+        "Dashboard",
+        "UX Research"
+      ],
+      "services": [
+        "User Research",
+        "Product Design",
+        "Design System"
+      ],
+      "cover": "/img/works/parallel-labs.svg",
+      "gallery": [
+        "/img/works/parallel-labs-1.svg",
+        "/img/works/parallel-labs-2.svg",
+        "/img/works/parallel-labs-3.svg"
+      ],
+      "challenge": "Parallel had built for the power user who lives in the tool. Analytics said the median user opened it twice a week for an hour, and spent most of that reorienting.",
+      "solution": "A workspace that remembers where you were, surfaces what changed since, and puts the two recurring tasks one click from the door.",
+      "stats": [
+        {
+          "value": "-64%",
+          "label": "Time to resume work"
+        },
+        {
+          "value": "2 clicks",
+          "label": "To the common task, from 7"
+        },
+        {
+          "value": "+19%",
+          "label": "Weekly retention"
+        }
+      ],
+      "quote": {
+        "text": "We had designed for the person who never leaves. Almost nobody is that person.",
+        "author": "Sarah Jenkins",
+        "role": "Head of Product, Parallel"
+      },
+      "duration": "11 weeks",
+      "team": "3 people",
+      "role": "Research & product design",
+      "tools": [
+        "Figma",
+        "Amplitude",
+        "Maze",
+        "Storybook"
+      ],
+      "deliverables": [
+        "Research report",
+        "Session-resume model",
+        "Redesigned workspace",
+        "Component library",
+        "Usability test results"
+      ],
+      "approach": [
+        {
+          "title": "Read the analytics first",
+          "body": "The gap between who they designed for and who actually used it was the whole brief."
+        },
+        {
+          "title": "Designed for returning, not arriving",
+          "body": "Most sessions are a resumption. The interface now treats that as the default case."
+        },
+        {
+          "title": "Made change visible",
+          "body": "A what-changed-since-you-left view removed most of the reorienting time."
+        },
+        {
+          "title": "Kept the power features",
+          "body": "Nothing was taken away from the heavy users; it stopped being the first thing everyone else saw."
+        }
+      ],
+      "outcome": "Time to resume work fell by nearly two thirds, and weekly retention rose 19% without a single new feature."
+    },
+    {
+      "slug": "aurora-health",
+      "title": "Aurora Health",
+      "year": "2023",
+      "category": "Email",
+      "client": "Aurora",
+      "summary": "A modular email system for a health brand sending to six segments a week.",
+      "tags": [
+        "Email",
+        "Klaviyo",
+        "Healthcare"
+      ],
+      "services": [
+        "Email Templates",
+        "Modular System",
+        "Testing"
+      ],
+      "cover": "/img/works/aurora-health.svg",
+      "gallery": [
+        "/img/works/aurora-health-1.svg",
+        "/img/works/aurora-health-2.svg",
+        "/img/works/aurora-health-3.svg"
+      ],
+      "challenge": "Every campaign was rebuilt from scratch, and roughly one in five broke in Outlook after it had already gone out.",
+      "solution": "Twelve tested modules the team assembles in Klaviyo, with dark-mode and image-off handling built in, so a campaign takes an hour instead of a day.",
+      "stats": [
+        {
+          "value": "12",
+          "label": "Reusable modules"
+        },
+        {
+          "value": "+38%",
+          "label": "Click-through rate"
+        },
+        {
+          "value": "0",
+          "label": "Broken sends since"
+        }
+      ],
+      "quote": {
+        "text": "Campaigns take an hour now, and nothing has broken in Outlook since launch.",
+        "author": "Sarah Jenkins",
+        "role": "Marketing Director, Aurora Health"
+      },
+      "duration": "5 weeks",
+      "team": "2 people",
+      "role": "Email system design & build",
+      "tools": [
+        "Klaviyo",
+        "Litmus",
+        "Figma",
+        "MJML"
+      ],
+      "deliverables": [
+        "Twelve tested modules",
+        "Dark-mode variants",
+        "Klaviyo template import",
+        "Cross-client test report",
+        "Editing guide for the team"
+      ],
+      "approach": [
+        {
+          "title": "Audited what broke",
+          "body": "One in five sends failed in Outlook. Every campaign had been rebuilt from scratch, so every campaign found new ways to break."
+        },
+        {
+          "title": "Built modules, not emails",
+          "body": "Twelve sections that compose into any campaign, each tested once and reused forever."
+        },
+        {
+          "title": "Handled the awkward cases",
+          "body": "Dark mode, image blocking and Gmail clipping designed for rather than discovered later."
+        },
+        {
+          "title": "Taught the team",
+          "body": "A short guide and one session. They have not needed us since."
+        }
+      ],
+      "outcome": "A campaign now takes an hour instead of a day, click-through is up 38%, and nothing has broken in Outlook since launch."
+    }
+  ]
+}

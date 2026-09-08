@@ -1,0 +1,784 @@
+{
+  "services": [
+    {
+      "slug": "ui-ux-design",
+      "number": "01",
+      "title": "UI/UX Design",
+      "icon": "Layout",
+      "blurb": "Websites, SaaS and dashboards designed for clarity and conversion.",
+      "lead": "Research-led product design that makes the first try the successful one.",
+      "tags": [
+        "UX Research",
+        "Wireframing",
+        "Prototyping",
+        "Design Systems",
+        "Usability Testing"
+      ],
+      "overview": [
+        "Most product problems are decision problems wearing a UI costume. We map the flows and the edge cases first, so the screens have something solid to sit on.",
+        "Everything ships as a component library with real states — loading, empty, error, permission-denied — not a set of happy-path mockups."
+      ],
+      "included": [
+        "Discovery workshop and competitive audit",
+        "User flows and information architecture",
+        "Wireframes and a clickable prototype",
+        "High-fidelity UI across every state",
+        "A component library with tokens"
+      ],
+      "features": [
+        {
+          "title": "UX Research",
+          "description": "Interviews and analytics review that tell us what users are actually stuck on.",
+          "icon": "Search"
+        },
+        {
+          "title": "Usability Testing",
+          "description": "Prototypes put in front of real users before anything gets built.",
+          "icon": "UserCheck"
+        },
+        {
+          "title": "Wireframing",
+          "description": "Structure agreed in low fidelity, so visual design is not doing two jobs at once.",
+          "icon": "Layout"
+        },
+        {
+          "title": "Design Systems",
+          "description": "Tokens, components and rules your team can build on without us.",
+          "icon": "Component"
+        },
+        {
+          "title": "Prototyping",
+          "description": "Interactive mockups that answer questions a static file cannot.",
+          "icon": "MousePointerClick"
+        },
+        {
+          "title": "Accessibility",
+          "description": "Contrast, focus order and screen-reader behaviour designed in, not bolted on.",
+          "icon": "Accessibility"
+        }
+      ],
+      "benefits": [
+        {
+          "title": "Fewer support tickets",
+          "description": "Interfaces people understand the first time generate far less confusion downstream."
+        },
+        {
+          "title": "Faster engineering",
+          "description": "A real component library means developers assemble rather than reinvent."
+        },
+        {
+          "title": "Decisions on evidence",
+          "description": "Testing settles arguments that would otherwise run for weeks."
+        },
+        {
+          "title": "A system that lasts",
+          "description": "New screens stay consistent long after the engagement ends."
+        }
+      ],
+      "industries": [
+        "SaaS",
+        "Fintech",
+        "Healthcare",
+        "E-commerce"
+      ],
+      "deliverables": [
+        "Figma design system",
+        "Clickable prototype",
+        "Annotated user flows",
+        "Responsive layouts",
+        "Accessibility notes",
+        "Developer handoff spec"
+      ],
+      "timeline": [
+        {
+          "phase": "Week 1",
+          "title": "Research",
+          "body": "Interviews, analytics review and a competitive audit."
+        },
+        {
+          "phase": "Weeks 2–3",
+          "title": "Structure",
+          "body": "Flows, IA and wireframes signed off before visual design."
+        },
+        {
+          "phase": "Weeks 4–7",
+          "title": "Design",
+          "body": "Full UI, component library and every non-happy-path state."
+        },
+        {
+          "phase": "Week 8",
+          "title": "Handover",
+          "body": "Prototype testing, revisions and engineering handoff."
+        }
+      ],
+      "stat": {
+        "value": "8–12",
+        "label": "weeks, typical engagement"
+      },
+      "faqs": [
+        {
+          "q": "Do you work in Figma?",
+          "a": "Yes, exclusively. You get the file, the library and edit access from day one — not a PDF at the end."
+        },
+        {
+          "q": "Can you work with our existing design system?",
+          "a": "Often that is the better option. We audit what you have, extend it where it is thin, and only rebuild if it is genuinely in the way."
+        },
+        {
+          "q": "What if we do not have users to research yet?",
+          "a": "Then we research the problem instead — competitors, adjacent products, and the people you are trying to reach. Guessing is still worse."
+        }
+      ]
+    },
+    {
+      "slug": "web-development",
+      "number": "02",
+      "title": "Web Development",
+      "icon": "Code",
+      "blurb": "Clean builds, performance-minded, responsive by default.",
+      "lead": "Fast, accessible front-ends that hold up under real traffic.",
+      "tags": [
+        "Next.js",
+        "Headless CMS",
+        "E-commerce",
+        "Performance",
+        "Accessibility"
+      ],
+      "overview": [
+        "We build on Next.js and TypeScript, with a headless CMS when the content team needs one and none when they do not.",
+        "Performance and accessibility are part of the build, not a phase afterwards — budgets are set at kickoff and checked on every pull request."
+      ],
+      "included": [
+        "Component-driven front-end build",
+        "CMS integration and editor training",
+        "Performance budget enforced in CI",
+        "Analytics, SEO and structured data",
+        "Deployment pipeline and monitoring"
+      ],
+      "features": [
+        {
+          "title": "Next.js Builds",
+          "description": "Static where it can be, dynamic where it has to be.",
+          "icon": "Code2"
+        },
+        {
+          "title": "Headless CMS",
+          "description": "Content models your marketing team can actually use.",
+          "icon": "Database"
+        },
+        {
+          "title": "Performance",
+          "description": "Core Web Vitals treated as a budget, not a report card.",
+          "icon": "Zap"
+        },
+        {
+          "title": "Responsive",
+          "description": "One build that works from 320px to ultrawide.",
+          "icon": "Smartphone"
+        },
+        {
+          "title": "Integrations",
+          "description": "Payments, CRMs and analytics wired up and monitored.",
+          "icon": "Plug"
+        },
+        {
+          "title": "Handover",
+          "description": "Documented code and a pipeline your team can run.",
+          "icon": "GitBranch"
+        }
+      ],
+      "benefits": [
+        {
+          "title": "Pages that load",
+          "description": "Faster sites convert better and rank better — the effect is measurable."
+        },
+        {
+          "title": "No developer bottleneck",
+          "description": "Editors change content without filing a ticket."
+        },
+        {
+          "title": "Fewer regressions",
+          "description": "Budgets and checks in CI stop slow pages shipping quietly."
+        },
+        {
+          "title": "Ownership",
+          "description": "The codebase is yours, documented, with no lock-in."
+        }
+      ],
+      "industries": [
+        "SaaS",
+        "Retail",
+        "Media",
+        "Professional services"
+      ],
+      "deliverables": [
+        "Production codebase",
+        "CMS with content models",
+        "CI/CD pipeline",
+        "Lighthouse and a11y report",
+        "Technical documentation",
+        "30 days of post-launch support"
+      ],
+      "timeline": [
+        {
+          "phase": "Week 1",
+          "title": "Plan",
+          "body": "Architecture, content model and a performance budget agreed up front."
+        },
+        {
+          "phase": "Weeks 2–4",
+          "title": "Build",
+          "body": "Components first, then pages, reviewed in preview deploys."
+        },
+        {
+          "phase": "Week 5",
+          "title": "Harden",
+          "body": "Accessibility pass, performance pass, cross-browser testing."
+        },
+        {
+          "phase": "Week 6",
+          "title": "Launch",
+          "body": "Migration, DNS cutover, monitoring and a support window."
+        }
+      ],
+      "stat": {
+        "value": "< 1s",
+        "label": "typical largest contentful paint"
+      },
+      "faqs": [
+        {
+          "q": "Which stack do you build on?",
+          "a": "Next.js and TypeScript, with Tailwind for styling. A headless CMS when the content team needs one, and none when they do not."
+        },
+        {
+          "q": "Do we own the code?",
+          "a": "Entirely. It is your repository, documented, with no proprietary layer and no lock-in."
+        },
+        {
+          "q": "Can you take over an existing codebase?",
+          "a": "Yes, after an audit. We will tell you honestly whether extending it or rebuilding it is the cheaper path."
+        }
+      ]
+    },
+    {
+      "slug": "email-templates",
+      "number": "03",
+      "title": "Email Templates",
+      "icon": "Mail",
+      "blurb": "Compatible layouts that render properly in every major inbox.",
+      "lead": "Templates that survive Outlook, Gmail clipping and dark mode.",
+      "tags": [
+        "Responsive Email",
+        "Klaviyo",
+        "Mailchimp",
+        "HubSpot",
+        "Dark Mode"
+      ],
+      "overview": [
+        "Email is the last place on the web where table layouts and a decade of client quirks still decide whether your design survives. We build for that reality rather than against it.",
+        "Every template is tested across the major clients before delivery, including dark mode and image-blocking, and handed over as an editable module set."
+      ],
+      "included": [
+        "Design adapted for email constraints",
+        "Hand-coded, table-based responsive build",
+        "Testing across major clients and devices",
+        "Dark-mode and image-off handling",
+        "Modular sections your team can rearrange"
+      ],
+      "features": [
+        {
+          "title": "Custom Coding",
+          "description": "Hand-written HTML built for email clients, not browsers.",
+          "icon": "Code2"
+        },
+        {
+          "title": "Mobile Tested",
+          "description": "Checked on real devices, not just a simulator.",
+          "icon": "Smartphone"
+        },
+        {
+          "title": "Pixel Accurate",
+          "description": "Rendering that matches the design in the clients that matter.",
+          "icon": "Crosshair"
+        },
+        {
+          "title": "Editable Modules",
+          "description": "Sections your team can reorder without breaking the layout.",
+          "icon": "Edit3"
+        },
+        {
+          "title": "Fast & Accessible",
+          "description": "Light payloads, real text, and alt content that reads well.",
+          "icon": "Zap"
+        },
+        {
+          "title": "Cross-client",
+          "description": "Outlook, Gmail, Apple Mail, Yahoo and the awkward ones too.",
+          "icon": "Globe"
+        }
+      ],
+      "benefits": [
+        {
+          "title": "Higher click-through",
+          "description": "Templates that render correctly get engaged with far more often."
+        },
+        {
+          "title": "No broken sends",
+          "description": "Testing before delivery removes the Monday-morning surprise."
+        },
+        {
+          "title": "Reusable system",
+          "description": "One module set covers campaigns for months."
+        },
+        {
+          "title": "Platform ready",
+          "description": "Delivered in the ESP you actually send from."
+        }
+      ],
+      "industries": [
+        "E-commerce",
+        "SaaS",
+        "Pharma",
+        "Travel"
+      ],
+      "deliverables": [
+        "Coded template set",
+        "Modular section library",
+        "Client test report",
+        "Dark-mode variants",
+        "ESP-ready import files",
+        "Editing guide for your team"
+      ],
+      "timeline": [
+        {
+          "phase": "Days 1–2",
+          "title": "Adapt",
+          "body": "Design adjusted for the constraints email actually imposes."
+        },
+        {
+          "phase": "Days 3–6",
+          "title": "Build",
+          "body": "Hand-coded, table-based, responsive, with dark-mode handling."
+        },
+        {
+          "phase": "Days 7–8",
+          "title": "Test",
+          "body": "Checked across the major clients, devices and image-off."
+        },
+        {
+          "phase": "Days 9–10",
+          "title": "Deliver",
+          "body": "Imported into your ESP and handed over documented."
+        }
+      ],
+      "stat": {
+        "value": "40+",
+        "label": "client and device combinations tested"
+      },
+      "faqs": [
+        {
+          "q": "Which email clients do you test?",
+          "a": "Outlook 2016 onward, Gmail web and app, Apple Mail, iOS Mail, Yahoo and Samsung Mail, in light and dark mode."
+        },
+        {
+          "q": "Will my team be able to edit it?",
+          "a": "Yes. Templates ship as modular sections your team can reorder in the ESP without touching code."
+        },
+        {
+          "q": "Do you handle the sending too?",
+          "a": "We build and hand over. Campaign strategy and sending stay with your team, though we are happy to advise."
+        }
+      ]
+    },
+    {
+      "slug": "banner-ads",
+      "number": "04",
+      "title": "Banner Ads",
+      "icon": "Monitor",
+      "blurb": "HTML5 display ads built for attention and message clarity.",
+      "lead": "Animated display sets that stay inside platform weight limits.",
+      "tags": [
+        "HTML5",
+        "Google Ads",
+        "Animation",
+        "Resizing",
+        "Ad Sets"
+      ],
+      "overview": [
+        "A display set lives or dies on the first half-second. We design for the message that has to land in that time, then animate around it.",
+        "Every size is hand-built rather than auto-scaled, so type stays legible and the call to action never gets squeezed out of the frame."
+      ],
+      "included": [
+        "Concept and key visual",
+        "Master size design and animation",
+        "Full size set, hand-adapted",
+        "Weight optimisation for each platform",
+        "Packaged and QA'd for trafficking"
+      ],
+      "features": [
+        {
+          "title": "HTML5 Build",
+          "description": "Lightweight animated banners, no legacy plugins.",
+          "icon": "Code2"
+        },
+        {
+          "title": "Full Size Sets",
+          "description": "Every IAB size adapted by hand, not stretched.",
+          "icon": "Maximize2"
+        },
+        {
+          "title": "Weight Optimised",
+          "description": "Comfortably inside platform limits without visible compromise.",
+          "icon": "Gauge"
+        },
+        {
+          "title": "Platform Ready",
+          "description": "Packaged correctly for Google Ads and major DSPs.",
+          "icon": "Globe"
+        },
+        {
+          "title": "Motion",
+          "description": "Animation that carries the message rather than distracting from it.",
+          "icon": "Play"
+        },
+        {
+          "title": "Fast Turnaround",
+          "description": "Campaign timelines are short; ours match them.",
+          "icon": "Zap"
+        }
+      ],
+      "benefits": [
+        {
+          "title": "Better click-through",
+          "description": "Clear hierarchy in the first frame does most of the work."
+        },
+        {
+          "title": "No rejected creative",
+          "description": "Specs checked before delivery, so trafficking is uneventful."
+        },
+        {
+          "title": "Consistent campaigns",
+          "description": "Every size reads as the same idea."
+        },
+        {
+          "title": "Ready to launch",
+          "description": "Delivered packaged, named and documented."
+        }
+      ],
+      "industries": [
+        "Retail",
+        "Finance",
+        "Entertainment",
+        "Automotive"
+      ],
+      "deliverables": [
+        "Master concept and key visual",
+        "Full IAB size set",
+        "Weight-optimised HTML5 files",
+        "Fallback static images",
+        "Trafficking-ready packages",
+        "Source files"
+      ],
+      "timeline": [
+        {
+          "phase": "Days 1–2",
+          "title": "Concept",
+          "body": "The message that has to land in the first half-second."
+        },
+        {
+          "phase": "Days 3–4",
+          "title": "Master",
+          "body": "Lead size designed and animated, signed off before the set."
+        },
+        {
+          "phase": "Days 5–7",
+          "title": "Adapt",
+          "body": "Every size hand-built rather than auto-scaled."
+        },
+        {
+          "phase": "Day 8",
+          "title": "Package",
+          "body": "Weight checks, QA and delivery ready for trafficking."
+        }
+      ],
+      "stat": {
+        "value": "150 KB",
+        "label": "typical per-banner weight"
+      },
+      "faqs": [
+        {
+          "q": "Which sizes do you deliver?",
+          "a": "The standard IAB set by default, plus any custom sizes your placements need. Each one is adapted by hand."
+        },
+        {
+          "q": "Do you handle the media buy?",
+          "a": "No — we produce the creative. We package it correctly for whoever is trafficking it."
+        },
+        {
+          "q": "Can you match an existing campaign?",
+          "a": "Yes. Send the brand guidelines and an example, and the set will sit alongside what you already have."
+        }
+      ]
+    },
+    {
+      "slug": "veeva-services",
+      "number": "05",
+      "title": "Veeva Services",
+      "icon": "FileText",
+      "blurb": "Approved email and CLM content for life-sciences teams.",
+      "lead": "Veeva-compliant content built to pass MLR the first time.",
+      "tags": [
+        "Approved Email",
+        "CLM",
+        "Vault",
+        "MLR",
+        "iRep"
+      ],
+      "overview": [
+        "Life-sciences marketing has a review process that punishes guesswork. We build Veeva content to the platform's rules so review cycles are about the message, not the markup.",
+        "Approved Email fragments, CLM presentations and Vault-ready assets, delivered tested and documented."
+      ],
+      "included": [
+        "Approved Email templates and fragments",
+        "CLM presentation build",
+        "Vault-ready packaging and metadata",
+        "Cross-device testing on iPad and desktop",
+        "Documentation for your MLR submission"
+      ],
+      "features": [
+        {
+          "title": "Approved Email",
+          "description": "Templates and fragments that behave correctly in Vault.",
+          "icon": "Mail"
+        },
+        {
+          "title": "CLM Presentations",
+          "description": "Interactive detail aids built for the rep's iPad.",
+          "icon": "Presentation"
+        },
+        {
+          "title": "Vault Ready",
+          "description": "Correct metadata and packaging from the first upload.",
+          "icon": "ShieldCheck"
+        },
+        {
+          "title": "MLR Friendly",
+          "description": "Built so review comments are about content, not rendering.",
+          "icon": "ClipboardCheck"
+        },
+        {
+          "title": "Tested",
+          "description": "Verified on the devices reps actually carry.",
+          "icon": "Smartphone"
+        },
+        {
+          "title": "Documented",
+          "description": "Handover notes your compliance team can follow.",
+          "icon": "FileText"
+        }
+      ],
+      "benefits": [
+        {
+          "title": "Shorter review cycles",
+          "description": "Fewer technical rejections means fewer rounds."
+        },
+        {
+          "title": "Reps stay on message",
+          "description": "Content that behaves predictably in the field."
+        },
+        {
+          "title": "Compliance confidence",
+          "description": "Built to the platform's rules, documented for audit."
+        },
+        {
+          "title": "Reusable assets",
+          "description": "Fragment libraries that serve many campaigns."
+        }
+      ],
+      "industries": [
+        "Pharma",
+        "Biotech",
+        "Medical devices",
+        "Healthcare"
+      ],
+      "deliverables": [
+        "Approved Email templates and fragments",
+        "CLM presentation build",
+        "Vault-ready packages with metadata",
+        "Device test report",
+        "MLR submission notes",
+        "Reusable fragment library"
+      ],
+      "timeline": [
+        {
+          "phase": "Week 1",
+          "title": "Scope",
+          "body": "Content inventory, template strategy and Vault requirements."
+        },
+        {
+          "phase": "Weeks 2–3",
+          "title": "Build",
+          "body": "Templates, fragments and CLM screens built to platform rules."
+        },
+        {
+          "phase": "Week 4",
+          "title": "Test",
+          "body": "Verified on the iPads reps actually carry, and in Vault."
+        },
+        {
+          "phase": "Week 5",
+          "title": "Submit",
+          "body": "Packaged with the documentation your MLR reviewers need."
+        }
+      ],
+      "stat": {
+        "value": "1 round",
+        "label": "typical MLR technical review"
+      },
+      "faqs": [
+        {
+          "q": "Do you need access to our Vault?",
+          "a": "It helps but is not essential. We can build and test locally, then hand over packages your team uploads."
+        },
+        {
+          "q": "Can you work with our MLR process?",
+          "a": "Yes. We build so review comments are about the message rather than about rendering, which is what shortens the cycle."
+        },
+        {
+          "q": "Do you do CLM as well as email?",
+          "a": "Both, and they share a fragment library so the field and inbox stay on the same message."
+        }
+      ]
+    },
+    {
+      "slug": "motion-video",
+      "number": "06",
+      "title": "Motion & Video",
+      "icon": "Video",
+      "blurb": "Short promos, UI demos and reels — simple and clean edits.",
+      "lead": "Motion that explains the product rather than decorating it.",
+      "tags": [
+        "Product Demos",
+        "Explainers",
+        "UI Motion",
+        "Reels",
+        "Sound Design"
+      ],
+      "overview": [
+        "Motion earns its place when it makes something clearer — how a product works, what just changed, where to look next.",
+        "We work from the same design system as the interface, so animation hands over to engineers as durations and easings rather than a video to eyeball."
+      ],
+      "included": [
+        "Script and storyboard",
+        "Style frames and animation direction",
+        "Full animation production",
+        "Sound design and mix",
+        "Interface motion spec for engineering"
+      ],
+      "features": [
+        {
+          "title": "Product Demos",
+          "description": "Short films that show the thing working.",
+          "icon": "Play"
+        },
+        {
+          "title": "Explainers",
+          "description": "Complex propositions in sixty seconds.",
+          "icon": "Video"
+        },
+        {
+          "title": "UI Motion",
+          "description": "Interface animation delivered as a timed spec.",
+          "icon": "MousePointerClick"
+        },
+        {
+          "title": "Social Reels",
+          "description": "Vertical cuts built for the feed, not cropped for it.",
+          "icon": "Smartphone"
+        },
+        {
+          "title": "Sound Design",
+          "description": "Music and effects licensed and mixed.",
+          "icon": "Music"
+        },
+        {
+          "title": "Source Files",
+          "description": "Project files handed over, not held hostage.",
+          "icon": "FolderOpen"
+        }
+      ],
+      "benefits": [
+        {
+          "title": "Clearer product story",
+          "description": "Showing beats telling on a landing page."
+        },
+        {
+          "title": "Consistent motion",
+          "description": "One vocabulary across film and interface."
+        },
+        {
+          "title": "Content that travels",
+          "description": "Every ratio you need, cut properly."
+        },
+        {
+          "title": "No lock-in",
+          "description": "You keep the source files and the licences."
+        }
+      ],
+      "industries": [
+        "SaaS",
+        "Consumer apps",
+        "Education",
+        "Fintech"
+      ],
+      "deliverables": [
+        "Master film in every ratio",
+        "Storyboard and style frames",
+        "Lottie or CSS interface animations",
+        "Motion spec sheet",
+        "Source project files",
+        "Music and sound licences"
+      ],
+      "timeline": [
+        {
+          "phase": "Week 1",
+          "title": "Script",
+          "body": "What it has to say, in what order, in how many seconds."
+        },
+        {
+          "phase": "Week 2",
+          "title": "Board",
+          "body": "Storyboard and style frames signed off before animation."
+        },
+        {
+          "phase": "Weeks 3–4",
+          "title": "Animate",
+          "body": "Production, sound design and review rounds."
+        },
+        {
+          "phase": "Week 5",
+          "title": "Ship",
+          "body": "Exports, interface specs and source files handed over."
+        }
+      ],
+      "stat": {
+        "value": "4–6",
+        "label": "weeks for a launch film"
+      },
+      "faqs": [
+        {
+          "q": "Do you write the script?",
+          "a": "Usually. You bring the proposition, we shape it into something that works in sixty seconds."
+        },
+        {
+          "q": "Can you animate our existing brand assets?",
+          "a": "Yes — that is often the point. We work from your system rather than inventing a parallel one."
+        },
+        {
+          "q": "Do we get the project files?",
+          "a": "Yes, along with the licences. Nothing is held hostage."
+        }
+      ]
+    }
+  ]
+}
