@@ -1,28 +1,20 @@
 import Link from "next/link";
+import { LogoMark } from "./LogoMark";
 import { cn } from "@/lib/cn";
 
 /**
- * Set as type rather than v1's logo.png: the PNG is white artwork on transparent, so it
- * disappears on a light background. This themes correctly and stays crisp at any size.
- * Swap for an SVG when the real mark is available.
+ * The real DotGrey wordmark, traced from public/logo.png into vector paths
+ * (scripts/trace-logo.mjs) and inlined so it can be themed.
+ *
+ * v1 shipped the PNG, whose neutral half is #444 — nearly invisible on the dark site and
+ * wrong again on the light one. Here that half is currentColor, so it follows the theme,
+ * and the warm half uses the brand token. It is also crisp at any size and does not wait
+ * for a webfont, which the previous type-set version did.
  */
 export function Logo({ className }: { className?: string }) {
   return (
-    <Link
-      href="/"
-      className={cn("group inline-flex items-center gap-2", className)}
-    >
-      <span
-        aria-hidden
-        className="size-2 rounded-full bg-accent transition-transform duration-400 group-hover:scale-125"
-      />
-      <span className="font-display text-[1.375rem] leading-none font-bold tracking-[0.04em] uppercase">
-        <span className="text-accent">Dot</span>
-        <span className="text-fg">Grey</span>
-        <span className="ml-1.5 align-top text-[0.5rem] font-semibold tracking-[0.28em] text-fg-subtle">
-          Digital
-        </span>
-      </span>
+    <Link href="/" className={cn("group inline-flex items-center", className)}>
+      <LogoMark className="h-7 w-auto text-fg transition-opacity duration-300 group-hover:opacity-80 md:h-8" />
     </Link>
   );
 }
