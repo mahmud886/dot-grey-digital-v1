@@ -114,6 +114,19 @@ inside one screen rather than as separate documents.
 2. Add a matching field to `keystatic.config.ts`.
 3. Read it in the component through `src/data/copy.ts` or the relevant `src/data/*.ts`.
 
-Steps 1 and 2 must agree — Keystatic writes exactly the shape its schema describes, so a
-field missing from the schema will be dropped from the file the next time an editor saves
-that screen.
+Steps 1 and 2 must agree, and the consequence of getting it wrong is worse than a dropped
+field: Keystatic validates the whole file before it renders the form, and treats any key the
+schema does not declare as a hard error. One undeclared key and the entry will not open at
+all — the editor sees `Field validation failed` where the form should be, with no way to
+edit their way out of it.
+
+So `npm run dev` and `npm run build` both run `scripts/check-content.mjs` first, which walks
+every singleton's schema against its JSON and fails with the offending path:
+
+```
+services.services[0].__probe — in the JSON, missing from keystatic.config.ts
+```
+
+Run it on its own with `npm run check:content`. It only flags keys the JSON has and the
+schema does not; the reverse is legal, since a field the content omits is filled from the
+schema's default.
