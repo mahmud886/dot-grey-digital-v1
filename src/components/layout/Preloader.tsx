@@ -1,0 +1,77 @@
+"use client";
+
+import { useEffect, useState } from "react";
+import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { cn } from "@/lib/cn";
+
+const SESSION_KEY = "dotgrey-preloader-seen";
+const DURATION = 1200;
+
+/** Shown once per session [1, 2]. Never renders under reduced motion. */
+export function Preloader() {
+  const reduced = useReducedMotion();
+  const [active, setActive] = useState(false);
+  const [progress, setProgress] = useState(0);
+  const [leaving, setLeaving] = useState(false);
+
+  useEffect(() => {
+    if (reduced) return;
+    try {
+      if (sessionStorage.getItem(SESSION_KEY)) return;
+      sessionStorage.setItem(SESSION_KEY, "1");
+    } catch {
+      /* storage blocked — still fine to show it once for this render */
+    }
+    setActive(true);
+  }, [reduced]);
+
+  useEffect(() => {
+    if (!active) return;
+    const start = performance.now();
+    let frame = requestAnimationFrame(function step(now) {
+      const t = Math.min((now - start) / DURATION, 1);
+      setProgress(Math.round(t * 100));
+      if (t < 1) frame = requestAnimationFrame(step);
+      else setLeaving(true);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [active]);
+
+  useEffect(() => {
+    if (!leaving) return;
+    const id = setTimeout(() => setActive(false), 900);
+    return () => clearTimeout(id);
+  }, [leaving]);
+
+  if (!active) return null;
+
+  return (
+    <div aria-hidden className="fixed inset-0 z-100">
+      {/* Orange sheet trailing the main panel as it wipes away. */}
+      <div
+        className={cn(
+          "absolute inset-0 bg-accent transition-[clip-path] delay-100 duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          leaving ? "[clip-path:inset(0_0_100%_0)]" : "[clip-path:inset(0_0_0_0)]",
+        )}
+      />
+      <div
+        className={cn(
+          "absolute inset-0 grid place-items-center bg-bg transition-[clip-path] duration-700 ease-[cubic-bezier(0.22,1,0.36,1)]",
+          leaving ? "[clip-path:inset(0_0_100%_0)]" : "[clip-path:inset(0_0_0_0)]",
+        )}
+      >
+        <div className="flex flex-col items-center gap-6">
+          <span className="font-display text-display-2 tabular-nums text-fg">
+            {String(progress).padStart(3, "0")}
+          </span>
+          <span className="block h-px w-40 overflow-hidden bg-line md:w-56">
+            <span
+              className="block h-full origin-left bg-accent"
+              style={{ transform: `scaleX(${progress / 100})` }}
+            />
+          </span>
+        </div>
+      </div>
+    </div>
+  );
+}
