@@ -6,6 +6,7 @@ import { PageHero } from "@/components/layout/PageHero";
 import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { Reveal, RevealGroup } from "@/components/ui/Reveal";
+import { SectionHeading } from "@/components/ui/SectionHeading";
 import { SplitText } from "@/components/ui/SplitText";
 import { getNextWork, getWorkBySlug, works } from "@/data/works";
 
@@ -29,7 +30,9 @@ export default async function WorkDetailPage({ params }: PageProps<"/works/[slug
   const meta = [
     { label: "Client", value: work.client },
     { label: "Year", value: work.year },
-    { label: "Category", value: work.category },
+    { label: "Duration", value: work.duration },
+    { label: "Team", value: work.team },
+    { label: "Our role", value: work.role },
     { label: "Services", value: work.services.join(", ") },
   ];
 
@@ -44,7 +47,7 @@ export default async function WorkDetailPage({ params }: PageProps<"/works/[slug
         ]}
         lead={work.summary}
         meta={
-          <dl className="mt-12 grid gap-8 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-4">
+          <dl className="mt-12 grid gap-8 border-t border-line pt-8 sm:grid-cols-2 lg:grid-cols-3">
             {meta.map((item) => (
               <div key={item.label}>
                 <dt className="font-display text-eyebrow font-semibold tracking-[0.18em] uppercase text-fg-subtle">
@@ -88,7 +91,7 @@ export default async function WorkDetailPage({ params }: PageProps<"/works/[slug
           <RevealGroup className="mt-16 grid gap-px overflow-hidden rounded-3xl border border-line bg-line md:mt-20 md:grid-cols-3">
             {work.stats.map((stat) => (
               <div key={stat.label} className="bg-bg p-8 md:p-9">
-                <p className="font-display text-h1 text-accent">{stat.value}</p>
+                <p className="font-display text-h1 uppercase text-accent">{stat.value}</p>
                 <p className="mt-3 text-fg-muted">{stat.label}</p>
               </div>
             ))}
@@ -98,6 +101,64 @@ export default async function WorkDetailPage({ params }: PageProps<"/works/[slug
 
       <Section spacing="lg" bg="elev" bordered>
         <Container>
+          <SectionHeading label="Approach" title="How we got there" />
+          <RevealGroup className="mt-14 md:mt-20">
+            {work.approach.map((step, i) => (
+              <div
+                key={step.title}
+                className="group grid gap-3 border-t border-line py-8 last:border-b md:grid-cols-[auto_1fr_2fr] md:items-baseline md:gap-10"
+              >
+                <span className="font-display text-sm text-accent">
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+                <h3 className="font-display text-h2 text-fg transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:group-hover:translate-x-2">
+                  {step.title}
+                </h3>
+                <p className="text-fg-muted">{step.body}</p>
+              </div>
+            ))}
+          </RevealGroup>
+
+          <div className="mt-16 grid gap-12 md:mt-24 lg:grid-cols-[7fr_5fr] lg:gap-20">
+            <Reveal>
+              <h2 className="font-display text-h2 text-fg">What we delivered</h2>
+              <ul className="mt-6 flex flex-col gap-3">
+                {work.deliverables.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-fg-muted">
+                    <span className="mt-1 grid size-5 shrink-0 place-items-center rounded-full bg-accent">
+                      <svg aria-hidden viewBox="0 0 20 20" className="size-3 text-accent-fg" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                        <path d="m4 10.5 4 4 8-9" />
+                      </svg>
+                    </span>
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <h2 className="font-display text-h2 text-fg">Tools</h2>
+              <ul className="mt-6 flex flex-wrap gap-2.5">
+                {work.tools.map((tool) => (
+                  <li
+                    key={tool}
+                    className="rounded-full border border-line px-4 py-2 font-display text-eyebrow font-semibold tracking-[0.14em] uppercase text-fg-muted"
+                  >
+                    {tool}
+                  </li>
+                ))}
+              </ul>
+
+              <h2 className="mt-10 font-display text-h2 text-fg">Outcome</h2>
+              <p className="mt-5 text-body-lg text-fg-muted">{work.outcome}</p>
+            </Reveal>
+          </div>
+        </Container>
+      </Section>
+
+      <Section spacing="lg">
+        <Container>
+          <SectionHeading label="Gallery" title="A closer look" className="mb-14 md:mb-20" />
           <RevealGroup className="grid gap-6 md:grid-cols-2">
             {work.gallery.map((src, i) => (
               <div

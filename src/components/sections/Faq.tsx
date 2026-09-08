@@ -34,7 +34,7 @@ export function Faq({
             <SplitText as="h2" text={copy.title} className="mt-5 block font-display text-h1 text-fg" />
 
             <Reveal delay={0.1} className="card-glass mt-9 rounded-3xl p-8">
-              <p className="font-display text-h3 text-fg">{copy.cardTitle}</p>
+              <p className="font-display text-h3 uppercase text-fg">{copy.cardTitle}</p>
               <p className="mt-3 text-fg-muted">{copy.cardBody}</p>
               <Magnetic className="mt-7">
                 <ButtonLink href="/contact" arrow>

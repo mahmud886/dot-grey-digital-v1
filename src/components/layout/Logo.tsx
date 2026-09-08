@@ -18,7 +18,7 @@ export function Logo({ className }: { className?: string }) {
         aria-hidden
         className="size-2 rounded-full bg-accent transition-transform duration-400 group-hover:scale-125"
       />
-      <span className="font-display text-[1.375rem] leading-none font-extrabold tracking-[-0.02em] uppercase">
+      <span className="font-display text-[1.375rem] leading-none font-bold tracking-[0.04em] uppercase">
         <span className="text-accent">Dot</span>
         <span className="text-fg">Grey</span>
         <span className="ml-1.5 align-top text-[0.5rem] font-semibold tracking-[0.28em] text-fg-subtle">

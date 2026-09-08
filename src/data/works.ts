@@ -1,6 +1,7 @@
 import data from "@/content/works.json";
 
 export type WorkStat = { value: string; label: string };
+export type ApproachStep = { title: string; body: string };
 export type WorkCategory = "UI/UX" | "Web" | "Email" | "Branding";
 
 export type Work = {
@@ -18,6 +19,13 @@ export type Work = {
   solution: string;
   stats: WorkStat[];
   quote: { text: string; author: string; role: string };
+  duration: string;
+  team: string;
+  role: string;
+  tools: string[];
+  deliverables: string[];
+  approach: ApproachStep[];
+  outcome: string;
 };
 
 export const workCategories: string[] = data.categories;

@@ -137,7 +137,7 @@ function StackCard({ service, active }: { service: Service; active: boolean }) {
       />
       {/* Styled as a heading but not one: this sits directly under the page h1, and a
           real h3 here would skip a level in the document outline. */}
-      <p className="font-display text-h2 leading-tight text-accent-strong">{service.title}</p>
+      <p className="font-display text-h2 leading-tight uppercase text-accent-strong">{service.title}</p>
       <p className="max-w-xs text-sm leading-relaxed text-neutral-600">{service.blurb}</p>
     </Link>
   );
@@ -150,7 +150,7 @@ function StaticCard({ service }: { service: Service }) {
       className="card-glass flex flex-col gap-4 rounded-3xl p-6 transition-colors duration-300 hover:border-accent"
     >
       <AnimatedIcon name={service.icon} size="sm" />
-      <p className="font-display text-h3 text-fg">{service.title}</p>
+      <p className="font-display text-h3 uppercase text-fg">{service.title}</p>
       <p className="text-sm text-fg-muted">{service.blurb}</p>
     </Link>
   );

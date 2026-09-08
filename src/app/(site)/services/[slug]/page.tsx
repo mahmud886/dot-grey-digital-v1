@@ -118,7 +118,7 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
             {service.deliverables.map((item) => (
               <div key={item} className="flex items-center gap-4 bg-bg p-7">
                 <span aria-hidden className="size-2 shrink-0 rounded-full bg-accent" />
-                <p className="font-display text-h3 text-fg">{item}</p>
+                <p className="font-display text-h3 uppercase text-fg">{item}</p>
               </div>
             ))}
           </RevealGroup>

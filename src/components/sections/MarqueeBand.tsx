@@ -11,13 +11,13 @@ export function MarqueeBand() {
         items={items}
         speed={38}
         outlined
-        className="font-display text-display-2 leading-none font-bold"
+        className="font-display text-display-2 leading-none font-semibold tracking-[0.02em]"
       />
       <Marquee
         items={items}
         speed={50}
         direction="right"
-        className="mt-2 font-display text-display-2 leading-none font-bold text-fg/10 md:mt-4"
+        className="mt-2 font-display text-display-2 leading-none font-semibold tracking-[0.02em] text-fg/10 md:mt-4"
       />
     </Section>
   );
