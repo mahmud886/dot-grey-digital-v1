@@ -1,4 +1,4 @@
-import { DialogCancel } from "@/components/keystatic/DialogCancel";
+import { DialogCloseButton } from "@/components/keystatic/DialogCloseButton";
 
 /**
  * The CMS renders its own full-page UI, so it opts out of the site's chrome. Site pages
@@ -8,7 +8,7 @@ export default function KeystaticLayout({ children }: LayoutProps<"/keystatic">)
   return (
     <>
       {children}
-      <DialogCancel />
+      <DialogCloseButton />
     </>
   );
 }

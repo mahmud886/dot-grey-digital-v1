@@ -111,18 +111,13 @@ inside one screen rather than as separate documents.
 ## Editing a list item
 
 Clicking a row in any list opens an **Edit item** dialog. Keystatic ships that dialog with
-**Done** as its only control, and Done does not "save" — it just closes. Everything you type
-is already in the form the moment you type it, and nothing reaches the files until you press
-**Save** at the top of the screen.
+**Done** as its only control, so a dialog you opened by mistake has no obvious way out. There
+is now a **×** in its top-right corner that closes it.
 
-That dialog now has a second button:
-
-- **Cancel** — puts the fields back the way you found them, then closes. It appears on simple
-  items (a single value, or a set of plain text fields).
-- **Close** — just closes, changing nothing back. It appears where a full revert is not
-  possible: items containing their own lists, or an image.
-
-If you see **Close** and want to undo what you did, leave the screen without pressing Save.
+Closing is all it does, and that is all it needs to do: everything you type in that dialog is
+already in the form the moment you type it, and Done does not commit anything either. Neither
+button touches the content files — nothing is written until you press **Save** at the top of
+the screen behind. To throw away a set of edits, leave the screen without saving.
 
 ## Adding a new editable field
 
