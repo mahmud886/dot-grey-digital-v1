@@ -14,6 +14,7 @@ Scope documents for the animated rebuild of the DotGrey Digital website, on the
 | [06-cms.md](06-cms.md) | The `/keystatic` CMS — what is editable and how it is wired |
 | [07-cms-setup.md](07-cms-setup.md) | Click-by-click guide to turning the CMS on for the team |
 
+
 ## What changes from v1
 
 v1 is a solid static layout. v2 keeps its identity — the orange, the warm gradient, the

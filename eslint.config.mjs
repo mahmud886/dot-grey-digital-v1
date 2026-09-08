@@ -12,8 +12,6 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
-    // v1 sources kept locally while the v2 rebuild is in progress; deleted when it lands.
-    "_v1-reference/**",
   ]),
 ]);
 

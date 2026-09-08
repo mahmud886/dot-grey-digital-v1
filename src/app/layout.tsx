@@ -4,18 +4,23 @@ import { site } from "@/data/site";
 import { ThemeScript } from "@/components/layout/ThemeScript";
 import "./globals.css";
 
+// Only the weights the design actually uses: 500 (nav), 600 (buttons and eyebrows),
+// 700 (headings) and 800 (logo and footer wordmark). Every extra weight is another
+// font file on the critical path.
 const kanit = Kanit({
   variable: "--font-kanit",
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600", "700", "800"],
+  weight: ["500", "600", "700", "800"],
+  preload: true,
 });
 
 const roboto = Roboto({
   variable: "--font-roboto",
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "700"],
+  weight: ["400", "500", "600"],
+  preload: true,
 });
 
 export const metadata: Metadata = {

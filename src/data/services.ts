@@ -2,6 +2,8 @@ import data from "@/content/services.json";
 
 export type Feature = { title: string; description: string; icon: string };
 export type Benefit = { title: string; description: string };
+export type TimelinePhase = { phase: string; title: string; body: string };
+export type ServiceFaq = { q: string; a: string };
 
 export type Service = {
   slug: string;
@@ -17,6 +19,10 @@ export type Service = {
   features: Feature[];
   benefits: Benefit[];
   industries: string[];
+  deliverables: string[];
+  timeline: TimelinePhase[];
+  stat: { value: string; label: string };
+  faqs: ServiceFaq[];
 };
 
 export const services: Service[] = data.services;

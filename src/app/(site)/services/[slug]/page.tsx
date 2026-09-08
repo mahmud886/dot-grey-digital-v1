@@ -6,7 +6,8 @@ import { Container } from "@/components/ui/Container";
 import { Section } from "@/components/ui/Section";
 import { SectionHeading } from "@/components/ui/SectionHeading";
 import { Reveal, RevealGroup } from "@/components/ui/Reveal";
-import { Icon } from "@/components/ui/Icon";
+import { FeatureCard } from "@/components/ui/FeatureCard";
+import { Accordion } from "@/components/ui/Accordion";
 import { ProcessSteps } from "@/components/sections/ProcessSteps";
 import { ProjectForm } from "@/components/sections/ProjectForm";
 import { getServiceBySlug, services } from "@/data/services";
@@ -43,7 +44,14 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
         ]}
         lead={service.lead}
         meta={
-          <ul className="mt-8 flex flex-wrap gap-2.5">
+          <>
+            <p className="mt-10 flex flex-wrap items-baseline gap-3">
+              <span className="font-display text-display-2 leading-none text-accent">
+                {service.stat.value}
+              </span>
+              <span className="text-fg-muted">{service.stat.label}</span>
+            </p>
+            <ul className="mt-8 flex flex-wrap gap-2.5">
             {service.tags.map((tag) => (
               <li
                 key={tag}
@@ -51,8 +59,9 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
               >
                 {tag}
               </li>
-            ))}
-          </ul>
+              ))}
+            </ul>
+          </>
         }
       />
 
@@ -95,14 +104,45 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
         <Container>
           <SectionHeading label="Capabilities" title="What you get" />
           <RevealGroup className="mt-14 grid gap-6 md:mt-20 md:grid-cols-2 lg:grid-cols-3">
-            {service.features.map((feature) => (
-              <article key={feature.title} className="card-glass rounded-3xl p-8">
-                <span className="grid size-12 place-items-center rounded-2xl bg-accent-dim text-accent">
-                  <Icon name={feature.icon} className="size-6" />
+            {service.features.map((feature, i) => (
+              <FeatureCard key={feature.title} feature={feature} seed={i} />
+            ))}
+          </RevealGroup>
+        </Container>
+      </Section>
+
+      <Section spacing="lg">
+        <Container>
+          <SectionHeading label="Deliverables" title="What lands in your hands" />
+          <RevealGroup className="mt-14 grid gap-px overflow-hidden rounded-3xl border border-line bg-line md:mt-20 md:grid-cols-2 lg:grid-cols-3">
+            {service.deliverables.map((item) => (
+              <div key={item} className="flex items-center gap-4 bg-bg p-7">
+                <span aria-hidden className="size-2 shrink-0 rounded-full bg-accent" />
+                <p className="font-display text-h3 text-fg">{item}</p>
+              </div>
+            ))}
+          </RevealGroup>
+        </Container>
+      </Section>
+
+      <Section spacing="lg" bg="elev" bordered>
+        <Container>
+          <SectionHeading label="Timeline" title="How the weeks actually run" />
+          <RevealGroup className="mt-14 md:mt-20">
+            {service.timeline.map((phase, i) => (
+              <div
+                key={phase.phase}
+                className="group grid gap-3 border-t border-line py-8 last:border-b md:grid-cols-[auto_1fr_2fr] md:items-baseline md:gap-10"
+              >
+                <span className="font-display text-eyebrow font-semibold tracking-[0.18em] uppercase text-accent">
+                  {phase.phase}
                 </span>
-                <h3 className="mt-6 font-display text-h3 text-fg">{feature.title}</h3>
-                <p className="mt-3 text-fg-muted">{feature.description}</p>
-              </article>
+                <h3 className="font-display text-h2 text-fg transition-transform duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] md:group-hover:translate-x-2">
+                  {phase.title}
+                </h3>
+                <p className="text-fg-muted">{phase.body}</p>
+                <span className="sr-only">Step {i + 1}</span>
+              </div>
             ))}
           </RevealGroup>
         </Container>
@@ -149,6 +189,28 @@ export default async function ServiceDetailPage({ params }: PageProps<"/services
         label="Process"
         title={`How a ${service.title.toLowerCase()} engagement runs`}
       />
+
+      <Section spacing="lg" bg="elev" bordered>
+        <Container>
+          <div className="grid gap-12 lg:grid-cols-[5fr_7fr] lg:gap-20">
+            <div className="lg:sticky lg:top-28 lg:self-start">
+              <SectionHeading
+                label="Questions"
+                title={`About ${service.title.toLowerCase()}`}
+              />
+            </div>
+            <Reveal delay={0.05}>
+              <Accordion
+                items={service.faqs.map((faq, i) => ({
+                  id: `${service.slug}-faq-${i}`,
+                  question: faq.q,
+                  answer: faq.a,
+                }))}
+              />
+            </Reveal>
+          </div>
+        </Container>
+      </Section>
 
       <Section spacing="lg">
         <Container>

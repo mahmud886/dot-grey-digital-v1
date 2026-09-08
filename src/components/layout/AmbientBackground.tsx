@@ -34,10 +34,13 @@ export function AmbientBackground() {
     <div aria-hidden className="pointer-events-none fixed inset-0 -z-10 overflow-hidden">
       <div className="absolute inset-0 bg-[var(--amb-base)]" />
 
+      {/* Radial gradients already fall off softly, so the blur filter is mostly redundant
+          on small screens where compositing three large blurred layers is expensive. The
+          third layer is desktop-only for the same reason. */}
       <div ref={ref} className="absolute inset-[-15%]">
-        <div className="absolute top-[8%] left-[55%] h-[70%] w-[80%] animate-[amb-drift-1_22s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(closest-side,var(--amb-1),transparent_70%)] blur-3xl" />
-        <div className="absolute top-[35%] left-[-10%] h-[80%] w-[90%] animate-[amb-drift-2_26s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(closest-side,var(--amb-2),transparent_70%)] blur-3xl" />
-        <div className="absolute top-[60%] left-[20%] h-[65%] w-[75%] animate-[amb-drift-3_18s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(closest-side,var(--amb-3),transparent_70%)] blur-3xl" />
+        <div className="absolute top-[8%] left-[55%] h-[70%] w-[80%] animate-[amb-drift-1_22s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(closest-side,var(--amb-1),transparent_70%)] lg:blur-3xl" />
+        <div className="absolute top-[35%] left-[-10%] h-[80%] w-[90%] animate-[amb-drift-2_26s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(closest-side,var(--amb-2),transparent_70%)] lg:blur-3xl" />
+        <div className="absolute top-[60%] left-[20%] hidden h-[65%] w-[75%] animate-[amb-drift-3_18s_ease-in-out_infinite_alternate] rounded-full bg-[radial-gradient(closest-side,var(--amb-3),transparent_70%)] lg:block lg:blur-3xl" />
       </div>
 
       <div

@@ -33,7 +33,7 @@ export default function ServicesPage() {
           <h2 className="sr-only">All services</h2>
           <RevealGroup className="grid gap-6 md:grid-cols-2">
             {services.map((service, i) => (
-              <ServiceCard key={service.slug} service={service} featured={i === 1} />
+              <ServiceCard key={service.slug} service={service} featured={i === 1} seed={i} />
             ))}
           </RevealGroup>
         </Container>

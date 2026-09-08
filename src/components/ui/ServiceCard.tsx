@@ -1,15 +1,18 @@
 import Link from "next/link";
-import { Icon } from "./Icon";
+import { AnimatedIcon } from "./AnimatedIcon";
 import type { Service } from "@/data/services";
 import { cn } from "@/lib/cn";
 
 export function ServiceCard({
   service,
   featured = false,
+  seed = 0,
   className,
 }: {
   service: Service;
   featured?: boolean;
+  /** Offsets the icon's idle animation so neighbouring cards do not pulse in unison. */
+  seed?: number;
   className?: string;
 }) {
   return (
@@ -25,16 +28,15 @@ export function ServiceCard({
       )}
     >
       <div className="flex items-start justify-between gap-4">
-        <span
+        <AnimatedIcon
+          name={service.icon}
+          seed={seed}
+          ring
           className={cn(
-            "grid size-14 place-items-center rounded-2xl transition-colors duration-400",
-            featured
-              ? "bg-accent-fg text-accent-strong"
-              : "bg-accent-dim text-accent group-hover:bg-accent group-hover:text-accent-fg",
+            "transition-colors duration-400",
+            featured && "bg-accent-fg from-accent-fg to-accent-fg text-accent-strong",
           )}
-        >
-          <Icon name={service.icon} className="size-7" />
-        </span>
+        />
         <span
           className={cn(
             "font-display text-sm",

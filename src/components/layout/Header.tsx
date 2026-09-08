@@ -28,7 +28,7 @@ export function Header() {
         className={cn(
           "fixed inset-x-0 top-0 z-80 transition-[transform,background-color,backdrop-filter,border-color] duration-400",
           scrolled
-            ? "border-b border-line bg-bg/80 backdrop-blur-xl"
+            ? "border-b border-line bg-bg/95 lg:bg-bg/80 lg:backdrop-blur-xl"
             : "border-b border-transparent bg-transparent",
           direction === "down" && !menuOpen ? "-translate-y-full" : "translate-y-0",
         )}

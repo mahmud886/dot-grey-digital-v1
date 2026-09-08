@@ -8,7 +8,7 @@ import { SplitText } from "@/components/ui/SplitText";
 import { Reveal } from "@/components/ui/Reveal";
 import { ButtonLink } from "@/components/ui/Button";
 import { Magnetic } from "@/components/ui/Magnetic";
-import { Icon } from "@/components/ui/Icon";
+import { AnimatedIcon } from "@/components/ui/AnimatedIcon";
 import { gsap, useGSAP } from "@/lib/gsap";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { sections } from "@/data/copy";
@@ -120,11 +120,15 @@ export function FeatureRows() {
                     aria-hidden
                     className="absolute size-[min(80%,340px)] rounded-full bg-[radial-gradient(closest-side,var(--accent),transparent_70%)] opacity-40 blur-2xl"
                   />
-                  <span
-                    data-tile
-                    className="relative grid size-32 place-items-center rounded-[2rem] bg-gradient-to-br from-accent to-accent-strong shadow-2xl shadow-accent/30 md:size-40"
-                  >
-                    <Icon name={row.icon} className="size-14 text-accent-fg md:size-16" strokeWidth={1.5} />
+                  <span data-tile className="relative">
+                    <AnimatedIcon
+                      name={row.icon}
+                      seed={i * 2 + 1}
+                      size="lg"
+                      variant="solid"
+                      ring
+                      className="size-32 rounded-[2rem] shadow-2xl shadow-accent/30 md:size-40 [&>svg]:size-14 md:[&>svg]:size-16"
+                    />
                   </span>
                 </div>
               </div>

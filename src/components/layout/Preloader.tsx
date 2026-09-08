@@ -2,20 +2,28 @@
 
 import { useEffect, useState } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
+import { useIsDesktop } from "@/hooks/useMediaQuery";
 import { cn } from "@/lib/cn";
 
 const SESSION_KEY = "dotgrey-preloader-seen";
-const DURATION = 1200;
+// Kept short: while this sheet is up it is the largest painted element, so every
+// millisecond here is added directly to LCP.
+const DURATION = 900;
 
-/** Shown once per session [1, 2]. Never renders under reduced motion. */
+/**
+ * Shown once per session [1, 2]. Never renders under reduced motion, and never on small
+ * screens — a full-screen sheet is the largest contentful paint while it is up, and phones
+ * are where that costs the most.
+ */
 export function Preloader() {
   const reduced = useReducedMotion();
+  const isDesktop = useIsDesktop();
   const [active, setActive] = useState(false);
   const [progress, setProgress] = useState(0);
   const [leaving, setLeaving] = useState(false);
 
   useEffect(() => {
-    if (reduced) return;
+    if (reduced || !isDesktop) return;
     try {
       if (sessionStorage.getItem(SESSION_KEY)) return;
       sessionStorage.setItem(SESSION_KEY, "1");
@@ -23,7 +31,7 @@ export function Preloader() {
       /* storage blocked — still fine to show it once for this render */
     }
     setActive(true);
-  }, [reduced]);
+  }, [reduced, isDesktop]);
 
   useEffect(() => {
     if (!active) return;

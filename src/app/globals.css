@@ -231,3 +231,30 @@
   from { transform: translate3d(0, 0, 0) scale(1); }
   to { transform: translate3d(4%, 6%, 0) scale(1.22); }
 }
+
+/* --- Icon life [46] ------------------------------------------------------
+   Small, slow, offset loops so a grid of icons never pulses in unison. */
+@keyframes icon-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+@keyframes icon-glow {
+  0%, 100% { opacity: 0.35; transform: scale(0.92); }
+  50% { opacity: 0.85; transform: scale(1.12); }
+}
+
+@keyframes icon-float {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-6px) rotate(2deg); }
+}
+
+@keyframes icon-blink {
+  0%, 92%, 100% { opacity: 1; }
+  95% { opacity: 0.35; }
+}
+
+@keyframes ring-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
