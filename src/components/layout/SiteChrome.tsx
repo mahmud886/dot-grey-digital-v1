@@ -7,6 +7,7 @@ import { Cursor } from "./Cursor";
 import { Preloader } from "./Preloader";
 import { Header } from "./Header";
 import { Footer } from "./Footer";
+import { PageTransition } from "./PageTransition";
 import { site } from "@/data/site";
 
 const organizationJsonLd = {
@@ -46,7 +47,7 @@ export function SiteChrome({ children }: { children: ReactNode }) {
           </a>
           <Header />
           <main id="main" className="flex-1">
-            {children}
+            <PageTransition>{children}</PageTransition>
           </main>
           <Footer />
         </SmoothScroll>

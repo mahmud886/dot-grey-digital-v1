@@ -300,3 +300,50 @@
     animation: none;
   }
 }
+
+/* --- Page transitions [44] ---------------------------------------------------
+   A sheet wipes up over the outgoing page and the incoming content rises into place.
+   Driven by CSS so the exit can start on the click, before the next route's JS has
+   loaded. */
+@keyframes sheet-cover {
+  from { transform: scaleY(0); }
+  to { transform: scaleY(1); }
+}
+
+@keyframes sheet-reveal {
+  from { transform: scaleY(1); }
+  to { transform: scaleY(0); }
+}
+
+@keyframes page-enter {
+  from { opacity: 0; transform: translate3d(0, 18px, 0); }
+  to { opacity: 1; transform: none; }
+}
+
+.page-sheet {
+  position: fixed;
+  inset: 0;
+  z-index: 95;
+  pointer-events: none;
+  transform-origin: bottom;
+  transform: scaleY(0);
+  background: var(--accent);
+}
+
+.page-sheet[data-state="covering"] {
+  animation: sheet-cover 0.42s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+
+.page-sheet[data-state="revealing"] {
+  transform-origin: top;
+  animation: sheet-reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+.page-enter {
+  animation: page-enter 0.55s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-sheet { display: none; }
+  .page-enter { animation: none; }
+}
