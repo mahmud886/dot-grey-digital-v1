@@ -49,8 +49,12 @@ write access to the repository; saving creates a commit and the host rebuilds th
    into `.env` for you**.
 4. Install that app on the repository when GitHub offers.
 5. Copy all five values into your host's environment variables and redeploy.
-6. Give each team member **Write** access to the repository. CMS access is repository
-   access — remove someone from the repo and they lose the CMS too.
+6. Make the GitHub App **public** (app settings → Advanced). GitHub creates it private, and
+   a private app on a personal account can only be signed into by its owner.
+7. Invite each team member as a **collaborator** on the repository. CMS access is
+   repository access — remove someone from the repo and they lose the CMS too. The full
+   walkthrough, including what to send the person you invite, is Step 8 of
+   `docs/07-cms-setup.md`.
 
 The five variables, in plain terms:
 

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Kanit, Roboto } from "next/font/google";
 import { site } from "@/data/site";
+import { siteUrl } from "@/lib/site-url";
 import { ThemeScript } from "@/components/layout/ThemeScript";
 import "./globals.css";
 
@@ -24,7 +25,7 @@ const roboto = Roboto({
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL(site.url),
+  metadataBase: new URL(siteUrl),
   title: {
     default: `${site.name} — ${site.tagline}`,
     template: `%s — ${site.name}`,
@@ -38,14 +39,15 @@ export const metadata: Metadata = {
     "banner ads",
     "Veeva",
   ],
-  // No title/description here on purpose. Metadata objects are merged field by field, so a
-  // title set at this level is inherited whole by every child route — every case study and
-  // article would share a link preview reading "DotGrey Digital". Left unset, Next fills
-  // og:title and og:description from each page's own title and description.
+  // No title, description or url here on purpose. Metadata objects are merged field by
+  // field, so anything set at this level is inherited whole by every child route. A title
+  // made every case study share as "DotGrey Digital"; a url made every page claim to be the
+  // homepage, and Facebook follows og:url and scrapes *that* page — so every shared link
+  // previewed as the homepage regardless of its own card. Left unset, og:title and
+  // og:description come from each page, and platforms use the link that was actually shared.
   openGraph: {
     type: "website",
     siteName: site.name,
-    url: site.url,
   },
   twitter: { card: "summary_large_image" },
 };

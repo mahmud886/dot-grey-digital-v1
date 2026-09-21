@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { site } from "@/data/site";
+import { siteUrl } from "@/lib/site-url";
 import { services } from "@/data/services";
 import { works } from "@/data/works";
 import { team } from "@/data/team";
@@ -34,10 +34,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticPaths.map(({ path, priority }) => ({
-      url: `${site.url}${path}`,
+      url: `${siteUrl}${path}`,
       lastModified: now,
       priority,
     })),
-    ...dynamicPaths.map((path) => ({ url: `${site.url}${path}`, lastModified: now, priority: 0.6 })),
+    ...dynamicPaths.map((path) => ({ url: `${siteUrl}${path}`, lastModified: now, priority: 0.6 })),
   ];
 }

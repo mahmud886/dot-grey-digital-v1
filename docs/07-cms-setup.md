@@ -81,6 +81,9 @@ On the Keystatic Setup screen:
 
 GitHub then sends you back to your local site automatically.
 
+The app starts out **private**, which is fine while you are the only editor. Before anyone
+else can sign in you will need to make it public — see Step 8a.
+
 ## Step 4 — Let Keystatic write the values
 
 You do not copy anything by hand here. On the way back, Keystatic **appends four lines to
@@ -116,7 +119,7 @@ Stop the dev server and start it again, so it picks up the new `.env`:
 npm run dev
 ```
 
-Open http://localhost:3220/keystatic again. It should now show **Sign in with GitHub**.
+Open http://localhost:3220/keystatic again. It moves itself to `127.0.0.1` — that is expected — and should now show **Log in with GitHub**.
 Sign in, make a small edit, and save — the change should appear as a commit in the
 repository on GitHub.
 
@@ -141,14 +144,76 @@ deployments). Then **redeploy** — environment variables only take effect on a 
 
 ## Step 8 — Give the team access
 
-CMS access *is* repository access. There is no separate user list to manage.
+CMS access *is* repository access. There is no separate user list to manage: whoever can
+push to the repository can sign in to the CMS, and nobody else can.
 
-For each team member: GitHub → your repository → **Settings** → **Collaborators** →
-**Add people** → their GitHub username → give them **Write** access. They accept the email
-invitation, then go to `https://your-domain.com/keystatic`, click **Sign in with GitHub**,
-and they are in.
+### 8a. Make the app public (once)
 
-To remove someone, remove them from the repository. Their CMS access disappears with it.
+GitHub creates apps as **private**, and a private app owned by a personal account can only
+be signed into by its owner. Until you change this, your teammates will be stopped by GitHub
+at the sign-in step, however the rest is set up.
+
+GitHub → **Settings** → **Developer settings** → **GitHub Apps** → your app → **Advanced**
+→ **Make public**.
+
+"Public" sounds more alarming than it is. It means anyone *may install the app on their own
+account* — which gives them access to their own repositories, not to yours. Access to this
+repository is decided entirely by 8b. The alternative is moving the repository and the app
+into a GitHub organisation, which also works but is a much bigger change.
+
+### 8b. Invite someone
+
+1. Open the repository on GitHub → **Settings**.
+2. In the left sidebar, under **Access**, click **Collaborators**. GitHub may ask for your
+   password again.
+3. Click **Add people**.
+4. Type their GitHub username, full name or email, and pick them from the list.
+5. Click **Add *name* to this repository**.
+
+GitHub emails them an invitation. **Nothing works for them until they accept it.**
+
+There is no role to pick. On a repository owned by a personal account, every collaborator
+gets the same access: they can read and push to the repository, but cannot change its
+settings or invite anyone else.
+
+> **Know what you are giving.** That access is not limited to content. A collaborator can
+> push code, not just edit through the CMS. Invite people you would trust with the codebase.
+> If you ever need content-only access, the repository has to move to a GitHub organisation,
+> where roles can be set per person.
+
+### 8c. What the person you invited does
+
+Send them this.
+
+**Once, the first time:**
+
+1. If you do not have a GitHub account, make one at **github.com/signup** (free).
+2. Open the invitation email from GitHub and click **Accept invitation**. It also appears
+   at **github.com/notifications**.
+3. Go to **https://your-domain.com/keystatic**.
+4. Click **Log in with GitHub**, then **Authorize** on the screen GitHub shows.
+
+**Every time after that:**
+
+1. Go to **https://your-domain.com/keystatic**.
+2. Pick what you want to change from the left-hand menu.
+3. Edit, then click **Save**.
+4. The live site updates about a minute or two later.
+
+There is nothing to install and no code to run — only a browser. The editing rules (what is
+safe to change, what is not) are in `docs/06-cms.md`, readable on the site at `/docs`.
+
+Two things to tell them plainly:
+
+- **Save publishes.** There is no draft or approval step; saved changes go live on the next
+  build.
+- **Nothing is permanent.** Every save is a commit with their name on it, so any change can
+  be seen and undone from the repository's history.
+
+### 8d. Removing someone
+
+Repository → **Settings** → **Collaborators** → **Remove** next to their name. Their CMS
+access disappears at the same moment.
 
 ---
 
@@ -209,19 +274,28 @@ must, go to **https://github.com/settings/apps/new** and set:
 | **GitHub App name** | Anything unique, e.g. `DotGrey Digital CMS` |
 | **Homepage URL** | `https://your-domain.com/keystatic` |
 | **Callback URL** | `https://your-domain.com/api/keystatic/github/oauth/callback` |
-| **Add a second callback URL** | `http://localhost:3220/api/keystatic/github/oauth/callback` — so the CMS also works on your machine |
+| **Add a second callback URL** | `http://127.0.0.1:3220/api/keystatic/github/oauth/callback` — so the CMS also works on your machine. It must be `127.0.0.1`, not `localhost`: in GitHub mode Keystatic redirects `localhost` to `127.0.0.1` and sends that address to GitHub, which compares it character for character |
 | **Request user authorization (OAuth) during installation** | ticked |
 | **Webhook → Active** | unticked |
 | **Repository permissions → Contents** | Read and write |
 | **Repository permissions → Metadata** | Read-only |
 | **Repository permissions → Pull requests** | Read-only |
-| **Where can this app be installed?** | Only on this account |
+| **Where can this app be installed?** | **Any account** — otherwise only you can sign in; see Step 8a for why this is safe |
 
 Create it, then generate a client secret and copy it immediately. Generate
 `KEYSTATIC_SECRET` yourself with `openssl rand -hex 40`. Then install the app on the
 repository, as in Step 5.
 
 ## Troubleshooting
+
+**`/keystatic` is a blank page on your machine, with nothing in the console.**
+The dev server is refusing the browser. In GitHub mode Keystatic moves you from `localhost`
+to `127.0.0.1`, and the Next 16 dev server blocks dev resources from origins it does not
+recognise — so the page's JavaScript never starts. The dev server's terminal says so:
+`Blocked cross-origin request to Next.js dev resource /_next/hmr from "127.0.0.1"`. The fix
+is `allowedDevOrigins: ["127.0.0.1"]` in `next.config.ts`, which is already there; if you
+see this, check it has not been removed, then restart the dev server. Live sites are not
+affected.
 
 **`/keystatic` shows a 404 on the live site.**
 `NEXT_PUBLIC_KEYSTATIC_GITHUB_REPO` is not set in the host's environment variables, or the
@@ -240,8 +314,15 @@ address people actually visit, including `https://` and no trailing slash. You c
 it later at GitHub → **Settings** → **Developer settings** → **GitHub Apps** → your app →
 **Callback URL**.
 
+**A teammate cannot sign in, but you can.**
+Nearly always one of two things. Either the app is still private (Step 8a), or they have not
+accepted the invitation yet (Step 8b) — a pending invite grants nothing. They can find it at
+**github.com/notifications**.
+
 **An editor can sign in but cannot save.**
-They have Read access to the repository, not Write.
+They are not a collaborator on this repository — check that the invitation was accepted and
+that it was for this repository and not another one.
+
 
 **You need to start over.**
 Delete the app at GitHub → **Settings** → **Developer settings** → **GitHub Apps**, remove

@@ -9,12 +9,13 @@ import { Header } from "./Header";
 import { Footer } from "./Footer";
 import { PageTransition } from "./PageTransition";
 import { site } from "@/data/site";
+import { siteUrl } from "@/lib/site-url";
 
 const organizationJsonLd = {
   "@context": "https://schema.org",
   "@type": "Organization",
   name: site.name,
-  url: site.url,
+  url: siteUrl,
   description: site.description,
   email: site.email,
   telephone: site.phone,
