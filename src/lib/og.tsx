@@ -22,6 +22,19 @@ const FG = "#ffffff";
 const MUTED = "#a09a95";
 const ACCENT = "#ff5a3c";
 
+/**
+ * The corner glow, as an SVG image rather than a CSS radial-gradient. Satori's CSS gradient
+ * support ignores the size keyword and never fades to its transparent stop, so the glow came
+ * out as a lit rectangle with hard edges. resvg renders an SVG radialGradient correctly.
+ */
+const glow = (color: string, opacity: number) =>
+  `data:image/svg+xml;base64,${Buffer.from(
+    `<svg xmlns="http://www.w3.org/2000/svg" width="760" height="760"><defs><radialGradient id="g">` +
+      `<stop offset="0" stop-color="${color}" stop-opacity="${opacity}"/>` +
+      `<stop offset="1" stop-color="${color}" stop-opacity="0"/>` +
+      `</radialGradient></defs><circle cx="380" cy="380" r="380" fill="url(#g)"/></svg>`,
+  ).toString("base64")}`;
+
 const fontPath = (file: string) => join(process.cwd(), "src/assets/fonts", file);
 
 async function displayFonts() {
@@ -73,18 +86,8 @@ export async function shareCard({ eyebrow, title, description, footer }: ShareCa
         }}
       >
         {/* The accent bloom the site's hero carries, flattened to a static gradient. */}
-        <div
-          style={{
-            position: "absolute",
-            top: -260,
-            right: -200,
-            width: 760,
-            height: 760,
-            borderRadius: 999,
-            background: "radial-gradient(circle, rgba(255,90,60,0.30) 0%, rgba(255,90,60,0) 68%)",
-            display: "flex",
-          }}
-        />
+        {/* eslint-disable-next-line @next/next/no-img-element -- Satori renders <img>, not next/image */}
+        <img src={glow("#ff5a3c", 0.30)} width={760} height={760} alt="" style={{ position: "absolute", top: -280, right: -220 }} />
 
         <div style={{ display: "flex", alignItems: "center", gap: 14, fontSize: 26, letterSpacing: 5 }}>
           <div style={{ width: 14, height: 14, borderRadius: 999, background: ACCENT, display: "flex" }} />
