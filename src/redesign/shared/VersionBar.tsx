@@ -1,6 +1,9 @@
 import Link from "next/link";
 import { versions } from "@/redesign/content";
 
+// Inline colours, because prototype CSS modules (unlayered) can override Tailwind utilities on links.
+const DIM = "rgb(255 255 255 / 0.7)";
+
 /** Small floating switcher so reviewers can hop between prototypes of the same set. */
 export function VersionBar({ current }: { current: string }) {
   const set = versions.find((v) => v.id === current)?.set;
@@ -10,7 +13,7 @@ export function VersionBar({ current }: { current: string }) {
       className="fixed bottom-3 left-1/2 z-[100] flex -translate-x-1/2 items-center gap-1 rounded-full bg-black/80 p-1 text-[11px] font-medium tracking-wide text-white shadow-lg backdrop-blur"
       style={{ fontFamily: "ui-sans-serif, system-ui, sans-serif" }}
     >
-      <Link href="/versions" className="rounded-full px-3 py-1.5 text-white/70 hover:text-white">
+      <Link href="/versions" className="rounded-full px-3 py-1.5 text-white/70 hover:text-white" style={{ color: DIM }}>
         All
       </Link>
       {versions
@@ -21,6 +24,7 @@ export function VersionBar({ current }: { current: string }) {
             href={`/${v.id}`}
             title={v.name}
             aria-current={v.id === current ? "page" : undefined}
+            style={v.id === current ? { background: "#fff", color: "#000" } : { color: DIM }}
             className={
               v.id === current
                 ? "rounded-full bg-white px-2.5 py-1.5 text-black"
