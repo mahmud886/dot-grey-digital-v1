@@ -1,0 +1,62 @@
+/* Shared theme plumbing for the prototypes. Each design owns its palette; this file only
+   holds the accent options (so one switch recolours every design) and the transition. */
+
+/* Accent ------------------------------------------------------------------
+   Designs read var(--dg-accent, <their ink>) and var(--dg-accent-ink, <their paper>).
+   "mono" defines nothing, so every design falls back to pure black and white. */
+[data-accent="orange"] { --dg-accent: #e8501c; --dg-accent-ink: #ffffff; }
+[data-theme="dark"][data-accent="orange"] { --dg-accent: #ff7440; --dg-accent-ink: #120a06; }
+
+[data-accent="blue"] { --dg-accent: #2449f0; --dg-accent-ink: #ffffff; }
+[data-theme="dark"][data-accent="blue"] { --dg-accent: #7a95ff; --dg-accent-ink: #060a1c; }
+
+[data-accent="lime"] { --dg-accent: #4f7a00; --dg-accent-ink: #ffffff; }
+[data-theme="dark"][data-accent="lime"] { --dg-accent: #c6f432; --dg-accent-ink: #0d1200; }
+
+[data-accent="violet"] { --dg-accent: #6a3df0; --dg-accent-ink: #ffffff; }
+[data-theme="dark"][data-accent="violet"] { --dg-accent: #a98bff; --dg-accent-ink: #0e0820; }
+
+/* Theme transition ----------------------------------------------------------
+   With View Transitions the new theme is revealed by a clip-path circle (ThemeToggle);
+   the default cross-fade is switched off so only the circle moves. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+/* Fallback for browsers without View Transitions: a short colour fade. */
+html.dg-theme-fade,
+html.dg-theme-fade *,
+html.dg-theme-fade *::before,
+html.dg-theme-fade *::after {
+  transition:
+    background-color 0.4s ease,
+    color 0.4s ease,
+    border-color 0.4s ease,
+    fill 0.4s ease,
+    stroke 0.4s ease !important;
+}
+
+/* Toggle icon: sun when dark (tap for light), moon when light. */
+.dg-theme-icon {
+  position: relative;
+  display: inline-grid;
+  width: 1.15em;
+  height: 1.15em;
+}
+
+.dg-theme-icon svg {
+  grid-area: 1 / 1;
+  width: 100%;
+  height: 100%;
+  transition:
+    opacity 0.35s ease,
+    transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+[data-theme="dark"] .dg-moon,
+:not([data-theme="dark"]) > body .dg-sun {
+  opacity: 0;
+  transform: rotate(-60deg) scale(0.6);
+}

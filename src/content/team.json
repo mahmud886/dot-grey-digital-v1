@@ -1,0 +1,106 @@
+{
+  "team": [
+    {
+      "slug": "arif-hasan",
+      "name": "Arif Hasan",
+      "role": "Founder & Design Director",
+      "portrait": "/img/team/arif-hasan.svg",
+      "bio": [
+        "Started DotGrey in 2019 after seven years split between a network agency and an in-house product team, which is where the studio's dislike of account layers comes from.",
+        "Leads creative direction and still runs the first workshop on every engagement."
+      ],
+      "skills": [
+        { "label": "Creative Direction", "value": 95 },
+        { "label": "Product Design", "value": 90 },
+        { "label": "Brand Strategy", "value": 88 },
+        { "label": "Client Facilitation", "value": 92 }
+      ],
+      "socials": [{ "label": "LinkedIn", "href": "#" }, { "label": "Dribbble", "href": "#" }]
+    },
+    {
+      "slug": "nusrat-jahan",
+      "name": "Nusrat Jahan",
+      "role": "Lead UI/UX Designer",
+      "portrait": "/img/team/nusrat-jahan.svg",
+      "bio": [
+        "Runs research and interface design across product engagements, and the usability sessions that keep the studio honest about its own assumptions.",
+        "Led the accessibility work on Medicove, which is now the reference the whole team designs against."
+      ],
+      "skills": [
+        { "label": "UI Design", "value": 94 },
+        { "label": "User Research", "value": 90 },
+        { "label": "Design Systems", "value": 91 },
+        { "label": "Accessibility", "value": 93 }
+      ],
+      "socials": [{ "label": "LinkedIn", "href": "#" }, { "label": "Behance", "href": "#" }]
+    },
+    {
+      "slug": "tanvir-ahmed",
+      "name": "Tanvir Ahmed",
+      "role": "Lead Engineer",
+      "portrait": "/img/team/tanvir-ahmed.svg",
+      "bio": [
+        "Owns architecture across every build — Next.js, TypeScript, headless CMS, and the CI that stops a heavy hero image reaching production.",
+        "Set the studio's performance budgets and enforces them in review, which has made a few designers grumpy and every client faster."
+      ],
+      "skills": [
+        { "label": "Next.js / React", "value": 96 },
+        { "label": "TypeScript", "value": 93 },
+        { "label": "Performance", "value": 92 },
+        { "label": "Infrastructure", "value": 84 }
+      ],
+      "socials": [{ "label": "LinkedIn", "href": "#" }, { "label": "X", "href": "#" }]
+    },
+    {
+      "slug": "mahdi-rahman",
+      "name": "Mahdi Rahman",
+      "role": "Email & Veeva Specialist",
+      "portrait": "/img/team/mahdi-rahman.svg",
+      "bio": [
+        "Builds the email and Veeva work, and knows exactly which Outlook version will break which layout before anyone has to find out the hard way.",
+        "Maintains the studio's module library, which is why a campaign now takes an hour instead of a day."
+      ],
+      "skills": [
+        { "label": "Email Development", "value": 96 },
+        { "label": "Veeva / Vault", "value": 90 },
+        { "label": "Cross-client QA", "value": 94 },
+        { "label": "Automation", "value": 80 }
+      ],
+      "socials": [{ "label": "LinkedIn", "href": "#" }]
+    },
+    {
+      "slug": "sadia-islam",
+      "name": "Sadia Islam",
+      "role": "Motion Designer",
+      "portrait": "/img/team/sadia-islam.svg",
+      "bio": [
+        "Handles everything that moves — launch films, product demos, and the interface motion specs that hand over to engineering as numbers rather than a reference video.",
+        "Storyboards on paper before opening anything, which saves a surprising amount of time."
+      ],
+      "skills": [
+        { "label": "Motion Design", "value": 95 },
+        { "label": "Interface Motion", "value": 90 },
+        { "label": "3D", "value": 78 },
+        { "label": "Sound Design", "value": 74 }
+      ],
+      "socials": [{ "label": "LinkedIn", "href": "#" }, { "label": "Behance", "href": "#" }]
+    },
+    {
+      "slug": "rifat-khan",
+      "name": "Rifat Khan",
+      "role": "Project Manager",
+      "portrait": "/img/team/rifat-khan.svg",
+      "bio": [
+        "Keeps engagements on schedule and clients well informed, without becoming a layer between them and the people doing the work.",
+        "Writes the weekly follow-ups everyone actually reads, and flags schedule risk in writing before it becomes a problem."
+      ],
+      "skills": [
+        { "label": "Project Delivery", "value": 93 },
+        { "label": "Client Communication", "value": 95 },
+        { "label": "Resourcing", "value": 88 },
+        { "label": "Process Design", "value": 82 }
+      ],
+      "socials": [{ "label": "LinkedIn", "href": "#" }]
+    }
+  ]
+}

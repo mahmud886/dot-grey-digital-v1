@@ -1,0 +1,102 @@
+{
+  "benefits": [
+    { "title": "Flexible hours", "body": "Core overlap from 11am to 4pm. The rest is yours to arrange." },
+    { "title": "Remote-friendly", "body": "Work from the studio, from home, or somewhere in between." },
+    { "title": "Learning budget", "body": "An annual budget for courses, conferences and books, with no approval theatre." },
+    { "title": "Health cover", "body": "Private health cover for you and immediate family, from day one." }
+  ],
+  "jobs": [
+    {
+      "slug": "senior-ui-ux-designer",
+      "title": "Senior UI/UX Designer",
+      "department": "Design",
+      "location": "Dhaka / Remote",
+      "type": "Full-time",
+      "summary": "Own product engagements end to end — research, flows, interface design and the component library that ships with them.",
+      "responsibilities": [
+        "Lead design on two to three engagements at a time",
+        "Run research sessions and turn findings into decisions",
+        "Build and maintain component libraries with real states",
+        "Present and defend work directly to clients",
+        "Mentor two designers on the team"
+      ],
+      "requirements": [
+        "Five or more years designing digital products",
+        "A portfolio of shipped work, not concepts",
+        "Fluency in Figma and design-system practice",
+        "Comfortable running a client workshop alone",
+        "Working knowledge of accessibility standards"
+      ],
+      "niceToHave": ["Front-end experience", "Motion design skills", "Agency background", "Regulated-industry experience"]
+    },
+    {
+      "slug": "frontend-engineer",
+      "title": "Frontend Engineer",
+      "department": "Engineering",
+      "location": "Remote",
+      "type": "Full-time",
+      "summary": "Build fast, accessible front-ends in Next.js and TypeScript, and help keep our performance budgets honest.",
+      "responsibilities": [
+        "Build client projects in Next.js and TypeScript",
+        "Translate design systems into component libraries",
+        "Keep Core Web Vitals inside agreed budgets",
+        "Review pull requests and raise the bar",
+        "Integrate headless CMS platforms and third-party APIs"
+      ],
+      "requirements": [
+        "Three or more years with React in production",
+        "Strong TypeScript and modern CSS",
+        "Real accessibility experience, not just an audit tool",
+        "Comfortable owning a build from setup to launch",
+        "Clear written communication — much of the team is remote"
+      ],
+      "niceToHave": ["Next.js App Router", "GSAP or WebGL", "E-commerce builds", "Open-source contributions"]
+    },
+    {
+      "slug": "email-developer",
+      "title": "Email Developer",
+      "department": "Production",
+      "location": "Dhaka",
+      "type": "Full-time",
+      "summary": "Hand-build responsive email and Veeva content that renders correctly everywhere it lands.",
+      "responsibilities": [
+        "Hand-code responsive email templates",
+        "Test across major clients, devices and dark mode",
+        "Build and maintain modular template libraries",
+        "Produce Veeva Approved Email and CLM content",
+        "Document handover for client ESP teams"
+      ],
+      "requirements": [
+        "Two or more years building production email",
+        "Deep familiarity with Outlook and Gmail quirks",
+        "Comfortable with table-based layout and MSO conditionals",
+        "Experience with at least one major ESP",
+        "Careful, methodical QA habits"
+      ],
+      "niceToHave": ["Veeva Vault experience", "Klaviyo or HubSpot", "Automation scripting", "Accessibility in email"]
+    },
+    {
+      "slug": "motion-designer",
+      "title": "Motion Designer",
+      "department": "Design",
+      "location": "Remote",
+      "type": "Contract",
+      "summary": "Produce launch films, product demos and interface motion, and write the specs engineering builds from.",
+      "responsibilities": [
+        "Storyboard and animate client films",
+        "Design interface motion and hand over timed specs",
+        "Direct sound design and music selection",
+        "Maintain the studio's motion guidelines",
+        "Work alongside designers from the concept stage"
+      ],
+      "requirements": [
+        "Three or more years in motion design",
+        "A reel showing narrative work, not just loops",
+        "After Effects fluency and clean project hygiene",
+        "Experience exporting Lottie or CSS-ready animation",
+        "Available for an initial six-month contract"
+      ],
+      "niceToHave": ["3D in Blender or Cinema 4D", "Sound design", "Illustration", "Live-action editing"]
+    }
+  ]
+}

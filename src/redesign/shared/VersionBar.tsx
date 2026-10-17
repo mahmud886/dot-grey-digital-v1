@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { versions } from "@/redesign/content";
+import { ReviewControls } from "./ReviewControls";
 
 // Inline colours, because prototype CSS modules (unlayered) can override Tailwind utilities on links.
 const DIM = "rgb(255 255 255 / 0.7)";
@@ -34,6 +35,7 @@ export function VersionBar({ current }: { current: string }) {
             {v.id.toUpperCase()}
           </Link>
         ))}
+      {set === "mono" && <ReviewControls />}
     </nav>
   );
 }

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Kanit, Roboto } from "next/font/google";
 import { site } from "@/data/site";
 import { siteUrl } from "@/lib/site-url";
-import { ThemeScript } from "@/components/layout/ThemeScript";
+import { ThemeScript } from "@/redesign/shared/ThemeScript";
 import "./globals.css";
 
 // Only the weights the design actually uses: 500 (nav), 600 (buttons and eyebrows),

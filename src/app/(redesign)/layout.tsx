@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import "@/redesign/shared/theme.css";
 
 // Prototypes for review, not part of the public site: keep them out of search results.
 export const metadata: Metadata = {

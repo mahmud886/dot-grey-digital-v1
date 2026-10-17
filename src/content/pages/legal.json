@@ -1,0 +1,27 @@
+{
+  "privacy": {
+    "title": "Privacy Policy",
+    "updated": "8 September 2026",
+    "notice": "Placeholder text. This page needs legal review before launch.",
+    "blocks": [
+      { "heading": "What we collect", "paragraphs": ["When you submit a project brief or a job application we collect the details you give us: your name, email address, company, budget range, timeline and message. We do not collect special-category data and we do not ask for payment details through this site."], "bullets": [] },
+      { "heading": "How we use it", "paragraphs": ["We use it to reply to you and, if we work together, to deliver the engagement. We do not sell your data and we do not use it for advertising."], "bullets": [] },
+      { "heading": "Analytics", "paragraphs": ["We measure aggregate traffic to understand which pages are useful. No individual visitor is identified from analytics data."], "bullets": [] },
+      { "heading": "How long we keep it", "paragraphs": ["Project briefs are kept for two years. Job applications are kept for twelve months unless you ask us to delete them sooner."], "bullets": [] },
+      { "heading": "Your rights", "paragraphs": [], "bullets": ["Ask for a copy of the data we hold about you", "Ask us to correct anything inaccurate", "Ask us to delete it", "Object to how we are using it"] },
+      { "heading": "Contact", "paragraphs": ["For anything on this page, write to us at the address below."], "bullets": [] }
+    ]
+  },
+  "terms": {
+    "title": "Terms of Use",
+    "updated": "8 September 2026",
+    "notice": "Placeholder text. This page needs legal review before launch.",
+    "blocks": [
+      { "heading": "Using this site", "paragraphs": ["You may browse and share this site freely. You may not copy its design, code or written content for commercial use without written permission."], "bullets": [] },
+      { "heading": "Our work", "paragraphs": ["Case studies are published with client permission. Project imagery and copy remain the property of the respective clients and of DotGrey Digital."], "bullets": [] },
+      { "heading": "Enquiries", "paragraphs": ["Nothing on this site is a binding offer. Pricing shown is indicative; the terms of an engagement are set out in a separate written agreement."], "bullets": [] },
+      { "heading": "Liability", "paragraphs": ["We publish this site in good faith but make no warranty that it is error-free or continuously available. We are not liable for decisions taken solely on the basis of information published here."], "bullets": [] },
+      { "heading": "Contact", "paragraphs": ["Questions about these terms go to the address below."], "bullets": [] }
+    ]
+  }
+}

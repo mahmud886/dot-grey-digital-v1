@@ -10,9 +10,18 @@ import { works, getWorkBySlug, getNextWork, type Work } from "@/data/works";
 import { stats } from "@/data/stats";
 import { testimonials } from "@/data/testimonials";
 import { offices, site } from "@/data/site";
+import { posts, postCategories, getPostBySlug, getRelatedPosts, formatPostDate, type Post, type PostBlock } from "@/data/insights";
+import { jobs, benefits, getJobBySlug, type Job } from "@/data/jobs";
+import { team, getMemberBySlug, type Member } from "@/data/team";
+import { faqs, faqCategories } from "@/data/faq";
+import { values } from "@/data/values";
+import { legalPages } from "@/data/legal";
 
 export { works, getWorkBySlug, getNextWork, stats, testimonials, site, offices };
-export type { Work };
+// Carried over from the previous site for the full-page prototypes (about, insights, careers, FAQ, legal).
+export { posts, postCategories, getPostBySlug, getRelatedPosts, formatPostDate, jobs, benefits, getJobBySlug };
+export { team, getMemberBySlug, faqs, faqCategories, values, legalPages };
+export type { Work, Post, PostBlock, Job, Member };
 
 export type Discipline = {
   id: string;
