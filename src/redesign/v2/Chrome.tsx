@@ -49,7 +49,7 @@ export function Colophon() {
           <span className={s.caps}>Colophon</span>
           <br />
           Set in Newsreader and Libre Franklin. Printed on the internet from Dhaka, Bangladesh. Prototype v2 —{" "}
-          <Link href="/versions" style={{ borderBottom: "1px solid currentColor" }}>
+          <Link href="/" style={{ borderBottom: "1px solid currentColor" }}>
             compare all versions
           </Link>
           .

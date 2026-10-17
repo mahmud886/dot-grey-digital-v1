@@ -177,7 +177,7 @@ export default function V3Home() {
               <a href={`mailto:${site.email}`} className={s.cta}>
                 {site.email} →
               </a>
-              <Link href="/contact" className={s.ctaGhost}>
+              <Link href="mailto:hello@dotgreydigital.com" className={s.ctaGhost}>
                 Fill in the brief form
               </Link>
             </div>

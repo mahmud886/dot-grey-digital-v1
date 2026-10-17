@@ -14,7 +14,7 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
             {site.email}
           </a>
           <div className={s.footCtas}>
-            <Link href="/contact" className={s.pillLight}>
+            <Link href="mailto:hello@dotgreydigital.com" className={s.pillLight}>
               Start a project →
             </Link>
             <a href={`mailto:${site.email}?subject=Hello`} className={s.pillGhost}>
@@ -52,7 +52,7 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
       <div className={s.footBar}>
         <span>© {new Date().getFullYear()} DotGrey Digital</span>
         <span>
-          Prototype v8 · <Link href="/versions">All versions</Link>
+          Prototype v8 · <Link href="/">All versions</Link>
         </span>
       </div>
     </footer>

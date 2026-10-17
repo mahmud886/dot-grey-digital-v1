@@ -28,7 +28,7 @@ export function Footer() {
       <div>
         <div className={s.footLinks}>
           <a href={`mailto:${site.email}`}>{site.email}</a>
-          <Link href="/versions">All versions</Link>
+          <Link href="/">All versions</Link>
           <span>Dhaka / Remote</span>
         </div>
         <p className={s.label} style={{ marginTop: "1rem", color: "#9a9a9a" }}>

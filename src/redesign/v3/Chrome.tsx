@@ -57,7 +57,7 @@ export function Footer() {
           <div>
             <small>Sheet</small>
             Prototype v3 —{" "}
-            <Link href="/versions" style={{ textDecoration: "underline" }}>
+            <Link href="/" style={{ textDecoration: "underline" }}>
               all versions
             </Link>
           </div>

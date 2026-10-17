@@ -515,8 +515,8 @@ export function WorkReel({ items }: { items: Work[] }) {
             </div>
           </Link>
         ))}
-        <Link href="/works" className={`${s.card} ${s.cardAll}`}>
-          <span>All work</span>
+        <Link href="mailto:hello@dotgreydigital.com" className={`${s.card} ${s.cardAll}`}>
+          <span>Yours next?</span>
           <span aria-hidden="true">→</span>
         </Link>
       </div>

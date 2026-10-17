@@ -93,7 +93,7 @@ export function Footer() {
             <ul>
               <li>V9 — Index</li>
               <li>
-                <Link href="/versions">All versions</Link>
+                <Link href="/">All versions</Link>
               </li>
               <li>Not indexed by search engines</li>
             </ul>

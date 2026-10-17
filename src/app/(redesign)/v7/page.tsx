@@ -251,7 +251,7 @@ export default function V7Home() {
                 <a href={`mailto:${site.email}`} className={s.btnSoft}>
                   {site.email}
                 </a>
-                <Link href="/contact" className={s.btnSoft}>
+                <Link href="mailto:hello@dotgreydigital.com" className={s.btnSoft}>
                   Send a brief
                 </Link>
               </div>

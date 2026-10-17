@@ -108,7 +108,7 @@ export function Footer() {
               <a href={`mailto:${site.email}`}>{site.email}</a>
             </li>
             <li>
-              <Link href="/versions">All prototypes ↗</Link>
+              <Link href="/">All prototypes ↗</Link>
             </li>
             <li>© {new Date().getFullYear()} DotGrey Digital</li>
           </ul>

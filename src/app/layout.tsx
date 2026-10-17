@@ -27,18 +27,10 @@ const roboto = Roboto({
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${site.name} — ${site.tagline}`,
+    default: `${site.name} — Redesign Lab`,
     template: `%s — ${site.name}`,
   },
-  description: site.description,
-  keywords: [
-    "digital agency",
-    "UI/UX design",
-    "web development",
-    "email templates",
-    "banner ads",
-    "Veeva",
-  ],
+  description: "Twelve redesign directions for DotGrey Digital: design, software, automation, data and machine learning.",
   // No title, description or url here on purpose. Metadata objects are merged field by
   // field, so anything set at this level is inherited whole by every child route. A title
   // made every case study share as "DotGrey Digital"; a url made every page claim to be the
@@ -64,7 +56,6 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       <head>
         <ThemeScript />
       </head>
-      {/* Site chrome lives in (site)/layout.tsx so /keystatic can opt out of it. */}
       <body>{children}</body>
     </html>
   );

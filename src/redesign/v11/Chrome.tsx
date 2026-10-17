@@ -76,7 +76,7 @@ export function Footer() {
               <Link href="/v11#process">Process</Link>
             </li>
             <li>
-              <Link href="/versions">All prototypes</Link>
+              <Link href="/">All prototypes</Link>
             </li>
           </ul>
         </div>

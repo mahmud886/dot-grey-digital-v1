@@ -26,7 +26,7 @@ export function Footer() {
         <BrandMark href="/v6" ink="#14123a" accent="#6b4dff" className={s.logo} />
         <a href={`mailto:${site.email}`}>{site.email}</a>
         <span>Dhaka · Remote</span>
-        <Link href="/versions" style={{ textDecoration: "underline" }}>
+        <Link href="/" style={{ textDecoration: "underline" }}>
           All versions
         </Link>
         <span>© {new Date().getFullYear()} DotGrey Digital · v6 Spatial</span>

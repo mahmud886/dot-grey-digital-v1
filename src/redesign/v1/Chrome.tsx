@@ -60,7 +60,7 @@ export function Footer() {
           <ul>
             <li>v1 — Signal</li>
             <li>
-              <Link href="/versions">Compare all versions</Link>
+              <Link href="/">Compare all versions</Link>
             </li>
             <li>© {new Date().getFullYear()} DotGrey Digital</li>
           </ul>

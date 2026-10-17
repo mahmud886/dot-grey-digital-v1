@@ -192,7 +192,7 @@ export default function V2Home() {
                 <a href={`mailto:${site.email}`}>{site.email}</a>
               </p>
               <p style={{ marginTop: "1.25rem" }}>
-                <Link href="/contact" className={`${s.btnInk} ${s.caps}`}>
+                <Link href="mailto:hello@dotgreydigital.com" className={`${s.btnInk} ${s.caps}`}>
                   Send a brief
                 </Link>
               </p>

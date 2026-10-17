@@ -109,7 +109,7 @@ export default function V6Home() {
                 <a href={`mailto:${site.email}`} className={s.pill}>
                   {site.email}
                 </a>
-                <Link href="/contact" className={s.pillGlass}>
+                <Link href="mailto:hello@dotgreydigital.com" className={s.pillGlass}>
                   Send a brief
                 </Link>
               </div>

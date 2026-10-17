@@ -107,7 +107,7 @@ export default function V4Home() {
             <a href={`mailto:${site.email}`} className={s.bigBtn}>
               {site.email}
             </a>
-            <Link href="/contact" className={s.bigBtn} style={{ background: "transparent", color: "#0a0a0a" }}>
+            <Link href="mailto:hello@dotgreydigital.com" className={s.bigBtn} style={{ background: "transparent", color: "#0a0a0a" }}>
               Send a brief
             </Link>
           </div>

@@ -24,7 +24,7 @@ export function Footer() {
       <span>© {new Date().getFullYear()} DotGrey Digital</span>
       <span>{offices[0].lines.join(", ")}</span>
       <a href={`mailto:${site.email}`}>{site.email}</a>
-      <Link href="/versions">All prototypes</Link>
+      <Link href="/">All prototypes</Link>
     </footer>
   );
 }

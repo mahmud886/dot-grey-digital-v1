@@ -137,7 +137,7 @@ export default function V1Home() {
                 <a href={`mailto:${site.email}`} className={s.btn}>
                   {site.email} <ArrowUpRight size={16} />
                 </a>
-                <Link href="/contact" className={s.btnGhost}>
+                <Link href="mailto:hello@dotgreydigital.com" className={s.btnGhost}>
                   Send a brief
                 </Link>
               </div>

@@ -158,7 +158,7 @@ export default function V12Home() {
             <a href={`mailto:${site.email}`} className={s.mail}>
               {site.email} <span aria-hidden="true">↗</span>
             </a>
-            <Link href="/contact" className={s.pill}>
+            <Link href="mailto:hello@dotgreydigital.com" className={s.pill}>
               Send a brief
             </Link>
           </div>

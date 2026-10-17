@@ -1,10 +1,6 @@
 import type { MetadataRoute } from "next";
-import { siteUrl } from "@/lib/site-url";
 
+// Design prototypes for review: keep the whole project out of search engines.
 export default function robots(): MetadataRoute.Robots {
-  return {
-    // /docs is the internal build reference, not marketing content.
-    rules: { userAgent: "*", allow: "/", disallow: "/docs" },
-    sitemap: `${siteUrl}/sitemap.xml`,
-  };
+  return { rules: { userAgent: "*", disallow: "/" } };
 }

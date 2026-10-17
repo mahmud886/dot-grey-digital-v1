@@ -28,7 +28,7 @@ export function Footer() {
       <div>guest@dotgrey:~$ logout</div>
       <div>
         [process exited with code 0] · {site.email} · prototype v5 ·{" "}
-        <Link href="/versions" style={{ textDecoration: "underline" }}>
+        <Link href="/" style={{ textDecoration: "underline" }}>
           all versions
         </Link>{" "}
         · © {new Date().getFullYear()} DotGrey Digital

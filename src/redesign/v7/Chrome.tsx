@@ -48,7 +48,7 @@ export function Footer() {
             <a href={`mailto:${site.email}`}>{site.email}</a>
           </p>
           <p style={{ marginTop: "1rem" }}>
-            <Link href="/versions" style={{ textDecoration: "underline" }}>
+            <Link href="/" style={{ textDecoration: "underline" }}>
               All prototypes
             </Link>{" "}
             · © {new Date().getFullYear()}

@@ -130,7 +130,7 @@ export default function V5Home() {
               <a href={`mailto:${site.email}`} className={s.btn}>
                 ▶ {site.email}
               </a>
-              <Link href="/contact" className={s.chip}>
+              <Link href="mailto:hello@dotgreydigital.com" className={s.chip}>
                 open brief form
               </Link>
             </div>
