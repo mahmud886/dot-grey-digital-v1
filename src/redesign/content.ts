@@ -1,5 +1,5 @@
 /**
- * Shared content for the redesign prototypes (/v1 – /v7).
+ * Shared content for the redesign prototypes (/v1 – /v12).
  *
  * Works, stats and testimonials come straight from the existing CMS content so every
  * version shows the same real material; only the service lineup is new, because the
@@ -114,6 +114,7 @@ export const featuredWorks = works.slice(0, 6);
 export const versions = [
   {
     id: "v1",
+    set: "colour",
     name: "Signal",
     idea: "AI/ML-first. Dark ink, neon lime, a living neural network.",
     signature: "Neural-network hero that reacts to the cursor, with live telemetry and a Pause button",
@@ -122,6 +123,7 @@ export const versions = [
   },
   {
     id: "v2",
+    set: "colour",
     name: "Editorial",
     idea: "A magazine. Cream paper, serif headlines, words that ink in as you read.",
     signature: "Local-time dateline and edition, scroll-inked manifesto, contents-page services",
@@ -130,6 +132,7 @@ export const versions = [
   },
   {
     id: "v3",
+    set: "colour",
     name: "Blueprint",
     idea: "Engineering drawings. Blueprint blue, self-drawing diagrams, a crosshair cursor.",
     signature: "Exploded system diagram you can hover, drafting crosshair, Gantt schedule",
@@ -138,6 +141,7 @@ export const versions = [
   },
   {
     id: "v4",
+    set: "colour",
     name: "Brutal",
     idea: "Raw and loud. Black, white and acid yellow, giant type, a pinned work reel.",
     signature: "Pinned horizontal work reel driven by scroll, VIEW cursor badge, scroll-linked band",
@@ -146,6 +150,7 @@ export const versions = [
   },
   {
     id: "v5",
+    set: "colour",
     name: "Terminal",
     idea: "A command line. Green phosphor, type commands, watch automations run.",
     signature: "Working shell (help, work, open …) and a step-by-step automation pipeline demo",
@@ -154,6 +159,7 @@ export const versions = [
   },
   {
     id: "v6",
+    set: "colour",
     name: "Spatial",
     idea: "Depth and glass. A live WebGL orb, cards that fly towards you.",
     signature: "WebGL iridescent orb with fallback and Pause, scroll-driven depth stack, tilt cards",
@@ -162,11 +168,57 @@ export const versions = [
   },
   {
     id: "v7",
+    set: "colour",
     name: "Warm Human",
     idea: "Friendly. Time-aware greeting, rounded shapes, a project scope planner.",
     signature: "Greeting in your time and Dhaka's, interactive scope planner that emails your plan",
     fonts: "Bricolage Grotesque + Figtree",
     palette: ["#fff6ec", "#2b1d14", "#ff6a2b", "#9cc5a1"],
+  },
+  {
+    id: "v8",
+    set: "mono",
+    name: "Wordmark",
+    idea: "The name is the hero. A full-width DOTGREY wordmark, black and white chapters, a site that says hello and bye.",
+    signature: "Time-aware \"Hello.\" greeting, pinned horizontal work reel, services that stack like a deck",
+    fonts: "Inter Tight + Bodoni Moda",
+    palette: ["#ffffff", "#0a0a0a", "#8f8f8f", "#e6e6e6"],
+  },
+  {
+    id: "v9",
+    set: "mono",
+    name: "Index",
+    idea: "A typographer's index. Text that decodes itself, work as giant type rows, glyphs set inline like words.",
+    signature: "Scramble-decode intro, work titles with a pixel-mosaic preview that follows the cursor",
+    fonts: "Gloock + Hanken Grotesk",
+    palette: ["#f7f7f5", "#0b0b0b", "#9a9a9a", "#d9d9d6"],
+  },
+  {
+    id: "v10",
+    set: "mono",
+    name: "Engine",
+    idea: "A world, not a page. Thousands of points re-form into each discipline as you scroll.",
+    signature: "Scroll-driven particle engine with a dot-matrix HUD, discipline filter and an ask box",
+    fonts: "Doto + Geist Mono",
+    palette: ["#000000", "#ffffff", "#5c5c5c", "#1a1a1a"],
+  },
+  {
+    id: "v11",
+    set: "mono",
+    name: "Grain",
+    idea: "Fashion-editorial. Uppercase grotesk on grain, the ● as punctuation, cursor badges that say what to do.",
+    signature: "Kinetic-type reel with WATCH REEL cursor, drag carousel with progress, case covers that flow on",
+    fonts: "Schibsted Grotesk",
+    palette: ["#f4f4f2", "#1e1e1e", "#7a7a78", "#cfcfcc"],
+  },
+  {
+    id: "v12",
+    set: "mono",
+    name: "Sculpture",
+    idea: "Calm and tactile. Paper and ink, an interactive line sculpture, an italic voice.",
+    signature: "Tap-to-shift wireframe sculpture with Pause, hairline service list, cards that straighten on hover",
+    fonts: "Onest + Cormorant Garamond",
+    palette: ["#eeede9", "#111111", "#6b6b68", "#d4d3ce"],
   },
 ] as const;
 

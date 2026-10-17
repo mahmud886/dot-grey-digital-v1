@@ -1,8 +1,9 @@
 import Link from "next/link";
 import { versions } from "@/redesign/content";
 
-/** Small floating switcher so reviewers can hop between prototypes. */
+/** Small floating switcher so reviewers can hop between prototypes of the same set. */
 export function VersionBar({ current }: { current: string }) {
+  const set = versions.find((v) => v.id === current)?.set;
   return (
     <nav
       aria-label="Redesign prototypes"
@@ -12,21 +13,23 @@ export function VersionBar({ current }: { current: string }) {
       <Link href="/versions" className="rounded-full px-3 py-1.5 text-white/70 hover:text-white">
         All
       </Link>
-      {versions.map((v) => (
-        <Link
-          key={v.id}
-          href={`/${v.id}`}
-          title={v.name}
-          aria-current={v.id === current ? "page" : undefined}
-          className={
-            v.id === current
-              ? "rounded-full bg-white px-2.5 py-1.5 text-black"
-              : "rounded-full px-2.5 py-1.5 text-white/70 hover:bg-white/15 hover:text-white"
-          }
-        >
-          {v.id.toUpperCase()}
-        </Link>
-      ))}
+      {versions
+        .filter((v) => v.set === set)
+        .map((v) => (
+          <Link
+            key={v.id}
+            href={`/${v.id}`}
+            title={v.name}
+            aria-current={v.id === current ? "page" : undefined}
+            className={
+              v.id === current
+                ? "rounded-full bg-white px-2.5 py-1.5 text-black"
+                : "rounded-full px-2.5 py-1.5 text-white/70 hover:bg-white/15 hover:text-white"
+            }
+          >
+            {v.id.toUpperCase()}
+          </Link>
+        ))}
     </nav>
   );
 }
