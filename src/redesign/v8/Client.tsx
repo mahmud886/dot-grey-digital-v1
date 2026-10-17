@@ -1,11 +1,14 @@
 "use client";
 
 import Link from "next/link";
-import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
+import { usePathname } from "next/navigation";
+import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { BrandMark } from "@/redesign/shared/BrandMark";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
 import { useMotion } from "@/redesign/shared/useMotion";
+import { ThemeToggle } from "@/redesign/shared/ThemeToggle";
+import { useTheme } from "@/redesign/shared/useTheme";
 import type { Work } from "@/redesign/content";
 import { variantFor } from "./art";
 import s from "./v8.module.css";
@@ -63,18 +66,37 @@ function Ticker() {
 }
 
 const LEFT = [
-  { href: "/v8#work", label: "Work" },
-  { href: "/v8#services", label: "Services" },
-  { href: "/v8#process", label: "Process" },
+  { href: "/v8/work", label: "Work" },
+  { href: "/v8/services", label: "Services" },
+  { href: "/v8/about", label: "About" },
 ];
 const RIGHT = [
-  { href: "/v8#about", label: "About" },
-  { href: "/v8#contact", label: "Contact" },
+  { href: "/v8/insights", label: "Insights" },
+  { href: "/v8/contact", label: "Contact" },
 ];
+const SHEET = [...LEFT, RIGHT[0], { href: "/v8/careers", label: "Careers" }, RIGHT[1]];
+
+/** "Light" or "Dark" — the mode you are in. Neutral until the pre-paint script's answer is read. */
+function ModeLabel() {
+  const theme = useTheme();
+  return <span className={s.motionText}>{theme === "dark" ? "Dark" : theme === "light" ? "Light" : "Mode"}</span>;
+}
+
+/** A pill like every other header control: a half-filled dot and the current mode. */
+export function ThemePill({ className }: { className?: string }) {
+  return (
+    <ThemeToggle className={className ?? s.pill}>
+      <span aria-hidden="true" className={s.modeDot} />
+      <ModeLabel />
+    </ThemeToggle>
+  );
+}
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const first = useRef<HTMLAnchorElement>(null);
+  const path = usePathname();
+  const current = (href: string) => (path === href || path.startsWith(`${href}/`) ? "page" : undefined);
 
   useEffect(() => {
     if (!open) return;
@@ -99,7 +121,7 @@ export function Header() {
           <BrandMark href="/v8" ink="#ffffff" accent="#8f8f8f" className={s.logo} />
           <nav aria-label="Main" className={s.pills}>
             {LEFT.map((l) => (
-              <Link key={l.label} href={l.href} className={s.pill}>
+              <Link key={l.label} href={l.href} className={s.pill} aria-current={current(l.href)}>
                 {l.label}
               </Link>
             ))}
@@ -109,11 +131,12 @@ export function Header() {
         <div className={`${s.cluster} ${s.clusterRight}`}>
           <nav aria-label="Secondary" className={s.pills}>
             {RIGHT.map((l) => (
-              <Link key={l.label} href={l.href} className={s.pill}>
+              <Link key={l.label} href={l.href} className={s.pill} aria-current={current(l.href)}>
                 {l.label}
               </Link>
             ))}
           </nav>
+          <ThemePill className={`${s.pill} ${s.headerMode}`} />
           <MotionToggle />
           <button type="button" className={`${s.pill} ${s.menuBtn}`} aria-expanded={open} aria-controls="v8-menu" onClick={() => setOpen(true)}>
             Menu
@@ -123,21 +146,32 @@ export function Header() {
 
       <div id="v8-menu" className={s.sheet} data-open={open} role="dialog" aria-modal="true" aria-label="Menu" hidden={!open}>
         <div className={s.sheetTop}>
-          <BrandMark href="/v8" ink="#ffffff" accent="#8f8f8f" className={s.logo} />
+          <BrandMark href="/v8" ink="var(--fg)" accent="var(--muted)" className={s.logo} />
           <button type="button" className={s.pill} onClick={() => setOpen(false)}>
             Close
           </button>
         </div>
         <nav aria-label="Menu" className={s.sheetLinks}>
-          {[...LEFT, ...RIGHT].map((l, k) => (
-            <Link key={l.label} ref={k === 0 ? first : undefined} href={l.href} onClick={() => setOpen(false)} style={{ ["--k" as string]: k }}>
-              {l.label}.
+          {SHEET.map((l, k) => (
+            <Link
+              key={l.label}
+              ref={k === 0 ? first : undefined}
+              href={l.href}
+              onClick={() => setOpen(false)}
+              aria-current={current(l.href)}
+              style={{ ["--k" as string]: k }}
+            >
+              {l.label}
+              <span className={s.stop}>.</span>
             </Link>
           ))}
         </nav>
         <div className={s.sheetFoot}>
           <span>Design · Software · Automation · Data · ML</span>
-          <MotionToggle />
+          <span className={s.sheetCtl}>
+            <ThemePill />
+            <MotionToggle />
+          </span>
         </div>
       </div>
     </>
@@ -204,7 +238,9 @@ export function Greeting() {
   const line = key ? lineFor(Number(day), Number(hour)) : "One studio for design, software, automation, data and machine learning.";
   return (
     <div className={s.greeting}>
-      <p className={s.hello}>Hello.</p>
+      <p className={s.hello}>
+        Hello<span className={s.stop}>.</span>
+      </p>
       <div className={s.greetSide}>
         <p className={s.greetLine}>{line}</p>
         <p className={s.greetMeta} suppressHydrationWarning>
@@ -229,10 +265,12 @@ const FIELD_WORDS = ["Design", "Software", "Automation", "Data", "ML"];
  * A field of dots that spells each discipline in turn, halftone-style. Dots swell around
  * the pointer. Stops on Pause and under reduced motion (shows the first word, still).
  */
-export function HalftoneField() {
+export function HalftoneField({ words = FIELD_WORDS, caption = "Six disciplines, one team.", compact = false }: { words?: string[]; caption?: string; compact?: boolean }) {
   const wrap = useRef<HTMLDivElement>(null);
   const canvas = useRef<HTMLCanvasElement>(null);
   const { paused } = useMotionCtx();
+  // Redraw in the new ink when the theme flips; the colour itself comes from CSS.
+  const theme = useTheme();
 
   useEffect(() => {
     const cv = canvas.current!;
@@ -248,11 +286,16 @@ export function HalftoneField() {
     let visible = true;
     const pointer = { x: -9999, y: -9999, k: 0 };
     const start = performance.now();
+    const ink = getComputedStyle(box).color;
 
     const build = () => {
       const dpr = Math.min(2, devicePixelRatio || 1);
       W = box.clientWidth;
       H = box.clientHeight;
+      if (!W || !H) {
+        masks = [];
+        return;
+      }
       cv.width = Math.round(W * dpr);
       cv.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -264,7 +307,7 @@ export function HalftoneField() {
       off.height = rows;
       const o = off.getContext("2d", { willReadFrequently: true })!;
       const family = getComputedStyle(cv).fontFamily;
-      masks = FIELD_WORDS.map((word) => {
+      masks = words.map((word) => {
         o.clearRect(0, 0, cols, rows);
         let size = rows * 0.62;
         o.font = `900 ${size}px ${family}`;
@@ -283,14 +326,15 @@ export function HalftoneField() {
     };
 
     const draw = (now: number) => {
+      if (!masks.length) return;
       const t = (now - start) / 1000;
       const hold = 2.6;
       const phase = paused ? 0 : t / hold;
-      const a = Math.floor(phase) % FIELD_WORDS.length;
-      const b = (a + 1) % FIELD_WORDS.length;
+      const a = Math.floor(phase) % words.length;
+      const b = (a + 1) % words.length;
       const f = phase - Math.floor(phase);
       ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = "#ffffff";
+      ctx.fillStyle = ink;
       pointer.k += ((pointer.x > -999 ? 1 : 0) - pointer.k) * 0.08;
       for (let j = 0; j < rows; j++) {
         for (let i = 0; i < cols; i++) {
@@ -351,13 +395,18 @@ export function HalftoneField() {
       box.removeEventListener("pointermove", move);
       box.removeEventListener("pointerleave", leave);
     };
-  }, [paused]);
+  }, [paused, theme, words]);
 
   return (
-    <div ref={wrap} className={s.field} role="img" aria-label="Dot field spelling Design, Software, Automation, Data, ML">
+    <div
+      ref={wrap}
+      className={`${s.field} ${compact ? s.fieldCompact : ""}`}
+      role="img"
+      aria-label={`Dot field spelling ${words.join(", ")}`}
+    >
       <canvas ref={canvas} className={s.fieldCanvas} />
       <div className={s.fieldCaption}>
-        <span>Six disciplines, one team.</span>
+        <span>{caption}</span>
         <MotionToggle className={s.pillDark} />
       </div>
     </div>
@@ -380,7 +429,8 @@ export function RotatingWord() {
     <span className={s.rotor}>
       <span className={s.srOnly}>{AUDIENCE.join(", ")}.</span>
       <span key={i} className={s.rotorWord} aria-hidden="true">
-        {AUDIENCE[i]}.
+        {AUDIENCE[i]}
+        <span className={s.stop}>.</span>
       </span>
     </span>
   );
@@ -480,7 +530,7 @@ export function WorkReel({ items }: { items: Work[] }) {
     <section ref={section} id="work" className={s.reel} aria-labelledby="work-title">
       <div className={s.reelHead}>
         <h2 id="work-title" className={s.chapterTitle}>
-          Our work.
+          Our work<span className={s.stop}>.</span>
         </h2>
         <p className={s.reelNote}>
           {items.length} recent projects. Every one has a number the client cared about.
@@ -499,7 +549,7 @@ export function WorkReel({ items }: { items: Work[] }) {
         {items.map((w, i) => (
           <Link key={w.slug} href={`/v8/work/${w.slug}`} className={s.card}>
             <div className={s.cardArt}>
-              <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug)} ink="#ffffff" paper="#141414" ratio={1.5} />
+              <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug)} ink="var(--fg)" paper="var(--art-paper)" ratio={1.5} />
             </div>
             <div className={s.cardMeta}>
               <div>
@@ -515,8 +565,8 @@ export function WorkReel({ items }: { items: Work[] }) {
             </div>
           </Link>
         ))}
-        <Link href="mailto:hello@dotgreydigital.com" className={`${s.card} ${s.cardAll}`}>
-          <span>Yours next?</span>
+        <Link href="/v8/work" className={`${s.card} ${s.cardAll}`}>
+          <span>All work</span>
           <span aria-hidden="true">→</span>
         </Link>
       </div>
@@ -600,4 +650,291 @@ const dhakaKey = () => timeFmt("Asia/Dhaka").format(new Date());
 export function DhakaClock() {
   const t = useSyncExternalStore(subscribeMinute, dhakaKey, () => "");
   return <span suppressHydrationWarning>{t ? `${t} in Dhaka` : "Dhaka"}</span>;
+}
+
+/* ------------------------------------------------------------------ work index */
+
+type ChipOpt = { id: string; label: string; count?: number };
+
+/** A row of pills that behave like radio buttons. */
+export function Chips({ label, options, value, onChange }: { label: string; options: ChipOpt[]; value: string; onChange: (v: string) => void }) {
+  return (
+    <div role="radiogroup" aria-label={label} className={s.chips}>
+      {options.map((o) => (
+        <button key={o.id} type="button" role="radio" aria-checked={value === o.id} className={s.chip} onClick={() => onChange(o.id)}>
+          {o.label}
+          {o.count !== undefined && <sup>{o.count}</sup>}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * The full work index: category filter plus Instrument's Display toggle. "Stack" gives each
+ * project a full-width row; "Grid" packs them two across. Cards are rendered on the server
+ * and passed in, so this only decides which to show and how.
+ */
+export function WorkIndex({ categories, items }: { categories: string[]; items: { slug: string; category: string; stack: ReactNode; grid: ReactNode }[] }) {
+  const [cat, setCat] = useState("all");
+  const [view, setView] = useState<"stack" | "grid">("stack");
+  const shown = items.filter((i) => cat === "all" || i.category === cat);
+  const opts = [{ id: "all", label: "All", count: items.length }, ...categories.map((c) => ({ id: c, label: c, count: items.filter((i) => i.category === c).length }))];
+  return (
+    <>
+      <div className={s.indexBar}>
+        <Chips label="Filter by discipline" options={opts} value={cat} onChange={setCat} />
+        <div className={s.viewToggle}>
+          <span className={s.viewLabel}>Display</span>
+          <Chips
+            label="Display"
+            options={[
+              { id: "stack", label: "Stack" },
+              { id: "grid", label: "Grid" },
+            ]}
+            value={view}
+            onChange={(v) => setView(v as "stack" | "grid")}
+          />
+        </div>
+      </div>
+      <p className={s.indexCount} aria-live="polite">
+        {shown.length} {shown.length === 1 ? "project" : "projects"}
+      </p>
+      <ul className={view === "stack" ? s.stackList : s.gridList}>
+        {shown.map((i) => (
+          <li key={i.slug}>{view === "stack" ? i.stack : i.grid}</li>
+        ))}
+      </ul>
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------ journal */
+
+export function JournalIndex({ categories, items }: { categories: string[]; items: { slug: string; category: string; node: ReactNode }[] }) {
+  const [cat, setCat] = useState("all");
+  const shown = items.filter((i) => cat === "all" || i.category === cat);
+  const used = categories.filter((c) => items.some((i) => i.category === c));
+  return (
+    <>
+      <div className={s.indexBar}>
+        <Chips label="Filter by topic" options={[{ id: "all", label: "All" }, ...used.map((c) => ({ id: c, label: c }))]} value={cat} onChange={setCat} />
+      </div>
+      <ol className={s.postList}>
+        {shown.map((i) => (
+          <li key={i.slug}>{i.node}</li>
+        ))}
+      </ol>
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------ faq */
+
+export function FaqTabs({ groups }: { groups: { id: string; items: { q: string; a: string }[] }[] }) {
+  const [tab, setTab] = useState(groups[0]?.id ?? "");
+  const active = groups.find((g) => g.id === tab) ?? groups[0];
+  return (
+    <div className={s.faqWrap}>
+      <Chips label="Topic" options={groups.map((g) => ({ id: g.id, label: g.id, count: g.items.length }))} value={tab} onChange={setTab} />
+      <div className={s.faqList}>
+        {active.items.map((f) => (
+          <details key={f.q} className={s.faqItem}>
+            <summary>
+              <span>{f.q}</span>
+              <span aria-hidden="true" className={s.faqMark} />
+            </summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ clocks */
+
+const dhakaHour = (d: Date) => Number(new Intl.DateTimeFormat("en-GB", { hour: "numeric", hour12: false, timeZone: "Asia/Dhaka" }).format(d));
+
+const localKey = () => {
+  const d = new Date();
+  return `${timeFmt().format(d)}|${timeFmt("Asia/Dhaka").format(d)}|${dhakaHour(d)}`;
+};
+
+/** Two live clocks: the visitor's and Dhaka's. Dashes on the server. */
+export function Clocks() {
+  const key = useSyncExternalStore(subscribeMinute, localKey, () => "—|—|");
+  const [you, dhaka] = key.split("|");
+  return (
+    <dl className={s.clocks} suppressHydrationWarning>
+      <div>
+        <dt>Your time</dt>
+        <dd>{you}</dd>
+      </div>
+      <div>
+        <dt>Dhaka</dt>
+        <dd>{dhaka}</dd>
+      </div>
+    </dl>
+  );
+}
+
+/** "It's 21:14 for you and 03:14 in Dhaka — we'll reply in our morning." */
+export function ReplyLine() {
+  const key = useSyncExternalStore(subscribeMinute, localKey, () => "");
+  if (!key) return <p className={s.pageAside}>We reply within one working day, from Dhaka.</p>;
+  const [you, dhaka, dh] = key.split("|");
+  const open = Number(dh) >= 10 && Number(dh) < 19;
+  return (
+    <p className={s.pageAside} suppressHydrationWarning>
+      It&apos;s {you} for you and {dhaka} in Dhaka — {open ? "we're at our desks, so expect a reply today." : "we'll reply in our morning."}
+    </p>
+  );
+}
+
+/* ------------------------------------------------------------------ brief form */
+
+type Brief = { name: string; email: string; company: string; needs: string[]; budget: string; timeline: string; message: string };
+
+/**
+ * Project brief. The prototypes have no backend, so a valid brief opens the visitor's email
+ * app with everything filled in — and the page says exactly that.
+ */
+export function BriefForm({ email, needs, budgets, timelines }: { email: string; needs: string[]; budgets: string[]; timelines: string[] }) {
+  const [f, setF] = useState<Brief>({ name: "", email: "", company: "", needs: [], budget: "", timeline: "", message: "" });
+  const [errors, setErrors] = useState<Partial<Record<keyof Brief, string>>>({});
+  const [sent, setSent] = useState(false);
+  const set = <K extends keyof Brief>(k: K, v: Brief[K]) => setF((x) => ({ ...x, [k]: v }));
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    const err: typeof errors = {};
+    if (!f.name.trim()) err.name = "Tell us who you are.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) err.email = "We need an email address to reply to.";
+    if (!f.needs.length) err.needs = "Pick at least one.";
+    if (f.message.trim().length < 20) err.message = "A sentence or two, please — at least 20 characters.";
+    setErrors(err);
+    if (Object.keys(err).length) {
+      document.getElementById(`brief-${Object.keys(err)[0]}`)?.focus();
+      return;
+    }
+    const body = [
+      `Name: ${f.name}`,
+      `Email: ${f.email}`,
+      f.company ? `Company: ${f.company}` : null,
+      `Needs: ${f.needs.join(", ")}`,
+      f.budget ? `Budget: ${f.budget}` : null,
+      f.timeline ? `Timeline: ${f.timeline}` : null,
+      "",
+      f.message,
+    ]
+      .filter((x) => x !== null)
+      .join("\n");
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(`Project brief — ${f.company || f.name}`)}&body=${encodeURIComponent(body)}`;
+    setSent(true);
+  };
+
+  if (sent) {
+    return (
+      <div className={s.sent} role="status">
+        <p className={s.kicker}>Almost there.</p>
+        <p className={s.sentTitle}>Your email app should open with the brief filled in.</p>
+        <p className={s.sentBody}>
+          Press send there and we reply within a working day. Nothing opened? Write to <a href={`mailto:${email}`}>{email}</a>.
+        </p>
+        <button type="button" className={s.pillSolidWide} onClick={() => setSent(false)}>
+          Edit the brief
+        </button>
+      </div>
+    );
+  }
+
+  const text = (k: "name" | "email" | "company", label: string, type = "text", auto?: string) => (
+    <div className={s.fieldRow} data-error={!!errors[k]}>
+      <label htmlFor={`brief-${k}`}>{label}</label>
+      <input
+        id={`brief-${k}`}
+        type={type}
+        autoComplete={auto}
+        value={f[k]}
+        onChange={(e) => set(k, e.target.value)}
+        aria-invalid={!!errors[k]}
+        aria-describedby={errors[k] ? `brief-${k}-err` : undefined}
+      />
+      {errors[k] && (
+        <small id={`brief-${k}-err`} className={s.err}>
+          {errors[k]}
+        </small>
+      )}
+    </div>
+  );
+
+  const pick = (k: "budget" | "timeline", label: string, opts: string[]) => (
+    <fieldset className={s.fieldSet}>
+      <legend>{label}</legend>
+      <div className={s.optRow}>
+        {opts.map((o) => (
+          <label key={o} className={s.opt}>
+            <input type="radio" name={k} value={o} checked={f[k] === o} onChange={() => set(k, o)} />
+            <span>{o}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  );
+
+  return (
+    <form className={s.form} onSubmit={submit} noValidate>
+      <div className={s.formTwo}>
+        {text("name", "Your name", "text", "name")}
+        {text("email", "Email", "email", "email")}
+      </div>
+      {text("company", "Company (optional)", "text", "organization")}
+      <fieldset className={s.fieldSet} data-error={!!errors.needs} aria-describedby={errors.needs ? "brief-needs-err" : undefined}>
+        <legend>What do you need?</legend>
+        <div className={s.optRow}>
+          {needs.map((n, i) => (
+            <label key={n} className={s.opt}>
+              <input
+                id={i === 0 ? "brief-needs" : undefined}
+                type="checkbox"
+                checked={f.needs.includes(n)}
+                onChange={() => set("needs", f.needs.includes(n) ? f.needs.filter((x) => x !== n) : [...f.needs, n])}
+              />
+              <span>{n}</span>
+            </label>
+          ))}
+        </div>
+        {errors.needs && (
+          <small id="brief-needs-err" className={s.err}>
+            {errors.needs}
+          </small>
+        )}
+      </fieldset>
+      {pick("budget", "Budget (optional)", budgets)}
+      {pick("timeline", "Timeline (optional)", timelines)}
+      <div className={s.fieldRow} data-error={!!errors.message}>
+        <label htmlFor="brief-message">What are you trying to do?</label>
+        <textarea
+          id="brief-message"
+          rows={5}
+          value={f.message}
+          onChange={(e) => set("message", e.target.value)}
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "brief-message-err" : undefined}
+        />
+        {errors.message && (
+          <small id="brief-message-err" className={s.err}>
+            {errors.message}
+          </small>
+        )}
+      </div>
+      <div className={s.formFoot}>
+        <button type="submit" className={s.pillAccent}>
+          Send the brief →
+        </button>
+        <small>Opens your email app with the brief filled in. Nothing is stored here.</small>
+      </div>
+    </form>
+  );
 }

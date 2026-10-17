@@ -1,13 +1,12 @@
 import Link from "next/link";
 import { disciplines, featuredWorks, process, stats, testimonials } from "@/redesign/content";
-import { Footer } from "@/redesign/v8/Chrome";
-import { Deck, Greeting, HalftoneField, Header, Quotes, RotatingWord, ScrubText, Wordmark, WorkReel } from "@/redesign/v8/Client";
+import { Footer, SecHead } from "@/redesign/v8/Chrome";
+import { Deck, Greeting, HalftoneField, Quotes, RotatingWord, ScrubText, Wordmark, WorkReel } from "@/redesign/v8/Client";
 import s from "@/redesign/v8/v8.module.css";
 
 export default function V8Home() {
   return (
     <>
-      <Header />
       <main id="main">
         <section className={s.hero}>
           <h1 className={s.wordmarkWrap}>
@@ -29,13 +28,13 @@ export default function V8Home() {
             <ScrubText text="Design, engineering, automation, data and machine learning under one roof. One team takes a product from the first sketch to the model behind it — and keeps improving it after launch." />
             <ul className={s.arrowList}>
               <li>
-                <Link href="#work">See the work</Link>
+                <Link href="/v8/work">See the work</Link>
               </li>
               <li>
-                <Link href="#services">What we do</Link>
+                <Link href="/v8/services">What we do</Link>
               </li>
               <li>
-                <Link href="#contact">Start a project</Link>
+                <Link href="/v8/contact">Start a project</Link>
               </li>
             </ul>
           </div>
@@ -46,12 +45,7 @@ export default function V8Home() {
         </div>
 
         <section id="services" className={s.services} aria-labelledby="services-title">
-          <div className={s.secHead}>
-            <h2 id="services-title" className={s.chapterTitle}>
-              What we do.
-            </h2>
-            <p className={s.secNote}>Six disciplines. Most problems cross at least two of them, so we staff all six.</p>
-          </div>
+          <SecHead id="services-title" title="What we do." note="Six disciplines. Most problems cross at least two of them, so we staff all six." />
           <Deck>
             {disciplines.map((d, i) => (
               <article
@@ -76,6 +70,9 @@ export default function V8Home() {
                       ))}
                     </ul>
                     <p className={s.deckStack}>{d.stack.join(" · ")}</p>
+                    <Link href={`/v8/services/${d.id}`} className={s.deckLink}>
+                      More on {d.short} →
+                    </Link>
                   </div>
                 </div>
               </article>
@@ -84,12 +81,7 @@ export default function V8Home() {
         </section>
 
         <section id="process" className={s.process} aria-labelledby="process-title">
-          <div className={s.secHead}>
-            <h2 id="process-title" className={s.chapterTitle}>
-              How it goes.
-            </h2>
-            <p className={s.secNote}>Five stages, run in weekly loops. You see working software from week two.</p>
-          </div>
+          <SecHead id="process-title" title="How it goes." note="Five stages, run in weekly loops. You see working software from week two." />
           <ol className={s.steps}>
             {process.map((p, i) => (
               <li key={p.title} className={s.step}>
@@ -102,12 +94,7 @@ export default function V8Home() {
         </section>
 
         <section id="about" className={`${s.chapterDark} ${s.numbers}`} aria-labelledby="numbers-title">
-          <div className={s.secHead}>
-            <h2 id="numbers-title" className={s.chapterTitle}>
-              In numbers.
-            </h2>
-            <p className={s.secNote}>A small senior team in Dhaka, working across four time zones.</p>
-          </div>
+          <SecHead id="numbers-title" title="In numbers." note="A small senior team in Dhaka, working across four time zones." />
           <dl className={s.statGrid}>
             {stats.map((st) => (
               <div key={st.label} className={s.stat}>

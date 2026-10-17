@@ -4,8 +4,7 @@ import { notFound } from "next/navigation";
 import { getNextWork, getWorkBySlug, works } from "@/redesign/content";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
 import { variantFor } from "@/redesign/v8/art";
-import { Footer } from "@/redesign/v8/Chrome";
-import { Header } from "@/redesign/v8/Client";
+import { Footer, SecHead, Stop } from "@/redesign/v8/Chrome";
 import s from "@/redesign/v8/v8.module.css";
 
 export function generateStaticParams() {
@@ -26,12 +25,11 @@ export default async function V8Case({ params }: PageProps<"/v8/work/[slug]">) {
 
   return (
     <>
-      <Header />
       <main id="main">
         <section className={`${s.chapterDark} ${s.caseCover}`}>
           <div className={s.caseTop}>
             <nav aria-label="Breadcrumb" className={s.crumbs}>
-              <Link href="/v8#work">Work</Link>
+              <Link href="/v8/work">Work</Link>
               <span aria-hidden="true">/</span>
               <span aria-current="page">{w.client}</span>
             </nav>
@@ -48,7 +46,9 @@ export default async function V8Case({ params }: PageProps<"/v8/work/[slug]">) {
         </section>
 
         <section className={s.caseIntro} aria-label="Overview">
-          <p className={s.kicker}>The brief.</p>
+          <p className={s.kicker}>
+            <Stop>The brief.</Stop>
+          </p>
           <div>
             <p className={s.caseLead}>{w.summary}</p>
             <dl className={s.caseMeta}>
@@ -68,39 +68,38 @@ export default async function V8Case({ params }: PageProps<"/v8/work/[slug]">) {
         </section>
 
         <div className={s.caseHeroArt}>
-          <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug)} ink="#ffffff" paper="#0a0a0a" ratio={2} title={`${w.title} — key visual`} />
+          <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug)} ink="var(--art-ink)" paper="var(--art-paper)" ratio={2} title={`${w.title} — key visual`} />
         </div>
 
         <section className={s.caseBlocks} aria-label="Problem and approach">
           <div className={s.caseBlock}>
-            <h2 className={s.blockTitle}>The problem.</h2>
+            <h2 className={s.blockTitle}>
+              <Stop>The problem.</Stop>
+            </h2>
             <p>{w.challenge}</p>
           </div>
           <div className={s.caseBlock}>
-            <h2 className={s.blockTitle}>The approach.</h2>
+            <h2 className={s.blockTitle}>
+              <Stop>The approach.</Stop>
+            </h2>
             <p>{w.solution}</p>
           </div>
         </section>
 
         <div className={s.gallery}>
           <div className={s.galA}>
-            <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug, 1)} frame={1} ink="#ffffff" paper="#0a0a0a" ratio={0.92} title={`${w.title} — detail 1`} />
+            <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug, 1)} frame={1} ink="var(--art-ink)" paper="var(--art-paper)" ratio={0.92} title={`${w.title} — detail 1`} />
           </div>
           <div className={s.galB}>
-            <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug, 2)} frame={2} ink="#0a0a0a" paper="#e6e6e6" ratio={1.5} title={`${w.title} — detail 2`} />
+            <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug, 2)} frame={2} ink="var(--deck-b-ink)" paper="var(--deck-b)" ratio={1.5} title={`${w.title} — detail 2`} />
           </div>
           <div className={s.galC}>
-            <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug, 3)} frame={3} ink="#ffffff" paper="#1a1a1a" ratio={1.5} title={`${w.title} — detail 3`} />
+            <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug, 3)} frame={3} ink="var(--art-ink)" paper="var(--art-paper-2)" ratio={1.5} title={`${w.title} — detail 3`} />
           </div>
         </div>
 
         <section className={s.process} aria-labelledby="steps-title">
-          <div className={s.secHead}>
-            <h2 id="steps-title" className={s.chapterTitle}>
-              How it went.
-            </h2>
-            <p className={s.secNote}>{w.duration}, with a team of {w.team.toLowerCase()}.</p>
-          </div>
+          <SecHead id="steps-title" title="How it went." note={`${w.duration}, with a team of ${w.team.toLowerCase()}.`} />
           <ol className={s.steps}>
             {w.approach.map((a, i) => (
               <li key={a.title} className={s.step}>
@@ -113,12 +112,7 @@ export default async function V8Case({ params }: PageProps<"/v8/work/[slug]">) {
         </section>
 
         <section className={`${s.chapterDark} ${s.numbers}`} aria-labelledby="outcomes-title">
-          <div className={s.secHead}>
-            <h2 id="outcomes-title" className={s.chapterTitle}>
-              Outcomes.
-            </h2>
-            <p className={s.secNote}>{w.outcome}</p>
-          </div>
+          <SecHead id="outcomes-title" title="Outcomes." note={w.outcome} />
           <dl className={`${s.statGrid} ${s.statGrid3}`}>
             {w.stats.slice(0, 3).map((st) => (
               <div key={st.label} className={s.stat}>
@@ -141,12 +135,14 @@ export default async function V8Case({ params }: PageProps<"/v8/work/[slug]">) {
         </section>
 
         <Link href={`/v8/work/${next.slug}`} className={s.next}>
-          <span className={s.kicker}>Next.</span>
+          <span className={s.kicker}>
+            <Stop>Next.</Stop>
+          </span>
           <span className={s.nextTitle}>
             {next.title} <span aria-hidden="true">→</span>
           </span>
           <span className={s.nextArt} aria-hidden="true">
-            <ProjectArt slug={next.slug} label={next.client} variant={variantFor(next.slug)} ink="#ffffff" paper="#0a0a0a" ratio={4} />
+            <ProjectArt slug={next.slug} label={next.client} variant={variantFor(next.slug)} ink="var(--art-ink)" paper="var(--art-paper)" ratio={4} />
           </span>
         </Link>
       </main>
