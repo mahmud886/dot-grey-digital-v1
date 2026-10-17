@@ -8,7 +8,7 @@ const cond = IBM_Plex_Sans_Condensed({ subsets: ["latin"], weight: ["400", "500"
 const mono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--v3-mono" });
 
 export const metadata: Metadata = {
-  title: { default: "v3 Blueprint — DotGrey Digital", template: "%s — v3 Blueprint" },
+  title: { default: "v3 Blueprint", template: "%s — v3 Blueprint" },
 };
 
 export default function V3Layout({ children }: { children: React.ReactNode }) {

@@ -7,7 +7,7 @@ const serif = Newsreader({ subsets: ["latin"], style: ["normal", "italic"], weig
 const sans = Libre_Franklin({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--v2-sans" });
 
 export const metadata: Metadata = {
-  title: { default: "v2 Editorial — DotGrey Digital", template: "%s — v2 Editorial" },
+  title: { default: "v2 Editorial", template: "%s — v2 Editorial" },
 };
 
 export default function V2Layout({ children }: { children: React.ReactNode }) {

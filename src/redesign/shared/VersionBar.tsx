@@ -11,7 +11,7 @@ export function VersionBar({ current }: { current: string }) {
   return (
     <nav
       aria-label="Redesign prototypes"
-      className="fixed bottom-3 left-1/2 z-[100] flex -translate-x-1/2 items-center gap-1 rounded-full bg-black/80 p-1 text-[11px] font-medium tracking-wide text-white shadow-lg backdrop-blur"
+      className="fixed bottom-3 left-1/2 z-[100] flex max-w-[calc(100vw-16px)] -translate-x-1/2 items-center gap-1 overflow-x-auto rounded-full [scrollbar-width:none] bg-black/80 [&>*]:shrink-0 p-1 text-[11px] font-medium tracking-wide text-white shadow-lg backdrop-blur"
       style={{ fontFamily: "ui-sans-serif, system-ui, sans-serif" }}
     >
       <Link href="/" className="rounded-full px-3 py-1.5 text-white/70 hover:text-white" style={{ color: DIM }}>

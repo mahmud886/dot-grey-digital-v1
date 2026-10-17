@@ -8,7 +8,7 @@ const sans = Inter_Tight({ subsets: ["latin"], weight: ["400", "500", "600", "70
 const serif = Bodoni_Moda({ subsets: ["latin"], style: ["italic"], weight: ["400", "500", "600"], variable: "--v8-serif" });
 
 export const metadata: Metadata = {
-  title: { default: "v8 Wordmark — DotGrey Digital", template: "%s — v8 Wordmark" },
+  title: { default: "v8 Wordmark", template: "%s — v8 Wordmark" },
 };
 
 export default function V8Layout({ children }: { children: React.ReactNode }) {

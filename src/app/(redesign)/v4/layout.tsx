@@ -7,7 +7,7 @@ const display = Anton({ subsets: ["latin"], weight: "400", variable: "--v4-displ
 const sans = Archivo({ subsets: ["latin"], weight: ["400", "500", "700", "800"], variable: "--v4-sans" });
 
 export const metadata: Metadata = {
-  title: { default: "v4 Brutal — DotGrey Digital", template: "%s — v4 Brutal" },
+  title: { default: "v4 Brutal", template: "%s — v4 Brutal" },
 };
 
 export default function V4Layout({ children }: { children: React.ReactNode }) {

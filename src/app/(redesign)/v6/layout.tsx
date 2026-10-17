@@ -7,7 +7,7 @@ const display = Sora({ subsets: ["latin"], weight: ["300", "400", "600", "700"],
 const body = Plus_Jakarta_Sans({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--v6-body" });
 
 export const metadata: Metadata = {
-  title: { default: "v6 Spatial — DotGrey Digital", template: "%s — v6 Spatial" },
+  title: { default: "v6 Spatial", template: "%s — v6 Spatial" },
 };
 
 export default function V6Layout({ children }: { children: React.ReactNode }) {

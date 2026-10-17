@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { disciplines, featuredWorks, process, site, stats, testimonials } from "@/redesign/content";
-import { Em, Footer, Header, WorkCard } from "@/redesign/v12/Chrome";
+import { Em, WorkCard } from "@/redesign/v12/Chrome";
 import { LocalHello, Sculpture, ServiceList } from "@/redesign/v12/Client";
 import s from "@/redesign/v12/v12.module.css";
 
@@ -27,7 +27,6 @@ export default function V12Home() {
   const quote = testimonials[0];
   return (
     <>
-      <Header />
       <main id="top">
         <section className={`${s.wrap} ${s.hero}`}>
           <div className={s.heroText}>
@@ -39,7 +38,7 @@ export default function V12Home() {
               Design, engineering, automation, data and machine learning — from one small, senior team.
             </p>
             <div className={s.ctas}>
-              <Link href="#contact" className={s.pillInk}>
+              <Link href="/v12/contact" className={s.pillInk}>
                 Start a project <span aria-hidden="true">↗</span>
               </Link>
               <Link href="#work" className={s.textLink}>
@@ -79,6 +78,11 @@ export default function V12Home() {
             </h2>
           </div>
           <ServiceList items={disciplines} />
+          <p className={s.more}>
+            <Link href="/v12/services" className={s.textLink}>
+              How each craft works
+            </Link>
+          </p>
         </section>
 
         <section id="work" className={`${s.wrap} ${s.section}`}>
@@ -93,6 +97,11 @@ export default function V12Home() {
               <WorkCard key={w.slug} work={w} index={i} />
             ))}
           </div>
+          <p className={s.more}>
+            <Link href="/v12/work" className={s.textLink}>
+              All nine projects
+            </Link>
+          </p>
         </section>
 
         <section className={`${s.wrap} ${s.quoteBlock}`} aria-label="What clients say">
@@ -158,13 +167,12 @@ export default function V12Home() {
             <a href={`mailto:${site.email}`} className={s.mail}>
               {site.email} <span aria-hidden="true">↗</span>
             </a>
-            <Link href="mailto:hello@dotgreydigital.com" className={s.pill}>
+            <Link href="/v12/contact" className={s.pill}>
               Send a brief
             </Link>
           </div>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

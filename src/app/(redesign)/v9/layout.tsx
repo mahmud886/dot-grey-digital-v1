@@ -8,7 +8,7 @@ const serif = Gloock({ subsets: ["latin"], weight: "400", variable: "--v9-serif"
 const sans = Hanken_Grotesk({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--v9-sans" });
 
 export const metadata: Metadata = {
-  title: { default: "v9 Index — DotGrey Digital", template: "%s — v9 Index" },
+  title: { default: "v9 Index", template: "%s — v9 Index" },
 };
 
 export default function V9Layout({ children }: { children: React.ReactNode }) {

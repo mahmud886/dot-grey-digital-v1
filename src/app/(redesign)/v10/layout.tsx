@@ -7,7 +7,7 @@ const dot = Doto({ subsets: ["latin"], weight: ["700", "900"], variable: "--v10-
 const mono = Geist_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--v10-mono" });
 
 export const metadata: Metadata = {
-  title: { default: "v10 Engine — DotGrey Digital", template: "%s — v10 Engine" },
+  title: { default: "v10 Engine", template: "%s — v10 Engine" },
 };
 
 export default function V10Layout({ children }: { children: React.ReactNode }) {

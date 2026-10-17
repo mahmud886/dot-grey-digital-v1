@@ -1,9 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { usePathname } from "next/navigation";
+import { useEffect, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { useMotion } from "@/redesign/shared/useMotion";
+import { useTheme } from "@/redesign/shared/useTheme";
+import { ThemeIcon, ThemeToggle } from "@/redesign/shared/ThemeToggle";
 import type { Discipline } from "@/redesign/content";
 import { LINES, PTS, forms } from "./sculpture";
 import s from "./v12.module.css";
@@ -16,11 +19,12 @@ const BUCKETS = 7;
  * per discipline; tapping shifts to the next and the lines re-form with a stagger. Idle
  * rotation follows the pointer and stops on Pause (and by default under reduced motion).
  */
-export function Sculpture({ labels }: { labels: string[] }) {
+export function Sculpture({ labels, initial = 0, single = false }: { labels: string[]; initial?: number; single?: boolean }) {
   const { paused, reduced, toggle } = useMotion();
-  const [index, setIndex] = useState(0);
+  const theme = useTheme();
+  const [index, setIndex] = useState(initial);
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const api = useRef<{ goTo: (i: number) => void } | null>(null);
+  const api = useRef<{ goTo: (i: number) => void; repaint: () => void } | null>(null);
   const pausedRef = useRef(paused);
   const reducedRef = useRef(reduced);
   const kick = useRef<(() => void) | null>(null);
@@ -31,15 +35,24 @@ export function Sculpture({ labels }: { labels: string[] }) {
     if (!paused) kick.current?.();
   }, [paused, reduced]);
 
+  // Lines are drawn in the theme's ink; repaint when the theme flips.
+  useEffect(() => {
+    api.current?.repaint();
+  }, [theme]);
+
   useEffect(() => {
     const canvas = canvasRef.current;
     if (!canvas) return;
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     const F = forms();
-    const cur = new Float32Array(F[0]);
-    let from = new Float32Array(F[0]);
-    let to = F[0];
+    const cur = new Float32Array(F[initial]);
+    let from = new Float32Array(F[initial]);
+    let to = F[initial];
+    let ink = "#111111";
+    const readInk = () => {
+      ink = getComputedStyle(canvas).getPropertyValue("--ink").trim() || ink;
+    };
     let morphStart = -1;
     const MORPH = 1500;
     let ry = -0.6;
@@ -110,10 +123,12 @@ export function Sculpture({ labels }: { labels: string[] }) {
       }
       ctx.lineWidth = 0.8;
       ctx.lineJoin = "round";
+      ctx.strokeStyle = ink;
       for (let b = 0; b < BUCKETS; b++) {
-        ctx.strokeStyle = `rgba(17,17,17,${(0.12 + (b / (BUCKETS - 1)) * 0.78).toFixed(3)})`;
+        ctx.globalAlpha = 0.12 + (b / (BUCKETS - 1)) * 0.78;
         ctx.stroke(paths[b]);
       }
+      ctx.globalAlpha = 1;
     }
 
     function step(now: number) {
@@ -162,7 +177,12 @@ export function Sculpture({ labels }: { labels: string[] }) {
         morphStart = performance.now();
         start();
       },
+      repaint() {
+        readInk();
+        draw();
+      },
     };
+    readInk();
 
     const onMove = (e: PointerEvent) => {
       if (pausedRef.current) return;
@@ -190,6 +210,8 @@ export function Sculpture({ labels }: { labels: string[] }) {
       api.current = null;
       kick.current = null;
     };
+    // `initial` only seeds the first form; later changes go through goTo.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const go = (i: number) => {
@@ -198,6 +220,24 @@ export function Sculpture({ labels }: { labels: string[] }) {
   };
   const next = () => go((index + 1) % labels.length);
   const n = String(index + 1).padStart(2, "0");
+
+  if (single) {
+    return (
+      <div className={`${s.sculpture} ${s.sculptureSingle}`}>
+        <div className={s.stage}>
+          <canvas ref={canvasRef} className={s.canvas} aria-hidden="true" />
+        </div>
+        <div className={s.caption}>
+          <p>
+            <span>The shape of it</span> — <b>{labels[index]}</b>
+          </p>
+          <button type="button" className={s.pause} onClick={toggle} aria-pressed={paused}>
+            {paused ? "Play motion" : "Pause motion"}
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={s.sculpture}>
@@ -405,12 +445,309 @@ export function MenuToggle({ links }: { links: { href: string; label: string }[]
       <div id="v12-menu" className={s.sheet} data-open={open} inert={!open}>
         <nav aria-label="Mobile">
           {links.map((l, i) => (
-            <Link key={l.href} href={l.href} onClick={() => setOpen(false)} style={{ transitionDelay: `${60 + i * 50}ms` }}>
+            <Link key={l.href} href={l.href} onClick={() => setOpen(false)} style={{ transitionDelay: `${60 + i * 40}ms` }}>
               {l.label} <span aria-hidden="true">↗</span>
             </Link>
           ))}
         </nav>
+        <div className={s.sheetFoot}>
+          <span>Colour mode</span>
+          <ThemeToggle className={s.themeBtn}>
+            <ThemeIcon />
+            <ModeLabel />
+          </ThemeToggle>
+        </div>
       </div>
     </>
+  );
+}
+
+/** "Light" / "Dark" next to the toggle icon: names the mode you switch to. */
+export function ModeLabel() {
+  const theme = useTheme();
+  return <span className={s.modeLabel}>{theme === "dark" ? "Light" : theme === "light" ? "Dark" : "Mode"}</span>;
+}
+
+/** Header links that know which section you are in. */
+export function NavLinks({ links }: { links: { href: string; label: string }[] }) {
+  const path = usePathname();
+  return (
+    <>
+      {links.map((l) => {
+        const on = path === l.href || path.startsWith(`${l.href}/`);
+        return (
+          <Link key={l.href} href={l.href} aria-current={on ? "page" : undefined}>
+            {l.label}
+          </Link>
+        );
+      })}
+    </>
+  );
+}
+
+type Opt = { id: string; label: string };
+
+/** A row of pill filters; one is always selected. */
+export function Filters({ options, value, onChange, label }: { options: Opt[]; value: string; onChange: (v: string) => void; label: string }) {
+  return (
+    <div className={s.filters} role="radiogroup" aria-label={label}>
+      {options.map((o) => (
+        <button key={o.id} type="button" role="radio" aria-checked={value === o.id} onClick={() => onChange(o.id)}>
+          {o.label}
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/**
+ * Work index: filter by kind of project and switch between the tilted-card grid and a
+ * dense list. Items are rendered on the server and passed in, keyed by category.
+ */
+export function WorkIndex({
+  categories,
+  items,
+}: {
+  categories: string[];
+  items: { slug: string; category: string; card: ReactNode; row: ReactNode }[];
+}) {
+  const [cat, setCat] = useState("all");
+  const [view, setView] = useState<"grid" | "list">("grid");
+  const shown = items.filter((i) => cat === "all" || i.category === cat);
+  return (
+    <>
+      <div className={s.toolbar}>
+        <Filters
+          label="Filter by kind of project"
+          value={cat}
+          onChange={setCat}
+          options={[{ id: "all", label: `All (${items.length})` }, ...categories.map((c) => ({ id: c, label: c }))]}
+        />
+        <Filters
+          label="View"
+          value={view}
+          onChange={(v) => setView(v as "grid" | "list")}
+          options={[
+            { id: "grid", label: "Grid" },
+            { id: "list", label: "List" },
+          ]}
+        />
+      </div>
+      <p className={s.count} aria-live="polite">
+        {shown.length} {shown.length === 1 ? "project" : "projects"}
+      </p>
+      {view === "grid" ? (
+        <div className={s.workGrid}>
+          {shown.map((i) => (
+            <div key={i.slug}>{i.card}</div>
+          ))}
+        </div>
+      ) : (
+        <ul className={s.workList}>
+          {shown.map((i) => (
+            <li key={i.slug}>{i.row}</li>
+          ))}
+        </ul>
+      )}
+    </>
+  );
+}
+
+/** Journal list with a category filter. */
+export function JournalIndex({ categories, items }: { categories: string[]; items: { slug: string; category: string; node: ReactNode }[] }) {
+  const [cat, setCat] = useState(categories[0] ?? "All");
+  const shown = items.filter((i) => cat === "All" || i.category === cat);
+  return (
+    <>
+      <div className={s.toolbar}>
+        <Filters label="Filter by topic" value={cat} onChange={setCat} options={categories.map((c) => ({ id: c, label: c }))} />
+      </div>
+      {shown.length ? (
+        <ul className={s.journal}>
+          {shown.map((i) => (
+            <li key={i.slug}>{i.node}</li>
+          ))}
+        </ul>
+      ) : (
+        <p className={s.empty}>Nothing in {cat} yet. We only publish when we have something to say.</p>
+      )}
+    </>
+  );
+}
+
+/** FAQ grouped by topic: pick a topic, read its questions. */
+export function FaqTabs({ groups }: { groups: { id: string; items: { q: string; a: string }[] }[] }) {
+  const [cat, setCat] = useState(groups[0]?.id ?? "");
+  const group = groups.find((g) => g.id === cat) ?? groups[0];
+  return (
+    <div className={s.faqPage}>
+      <Filters label="Topic" value={cat} onChange={setCat} options={groups.map((g) => ({ id: g.id, label: `${g.id} (${g.items.length})` }))} />
+      <div className={s.faq}>
+        {group?.items.map((f) => (
+          <details key={f.q}>
+            <summary>
+              {f.q}
+              <i aria-hidden="true" />
+            </summary>
+            <p>{f.a}</p>
+          </details>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+const dhaka = () => new Date().toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: "Asia/Dhaka" });
+
+/** Live Dhaka time; a dash on the server. */
+export function DhakaTime() {
+  const t = useSyncExternalStore(subscribeMinute, dhaka, () => "—");
+  return <span suppressHydrationWarning>{t}</span>;
+}
+
+type Brief = { name: string; email: string; company: string; needs: string[]; budget: string; timeline: string; message: string };
+
+/**
+ * Project brief. There is no backend in the prototypes, so submitting validates the form,
+ * then opens the visitor's email app with everything filled in — and says so.
+ */
+export function BriefForm({ email, needs, budgets, timelines }: { email: string; needs: string[]; budgets: string[]; timelines: string[] }) {
+  const [f, setF] = useState<Brief>({ name: "", email: "", company: "", needs: [], budget: "", timeline: "", message: "" });
+  const [errors, setErrors] = useState<Partial<Record<keyof Brief, string>>>({});
+  const [sent, setSent] = useState(false);
+  const set = <K extends keyof Brief>(k: K, v: Brief[K]) => setF((x) => ({ ...x, [k]: v }));
+
+  const submit = (e: FormEvent) => {
+    e.preventDefault();
+    const err: typeof errors = {};
+    if (!f.name.trim()) err.name = "Tell us who you are.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) err.email = "We need an email address to reply to.";
+    if (!f.needs.length) err.needs = "Pick at least one.";
+    if (f.message.trim().length < 20) err.message = "A sentence or two, please — at least 20 characters.";
+    setErrors(err);
+    if (Object.keys(err).length) {
+      const first = Object.keys(err)[0];
+      document.getElementById(`brief-${first}`)?.focus();
+      return;
+    }
+    const body = [
+      `Name: ${f.name}`,
+      `Email: ${f.email}`,
+      f.company ? `Company: ${f.company}` : null,
+      `Needs: ${f.needs.join(", ")}`,
+      f.budget ? `Budget: ${f.budget}` : null,
+      f.timeline ? `Timeline: ${f.timeline}` : null,
+      "",
+      f.message,
+    ]
+      .filter((x) => x !== null)
+      .join("\n");
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(`Project brief — ${f.company || f.name}`)}&body=${encodeURIComponent(body)}`;
+    setSent(true);
+  };
+
+  if (sent) {
+    return (
+      <div className={s.sent} role="status">
+        <p className={s.label}>Almost there</p>
+        <p className={s.sentTitle}>Your email app should open with the brief filled in.</p>
+        <p>
+          Press send there and we will reply within a working day. Nothing opened? Write to{" "}
+          <a href={`mailto:${email}`}>{email}</a>.
+        </p>
+        <button type="button" className={s.pill} onClick={() => setSent(false)}>
+          Edit the brief
+        </button>
+      </div>
+    );
+  }
+
+  const field = (k: "name" | "email" | "company", label: string, type = "text", auto?: string) => (
+    <div className={s.field} data-error={!!errors[k]}>
+      <label htmlFor={`brief-${k}`}>{label}</label>
+      <input
+        id={`brief-${k}`}
+        type={type}
+        autoComplete={auto}
+        value={f[k]}
+        onChange={(e) => set(k, e.target.value)}
+        aria-invalid={!!errors[k]}
+        aria-describedby={errors[k] ? `brief-${k}-err` : undefined}
+      />
+      {errors[k] && (
+        <small id={`brief-${k}-err`} className={s.err}>
+          {errors[k]}
+        </small>
+      )}
+    </div>
+  );
+
+  const choice = (k: "budget" | "timeline", label: string, opts: string[]) => (
+    <fieldset className={s.choice}>
+      <legend>{label}</legend>
+      <div className={s.chips}>
+        {opts.map((o) => (
+          <label key={o}>
+            <input type="radio" name={k} value={o} checked={f[k] === o} onChange={() => set(k, o)} />
+            <span>{o}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  );
+
+  return (
+    <form className={s.form} onSubmit={submit} noValidate>
+      <div className={s.formRow}>
+        {field("name", "Your name", "text", "name")}
+        {field("email", "Email", "email", "email")}
+      </div>
+      {field("company", "Company (optional)", "text", "organization")}
+      <fieldset className={s.choice} data-error={!!errors.needs} aria-describedby={errors.needs ? "brief-needs-err" : undefined}>
+        <legend>What do you need?</legend>
+        <div className={s.chips}>
+          {needs.map((n, i) => (
+            <label key={n}>
+              <input
+                id={i === 0 ? "brief-needs" : undefined}
+                type="checkbox"
+                checked={f.needs.includes(n)}
+                onChange={() => set("needs", f.needs.includes(n) ? f.needs.filter((x) => x !== n) : [...f.needs, n])}
+              />
+              <span>{n}</span>
+            </label>
+          ))}
+        </div>
+        {errors.needs && (
+          <small id="brief-needs-err" className={s.err}>
+            {errors.needs}
+          </small>
+        )}
+      </fieldset>
+      {choice("budget", "Budget (optional)", budgets)}
+      {choice("timeline", "Timeline (optional)", timelines)}
+      <div className={s.field} data-error={!!errors.message}>
+        <label htmlFor="brief-message">What are you trying to do?</label>
+        <textarea
+          id="brief-message"
+          rows={5}
+          value={f.message}
+          onChange={(e) => set("message", e.target.value)}
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "brief-message-err" : undefined}
+        />
+        {errors.message && (
+          <small id="brief-message-err" className={s.err}>
+            {errors.message}
+          </small>
+        )}
+      </div>
+      <div className={s.formFoot}>
+        <button type="submit" className={s.pillInk}>
+          Send the brief <span aria-hidden="true">↗</span>
+        </button>
+        <small>Opens your email app with the brief filled in. No forms stored here.</small>
+      </div>
+    </form>
   );
 }

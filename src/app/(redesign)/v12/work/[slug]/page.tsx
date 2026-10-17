@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
 import { getNextWork, getWorkBySlug, works } from "@/redesign/content";
-import { Em, Footer, Header, WorkCard } from "@/redesign/v12/Chrome";
+import { Em, WorkCard } from "@/redesign/v12/Chrome";
 import s from "@/redesign/v12/v12.module.css";
 
 /** The italic word after each title, by kind of project. */
@@ -28,11 +28,10 @@ export default async function V12Case({ params }: PageProps<"/v12/work/[slug]">)
 
   return (
     <>
-      <Header />
       <main>
         <section className={`${s.wrap} ${s.caseHero}`}>
           <p className={s.kicker}>
-            <Link href="/v12#work">Work</Link> — {w.category} — {w.year}
+            <Link href="/v12/work">Work</Link> — {w.category} — {w.year}
           </p>
           <h1 className={s.caseTitle}>
             {w.title}, <Em>{VERB[w.category] ?? "made."}</Em>
@@ -54,7 +53,7 @@ export default async function V12Case({ params }: PageProps<"/v12/work/[slug]">)
         </section>
 
         <div className={`${s.wrap} ${s.cover}`}>
-          <ProjectArt slug={w.slug} label={w.client} variant="contour" ink="#eeede9" paper="#111111" ratio={2.2} title={`${w.title} — cover artwork`} />
+          <ProjectArt slug={w.slug} label={w.client} variant="contour" ink="var(--art-b-ink)" paper="var(--art-b-paper)" ratio={2.2} title={`${w.title} — cover artwork`} />
         </div>
 
         <section className={`${s.wrap} ${s.section} ${s.twoUp}`}>
@@ -118,7 +117,7 @@ export default async function V12Case({ params }: PageProps<"/v12/work/[slug]">)
         <section className={`${s.wrap} ${s.gallery}`} aria-label="Gallery">
           {(["rings", "halftone", "contour"] as const).map((v, i) => (
             <div key={v} className={s.galleryItem} style={{ ["--r" as string]: `${[-2.5, 1.8, -1.2][i]}deg` }}>
-              <ProjectArt slug={w.slug} label={w.client} variant={v} frame={i + 2} ink={i === 1 ? "#eeede9" : "#111111"} paper={i === 1 ? "#111111" : "#f6f5f1"} ratio={i === 0 ? 1.6 : 1.1} />
+              <ProjectArt slug={w.slug} label={w.client} variant={v} frame={i + 2} ink={i === 1 ? "var(--art-b-ink)" : "var(--art-a-ink)"} paper={i === 1 ? "var(--art-b-paper)" : "var(--art-a-paper)"} ratio={i === 0 ? 1.6 : 1.1} />
             </div>
           ))}
         </section>
@@ -147,7 +146,6 @@ export default async function V12Case({ params }: PageProps<"/v12/work/[slug]">)
           <WorkCard work={next} index={nextIndex} size="lg" />
         </section>
       </main>
-      <Footer />
     </>
   );
 }

@@ -6,7 +6,7 @@ import s from "@/redesign/v11/v11.module.css";
 const grotesk = Schibsted_Grotesk({ subsets: ["latin"], variable: "--v11-font" });
 
 export const metadata: Metadata = {
-  title: { default: "v11 Grain — DotGrey Digital", template: "%s — v11 Grain" },
+  title: { default: "v11 Grain", template: "%s — v11 Grain" },
 };
 
 export default function V11Layout({ children }: { children: React.ReactNode }) {

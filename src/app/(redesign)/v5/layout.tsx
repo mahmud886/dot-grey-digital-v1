@@ -7,7 +7,7 @@ const pixel = VT323({ subsets: ["latin"], weight: "400", variable: "--v5-pixel" 
 const code = Fira_Code({ subsets: ["latin"], weight: ["400", "500", "600"], variable: "--v5-code" });
 
 export const metadata: Metadata = {
-  title: { default: "v5 Terminal — DotGrey Digital", template: "%s — v5 Terminal" },
+  title: { default: "v5 Terminal", template: "%s — v5 Terminal" },
 };
 
 export default function V5Layout({ children }: { children: React.ReactNode }) {

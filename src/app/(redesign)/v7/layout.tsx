@@ -7,7 +7,7 @@ const display = Bricolage_Grotesque({ subsets: ["latin"], weight: ["400", "600",
 const body = Figtree({ subsets: ["latin"], weight: ["400", "500", "600", "700"], variable: "--v7-body" });
 
 export const metadata: Metadata = {
-  title: { default: "v7 Warm Human — DotGrey Digital", template: "%s — v7 Warm Human" },
+  title: { default: "v7 Warm Human", template: "%s — v7 Warm Human" },
 };
 
 export default function V7Layout({ children }: { children: React.ReactNode }) {
