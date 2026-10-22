@@ -1,10 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState, useSyncExternalStore } from "react";
+import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
-import type { Discipline, Work } from "@/redesign/content";
+import { ThemeToggle } from "@/redesign/shared/ThemeToggle";
+import type { Discipline, Post, Work } from "@/redesign/content";
 import { artFor } from "./art";
 import { G } from "./Glyphs";
 import s from "./v9.module.css";
@@ -62,12 +63,19 @@ export function Scramble({ text, delay = 0, duration = 700, className }: { text:
   );
 }
 
-/** Full-screen intro on a full page load: a turning asterisk and two decoding lines. */
+/**
+ * Full-screen intro on a full load of the homepage: a turning asterisk and two decoding
+ * lines. Arriving by client navigation, it is removed before paint.
+ */
 export function Preloader() {
+  const wrap = useRef<HTMLDivElement>(null);
   const a = useRef<HTMLSpanElement>(null);
   const b = useRef<HTMLSpanElement>(null);
+  useLayoutEffect(() => {
+    if (wrap.current && performance.now() > INTRO_MS) wrap.current.style.display = "none";
+  }, []);
   useEffect(() => {
-    if (!a.current || !b.current) return;
+    if (!a.current || !b.current || performance.now() > INTRO_MS) return;
     const stopA = scramble(a.current, "Digital-first studio", 650);
     const stopB = scramble(b.current, "Dhaka ◇ Remote", 800);
     return () => {
@@ -76,7 +84,7 @@ export function Preloader() {
     };
   }, []);
   return (
-    <div className={s.loader} aria-hidden="true">
+    <div ref={wrap} className={s.loader} aria-hidden="true">
       <G name="asterisk" className={s.loaderMark} />
       <span className={s.loaderLines}>
         <span ref={a}>Digital-first studio</span>
@@ -213,7 +221,8 @@ export function PixelReveal({ children, className }: { children: React.ReactNode
  * the mosaic for each row. Touch: every row carries its own thumbnail instead.
  * ---------------------------------------------------------------------------------------- */
 
-export function WorkIndex({ works, initial = 6 }: { works: Work[]; initial?: number }) {
+export function WorkIndex({ works, initial = 6, source }: { works: Work[]; initial?: number; source?: Work[] }) {
+  const artList = source ?? works;
   const [all, setAll] = useState(false);
   const listRef = useRef<HTMLOListElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
@@ -311,11 +320,12 @@ export function WorkIndex({ works, initial = 6 }: { works: Work[]; initial?: num
                 <span>{w.year}</span>
               </span>
               <span className={s.rowThumb}>
-                <ProjectArt slug={w.slug} label={w.client} variant={artFor(works.indexOf(w))} ink="#f7f7f5" paper="#0b0b0b" ratio={4 / 3} />
+                <ProjectArt slug={w.slug} label={w.client} variant={artFor(artList.indexOf(w))} ink="#f7f7f5" paper="#0b0b0b" ratio={4 / 3} />
               </span>
             </Link>
           </li>
         ))}
+        {works.length > initial && (
         <li>
           <button type="button" className={`${s.row} ${s.rowAll}`} aria-expanded={all} onClick={() => setAll((v) => !v)}>
             <span className={s.rowMeta}>
@@ -337,6 +347,7 @@ export function WorkIndex({ works, initial = 6 }: { works: Work[]; initial?: num
             </span>
           </button>
         </li>
+        )}
       </ol>
       <div ref={previewRef} className={s.preview} aria-hidden="true">
         <canvas ref={canvasRef} />
@@ -463,10 +474,213 @@ export function MobileMenu({ links }: { links: { href: string; label: string }[]
             ))}
           </ul>
         </nav>
-        <p className={s.menuFoot}>
-          <G name="diamond" /> Dhaka <G name="arrow" /> Remote
-        </p>
+        <div className={s.menuFoot}>
+          <span>
+            <G name="diamond" /> Dhaka <G name="arrow" /> Remote
+          </span>
+          <ThemeToggle className={s.themeBtn}>
+            <G name="ring" className={s.themeGlyph} />
+            <span className={s.toDark}>Dark mode</span>
+            <span className={s.toLight}>Light mode</span>
+          </ThemeToggle>
+        </div>
       </div>
     </>
+  );
+}
+
+/* ------------------------------------------------------------------------------------------
+ * Filters: a row of small grotesk options with counts, as on an index card.
+ * ---------------------------------------------------------------------------------------- */
+
+function Filters({ options, value, onChange, label }: { options: { id: string; count: number }[]; value: string; onChange: (v: string) => void; label: string }) {
+  return (
+    <div className={s.filters} role="radiogroup" aria-label={label}>
+      {options.map((o) => (
+        <button key={o.id} type="button" role="radio" aria-checked={value === o.id} className={s.filter} onClick={() => onChange(o.id)}>
+          {o.id} <sup>({String(o.count).padStart(2, "0")})</sup>
+        </button>
+      ))}
+    </div>
+  );
+}
+
+/** The full work index: category filter over the giant rows. */
+export function WorkCatalogue({ works }: { works: Work[] }) {
+  const [cat, setCat] = useState("All");
+  const cats = ["All", ...Array.from(new Set(works.map((w) => w.category)))];
+  const shown = cat === "All" ? works : works.filter((w) => w.category === cat);
+  return (
+    <>
+      <div className={s.wrap}>
+        <Filters label="Filter by discipline" value={cat} onChange={setCat} options={cats.map((c) => ({ id: c, count: c === "All" ? works.length : works.filter((w) => w.category === c).length }))} />
+      </div>
+      <WorkIndex key={cat} works={shown} initial={shown.length} source={works} />
+    </>
+  );
+}
+
+/** Insights as a typographic index: topic filter over numbered rows. */
+export function PostIndex({ posts, authors, format }: { posts: Post[]; authors: Record<string, string>; format: Record<string, string> }) {
+  const [cat, setCat] = useState("All");
+  const cats = ["All", ...Array.from(new Set(posts.map((p) => p.category)))];
+  const shown = cat === "All" ? posts : posts.filter((p) => p.category === cat);
+  return (
+    <div className={s.wrap}>
+      <Filters label="Filter by topic" value={cat} onChange={setCat} options={cats.map((c) => ({ id: c, count: c === "All" ? posts.length : posts.filter((p) => p.category === c).length }))} />
+      <ol className={s.postRows}>
+        {shown.map((p, i) => (
+          <li key={p.slug}>
+            <Link href={`/v9/insights/${p.slug}`} className={s.postRow}>
+              <span className={s.postNum}>{String(i + 1).padStart(2, "0")}</span>
+              <span className={s.postMain}>
+                <span className={s.postTitle}>{p.title}</span>
+                <span className={s.postExcerpt}>{p.excerpt}</span>
+              </span>
+              <span className={s.postMeta}>
+                <span>{p.category}</span>
+                <span>{format[p.slug]}</span>
+                <span>{authors[p.author] ?? ""}</span>
+                <span>{p.readingMinutes} min</span>
+              </span>
+            </Link>
+          </li>
+        ))}
+      </ol>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------------------------------
+ * Contact brief. Nothing is stored: a valid brief opens the visitor's email app, and the
+ * page says so.
+ * ---------------------------------------------------------------------------------------- */
+
+type Errors = Partial<Record<"name" | "email" | "needs" | "message", string>>;
+
+export function BriefForm({ email, needs, budgets, timelines }: { email: string; needs: string[]; budgets: string[]; timelines: string[] }) {
+  const [picked, setPicked] = useState<string[]>([]);
+  const [errors, setErrors] = useState<Errors>({});
+  const [sent, setSent] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+
+  const submit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const f = new FormData(e.currentTarget);
+    const v = (k: string) => String(f.get(k) ?? "").trim();
+    const next: Errors = {};
+    if (!v("name")) next.name = "Your name, please.";
+    if (!/^\S+@\S+\.\S+$/.test(v("email"))) next.email = "An email we can reply to.";
+    if (!picked.length) next.needs = "Pick at least one.";
+    if (v("message").length < 10) next.message = "A sentence or two about the project.";
+    setErrors(next);
+    const first = Object.keys(next)[0];
+    if (first) {
+      formRef.current?.querySelector<HTMLElement>(`[data-field="${first}"]`)?.focus();
+      return;
+    }
+    const body = [
+      `Name: ${v("name")}`,
+      `Email: ${v("email")}`,
+      v("company") && `Company: ${v("company")}`,
+      `Needs: ${picked.join(", ")}`,
+      v("budget") && `Budget: ${v("budget")}`,
+      v("timeline") && `Timeline: ${v("timeline")}`,
+      "",
+      v("message"),
+    ]
+      .filter((x) => x !== "")
+      .join("\n");
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(`Project brief — ${v("name")}`)}&body=${encodeURIComponent(body)}`;
+    setSent(true);
+  };
+
+  if (sent) {
+    return (
+      <div className={s.sent} role="status">
+        <p className={s.sentTitle}>
+          Brief ready <G name="arrow" />
+        </p>
+        <p>
+          Your email app should have opened with the brief filled in — press send there and we reply within a working day.
+          Nothing was stored on this site. If no window opened, write to <a href={`mailto:${email}`}>{email}</a>.
+        </p>
+        <button type="button" className={s.textBtn} onClick={() => setSent(false)}>
+          Edit the brief
+        </button>
+      </div>
+    );
+  }
+
+  const err = (k: keyof Errors) =>
+    errors[k] ? (
+      <span className={s.err} id={`v9-err-${k}`}>
+        <G name="plus" /> {errors[k]}
+      </span>
+    ) : null;
+
+  return (
+    <form ref={formRef} className={s.form} onSubmit={submit} noValidate>
+      <label className={s.field}>
+        <span className={s.label}>(01) Name</span>
+        <input name="name" data-field="name" autoComplete="name" aria-invalid={!!errors.name} aria-describedby={errors.name ? "v9-err-name" : undefined} />
+        {err("name")}
+      </label>
+      <label className={s.field}>
+        <span className={s.label}>(02) Email</span>
+        <input name="email" type="email" data-field="email" autoComplete="email" aria-invalid={!!errors.email} aria-describedby={errors.email ? "v9-err-email" : undefined} />
+        {err("email")}
+      </label>
+      <label className={s.field}>
+        <span className={s.label}>(03) Company — optional</span>
+        <input name="company" autoComplete="organization" />
+      </label>
+      <fieldset className={`${s.field} ${s.fieldWide}`}>
+        <legend className={s.label}>(04) What you need</legend>
+        <div className={s.chips} data-field="needs" tabIndex={-1} aria-describedby={errors.needs ? "v9-err-needs" : undefined}>
+          {needs.map((n) => (
+            <button
+              key={n}
+              type="button"
+              className={s.filter}
+              aria-pressed={picked.includes(n)}
+              onClick={() => setPicked((p) => (p.includes(n) ? p.filter((x) => x !== n) : [...p, n]))}
+            >
+              {n}
+            </button>
+          ))}
+        </div>
+        {err("needs")}
+      </fieldset>
+      <label className={s.field}>
+        <span className={s.label}>(05) Budget — optional</span>
+        <select name="budget" defaultValue="">
+          <option value="">Not sure yet</option>
+          {budgets.map((b) => (
+            <option key={b}>{b}</option>
+          ))}
+        </select>
+      </label>
+      <label className={s.field}>
+        <span className={s.label}>(06) Timeline — optional</span>
+        <select name="timeline" defaultValue="">
+          <option value="">Flexible</option>
+          {timelines.map((b) => (
+            <option key={b}>{b}</option>
+          ))}
+        </select>
+      </label>
+      <label className={`${s.field} ${s.fieldWide}`}>
+        <span className={s.label}>(07) The project</span>
+        <textarea name="message" rows={5} data-field="message" aria-invalid={!!errors.message} aria-describedby={errors.message ? "v9-err-message" : undefined} />
+        {err("message")}
+      </label>
+      <div className={`${s.fieldWide} ${s.formFoot}`}>
+        <button type="submit" className={s.cta}>
+          Send the brief <G name="arrow" />
+        </button>
+        <span className={s.formNote}>Opens your email app with the brief filled in. Nothing is stored here.</span>
+      </div>
+    </form>
   );
 }

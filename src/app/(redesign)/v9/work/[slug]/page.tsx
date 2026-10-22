@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getNextWork, getWorkBySlug, works } from "@/redesign/content";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
-import { Footer, Header, SectionHead } from "@/redesign/v9/Chrome";
+import { SectionHead } from "@/redesign/v9/Chrome";
 import { PixelReveal, Scramble } from "@/redesign/v9/Client";
 import { artFor } from "@/redesign/v9/art";
 import { G } from "@/redesign/v9/Glyphs";
@@ -35,11 +35,10 @@ export default async function V9Case({ params }: PageProps<"/v9/work/[slug]">) {
 
   return (
     <>
-      <Header />
       <main>
         <section className={s.caseHero}>
           <p className={s.heroMeta}>
-            <Link href="/v9#work" className={s.back}>
+            <Link href="/v9/work" className={s.back}>
               <G name="arrow" className={s.flipArrow} /> Index
             </Link>
             <span>
@@ -179,7 +178,6 @@ export default async function V9Case({ params }: PageProps<"/v9/work/[slug]">) {
           </span>
         </Link>
       </main>
-      <Footer />
     </>
   );
 }

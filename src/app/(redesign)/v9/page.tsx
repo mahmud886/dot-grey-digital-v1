@@ -1,6 +1,7 @@
 import { disciplines, process, stats, testimonials, works, offices } from "@/redesign/content";
-import { Footer, Header, SectionHead } from "@/redesign/v9/Chrome";
-import { DhakaTime, Scramble, ServicesIndex, WorkIndex } from "@/redesign/v9/Client";
+import { SectionHead } from "@/redesign/v9/Chrome";
+import Link from "next/link";
+import { DhakaTime, Preloader, Scramble, ServicesIndex, WorkIndex } from "@/redesign/v9/Client";
 import { G } from "@/redesign/v9/Glyphs";
 import s from "@/redesign/v9/v9.module.css";
 
@@ -11,7 +12,7 @@ export default function V9Home() {
   const quote = testimonials[1];
   return (
     <>
-      <Header />
+      <Preloader />
       <main>
         <section className={s.hero}>
           <p className={s.heroMeta}>
@@ -54,7 +55,15 @@ export default function V9Home() {
 
         <section id="work" className={s.section}>
           <div className={s.wrap}>
-            <SectionHead n="01" title="Selected work" aside={`${works.length} projects`} />
+            <SectionHead
+              n="01"
+              title="Selected work"
+              aside={
+                <Link href="/v9/work" className={s.asideLink}>
+                  Full index ({works.length}) <G name="arrow" />
+                </Link>
+              }
+            />
           </div>
           <WorkIndex works={works} />
         </section>
@@ -72,7 +81,16 @@ export default function V9Home() {
 
         <section id="services" className={`${s.section} ${s.dark}`}>
           <div className={s.wrap}>
-            <SectionHead n="03" title="Services" aside="Six disciplines, one team" dark />
+            <SectionHead
+              n="03"
+              title="Services"
+              aside={
+                <Link href="/v9/services" className={s.asideLink}>
+                  Six disciplines, one team <G name="arrow" />
+                </Link>
+              }
+              dark
+            />
             <ServicesIndex items={disciplines} />
           </div>
         </section>
@@ -148,7 +166,6 @@ export default function V9Home() {
           </figure>
         </section>
       </main>
-      <Footer />
     </>
   );
 }
