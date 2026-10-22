@@ -1,18 +1,30 @@
 import Link from "next/link";
 import { BrandMark } from "@/redesign/shared/BrandMark";
 import { ThemeToggle } from "@/redesign/shared/ThemeToggle";
-import { disciplines, offices, site } from "@/redesign/content";
+import { offices, site } from "@/redesign/content";
 import { DhakaTime, MobileMenu } from "./Client";
 import { G } from "./Glyphs";
+import { Notes } from "./More";
+import { V9_MAP } from "./nav";
+import m from "./more.module.css";
 import s from "./v9.module.css";
 
 export const LINKS = [
   { href: "/v9/work", label: "Work" },
   { href: "/v9/services", label: "Services" },
+  { href: "/v9/process", label: "Process" },
   { href: "/v9/about", label: "About" },
   { href: "/v9/insights", label: "Insights" },
-  { href: "/v9/careers", label: "Careers" },
   { href: "/v9/contact", label: "Contact" },
+];
+
+/** The mobile menu has room for the rest of "work with us". */
+const MENU_LINKS = [
+  ...LINKS.slice(0, 3),
+  { href: "/v9/engagements", label: "Engagements" },
+  ...LINKS.slice(3),
+  { href: "/v9/careers", label: "Careers" },
+  { href: "/v9/start", label: "Start a project" },
 ];
 
 /** "◐ Dark" / "◐ Light" — both labels render, CSS shows the one that applies. */
@@ -49,9 +61,12 @@ export function Header() {
           <ThemeToggle className={s.themeBtn}>
             <ThemeLabel />
           </ThemeToggle>
+          <Link href="/v9/start" className={m.startPill}>
+            Start a project <G name="arrow" />
+          </Link>
         </div>
       </header>
-      <MobileMenu links={LINKS} />
+      <MobileMenu links={MENU_LINKS} />
     </>
   );
 }
@@ -111,7 +126,7 @@ export function Footer() {
   return (
     <footer className={s.footer} id="contact">
       <div className={s.wrap}>
-        <Link href="/v9/contact" className={s.footCta}>
+        <Link href="/v9/start" className={s.footCta}>
           <span className={s.footCtaKicker}>(Contact) New business, any size</span>
           <span className={s.footCtaLine}>
             Start a project <G name="arrow" />
@@ -123,53 +138,32 @@ export function Footer() {
           <G name="wave" /> <a href={`mailto:${site.email}`}>{site.email}</a> <G name="plus" /> {site.phone}
         </p>
 
-        <div className={s.footCols}>
-          <div>
-            <h3 className={s.footHead}>Studio</h3>
-            <ul>
-              {LINKS.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href}>{l.label}</Link>
-                </li>
-              ))}
-              <li>
-                <Link href="/v9/faq">FAQ</Link>
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className={s.footHead}>Services</h3>
-            <ul>
-              {disciplines.map((d) => (
-                <li key={d.id}>
-                  <Link href={`/v9/services/${d.id}`}>{d.short}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h3 className={s.footHead}>Contact</h3>
-            <ul>
-              <li>
-                <a href={`mailto:${site.email}`}>{site.email}</a>
-              </li>
-              <li>{site.phone}</li>
-              <li>
-                Dhaka <DhakaTime />
-              </li>
-            </ul>
-          </div>
-          <div>
-            <h3 className={s.footHead}>Prototype</h3>
-            <ul>
-              <li>V9 — Index</li>
-              <li>
-                <Link href="/">All versions</Link>
-              </li>
-              <li>
-                <Link href="/v9/privacy">Privacy</Link> <G name="slash" /> <Link href="/v9/terms">Terms</Link>
-              </li>
-            </ul>
+        <div className={m.footGrid}>
+          {V9_MAP.map((col) => (
+            <nav key={col.label} aria-label={col.label}>
+              <h3 className={s.footHead}>{col.label}</h3>
+              <ul>
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href}>{l.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
+          <div className={m.footNotes}>
+            <Notes email={site.email} id="v9-foot-notes" />
+            <p>
+              <a href={`mailto:${site.email}`}>{site.email}</a>
+              <br />
+              {site.phone} <G name="slash" /> Dhaka <DhakaTime />
+            </p>
+            <ThemeToggle className={s.themeBtn}>
+              <ThemeLabel />
+            </ThemeToggle>
+            <p>
+              V9 — Index <G name="slash" /> <Link href="/">All versions</Link>
+            </p>
           </div>
         </div>
       </div>

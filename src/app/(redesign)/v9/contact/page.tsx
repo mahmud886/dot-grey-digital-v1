@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { disciplines, offices, site } from "@/redesign/content";
 import { budgetOptions, timelineOptions } from "@/data/site";
 import { PageHead } from "@/redesign/v9/Chrome";
@@ -17,10 +18,10 @@ export default function V9Contact() {
         meta="New business, any size"
         title={
           <>
-            Start a project <G name="arrow" />
+            Say <G name="wave" /> hello
           </>
         }
-        lede="Two minutes here saves a week of email. Tell us what you are trying to do; we reply within a working day."
+        lede={<>Two minutes here saves a week of email; we reply within a working day. Prefer one question at a time? Try the <Link href="/v9/start" className={s.asideLink}>step-by-step brief</Link>.</>}
       />
       <section className={s.sectionTight}>
         <div className={`${s.wrap} ${s.contactGrid}`}>

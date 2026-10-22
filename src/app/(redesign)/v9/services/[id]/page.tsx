@@ -8,6 +8,7 @@ import { PageHead, SectionHead } from "@/redesign/v9/Chrome";
 import { PixelReveal } from "@/redesign/v9/Client";
 import { G } from "@/redesign/v9/Glyphs";
 import { CRAFT_ART, CRAFT_FAQ, RELATED } from "@/redesign/v9/related";
+import m from "@/redesign/v9/more.module.css";
 import s from "@/redesign/v9/v9.module.css";
 
 export function generateStaticParams() {
@@ -120,6 +121,23 @@ export default async function V9Service({ params }: PageProps<"/v9/services/[id]
           </div>
         </div>
       </section>
+
+      <nav className={m.band} aria-label="Work with us">
+        <Link href="/v9/engagements" className={m.bandLink}>
+          <span className={s.label}>How we would work together</span>
+          <b>
+            Engagements <G name="arrow" />
+          </b>
+          <p>Discovery, Sprint, Product team or Embedded squad — and how each is priced.</p>
+        </Link>
+        <Link href="/v9/start" className={m.bandLink}>
+          <span className={s.label}>{d.short}, scoped for you</span>
+          <b>
+            Start a project <G name="arrow" />
+          </b>
+          <p>Six short questions; your answers open as an email to us.</p>
+        </Link>
+      </nav>
 
       <Link href={`/v9/services/${next.id}`} className={s.next}>
         <span className={s.label}>Next discipline</span>
