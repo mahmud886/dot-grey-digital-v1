@@ -38,7 +38,7 @@ export default async function V12Service({ params }: PageProps<"/v12/services/[i
           </h1>
           <p className={s.heroLead}>{d.line}</p>
           <div className={s.ctas}>
-            <Link href="/v12/contact" className={s.pillInk}>
+            <Link href="/v12/start" className={s.pillInk}>
               Start a project <span aria-hidden="true">↗</span>
             </Link>
           </div>
@@ -126,6 +126,20 @@ export default async function V12Service({ params }: PageProps<"/v12/services/[i
               <p>{f.a}</p>
             </details>
           ))}
+        </div>
+      </section>
+
+      <section className={`${s.wrap} ${s.band}`} aria-label="Working together">
+        <p className={s.bandText}>
+          Start with a two-week Discovery, a fixed Sprint or a team on <Em>an outcome.</Em>
+        </p>
+        <div className={s.ctas}>
+          <Link href="/v12/engagements" className={s.pill}>
+            How engagements work <span aria-hidden="true">→</span>
+          </Link>
+          <Link href="/v12/start" className={s.pillInk}>
+            Start a project <span aria-hidden="true">↗</span>
+          </Link>
         </div>
       </section>
 

@@ -38,7 +38,7 @@ export default function V12Home() {
               Design, engineering, automation, data and machine learning — from one small, senior team.
             </p>
             <div className={s.ctas}>
-              <Link href="/v12/contact" className={s.pillInk}>
+              <Link href="/v12/start" className={s.pillInk}>
                 Start a project <span aria-hidden="true">↗</span>
               </Link>
               <Link href="#work" className={s.textLink}>
@@ -167,8 +167,8 @@ export default function V12Home() {
             <a href={`mailto:${site.email}`} className={s.mail}>
               {site.email} <span aria-hidden="true">↗</span>
             </a>
-            <Link href="/v12/contact" className={s.pill}>
-              Send a brief
+            <Link href="/v12/start" className={s.pill}>
+              Start a project
             </Link>
           </div>
         </section>

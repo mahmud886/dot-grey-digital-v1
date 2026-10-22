@@ -67,8 +67,8 @@ export default function V12Services() {
           <Link href="/v12/contact" className={s.pillInk}>
             Tell us the problem <span aria-hidden="true">↗</span>
           </Link>
-          <Link href="/v12/faq" className={s.textLink}>
-            Read the FAQ
+          <Link href="/v12/engagements" className={s.textLink}>
+            How engagements work
           </Link>
         </div>
       </section>

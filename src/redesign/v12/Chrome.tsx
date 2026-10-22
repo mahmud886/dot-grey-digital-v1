@@ -5,20 +5,15 @@ import { ProjectArt } from "@/redesign/shared/ProjectArt";
 import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { ThemeIcon, ThemeToggle } from "@/redesign/shared/ThemeToggle";
 import { offices, site, type Work } from "@/redesign/content";
+import { V12_MAP, V12_MOBILE, V12_NAV } from "./agency-extra";
 import { MenuToggle, NavLinks } from "./Client";
+import { Newsletter } from "./More";
 import s from "./v12.module.css";
 
 export const BASE = "/v12";
 
-const NAV = [
-  { href: `${BASE}/work`, label: "Work" },
-  { href: `${BASE}/services`, label: "Services" },
-  { href: `${BASE}/about`, label: "About" },
-  { href: `${BASE}/insights`, label: "Insights" },
-  { href: `${BASE}/careers`, label: "Careers" },
-];
-
-const MOBILE = [...NAV, { href: `${BASE}/faq`, label: "FAQ" }, { href: `${BASE}/contact`, label: "Contact" }];
+const NAV = V12_NAV;
+const MOBILE = V12_MOBILE;
 
 /** The italic accent voice: a word or two set in Cormorant Garamond. */
 export function Em({ children }: { children: ReactNode }) {
@@ -40,8 +35,8 @@ export function Header() {
           <ThemeToggle className={s.themeBtn}>
             <ThemeIcon />
           </ThemeToggle>
-          <Link href={`${BASE}/contact`} className={`${s.pill} ${s.headerCta}`}>
-            Let&apos;s talk <span aria-hidden="true">↗</span>
+          <Link href={`${BASE}/start`} className={`${s.pill} ${s.headerCta}`}>
+            Start a project <span aria-hidden="true">↗</span>
           </Link>
           <MenuToggle links={MOBILE} />
         </div>
@@ -131,32 +126,10 @@ export function Portrait({ slug, name, title }: { slug: string; name: string; ti
   );
 }
 
-const SITEMAP = [
-  {
-    label: "Explore",
-    links: [
-      { href: `${BASE}/work`, label: "Work" },
-      { href: `${BASE}/services`, label: "Services" },
-      { href: `${BASE}/about`, label: "About" },
-      { href: `${BASE}/insights`, label: "Insights" },
-    ],
-  },
-  {
-    label: "Studio",
-    links: [
-      { href: `${BASE}/careers`, label: "Careers" },
-      { href: `${BASE}/faq`, label: "FAQ" },
-      { href: `${BASE}/contact`, label: "Contact" },
-      { href: `${BASE}/privacy`, label: "Privacy" },
-      { href: `${BASE}/terms`, label: "Terms" },
-    ],
-  },
-];
-
 export function Footer() {
   return (
     <footer className={s.footer}>
-      <div className={`${s.wrap} ${s.footCols}`}>
+      <div className={`${s.wrap} ${s.footTop}`}>
         <div>
           <p className={s.footLead}>
             Design, software, automation, data and machine learning — <Em>under one roof</Em> in Dhaka.
@@ -164,9 +137,15 @@ export function Footer() {
           <p className={s.footMail}>
             <a href={`mailto:${site.email}`}>{site.email}</a>
           </p>
+          <Link href={`${BASE}/start`} className={s.pillInk}>
+            Start a project <span aria-hidden="true">↗</span>
+          </Link>
         </div>
-        {SITEMAP.map((col) => (
-          <div key={col.label}>
+        <Newsletter email={site.email} id="v12-news-foot" />
+      </div>
+      <div className={`${s.wrap} ${s.footCols}`}>
+        {V12_MAP.map((col) => (
+          <nav key={col.label} aria-label={col.label}>
             <small className={s.label}>{col.label}</small>
             <ul>
               {col.links.map((l) => (
@@ -175,7 +154,7 @@ export function Footer() {
                 </li>
               ))}
             </ul>
-          </div>
+          </nav>
         ))}
         <div>
           <small className={s.label}>Where</small>
@@ -185,6 +164,11 @@ export function Footer() {
                 <b>{o.label}</b> — {o.lines.join(", ")}
               </li>
             ))}
+            <li>
+              <ThemeToggle className={s.footTheme}>
+                <ThemeIcon /> <span>Colour mode</span>
+              </ThemeToggle>
+            </li>
             <li>
               <Link href="/">All prototypes ↗</Link>
             </li>
