@@ -1,19 +1,107 @@
 {
-  "categories": ["General", "Process", "Pricing", "Support"],
+  "categories": [
+    "General",
+    "Process",
+    "Pricing & engagement",
+    "AI & data",
+    "Support"
+  ],
   "faqs": [
-    { "id": "what-we-do", "category": "General", "question": "What does DotGrey actually do?", "answer": "Design and build digital products. In practice that means UI/UX design, web development, email templates, banner ads, Veeva content and motion — usually two or three of those together on the same engagement." },
-    { "id": "who", "category": "General", "question": "Who do you usually work with?", "answer": "Funded startups and established teams rebuilding something that has outgrown its original design. Company sizes run from five people to a few hundred. We are happy to say no when a project is not a fit." },
-    { "id": "where", "category": "General", "question": "Where is the team based?", "answer": "Our studio is in Dhaka and part of the team is remote across four time zones. We overlap comfortably with European and Gulf hours, and keep at least four hours of overlap with North American clients." },
-    { "id": "nda", "category": "General", "question": "Do you sign NDAs?", "answer": "Yes, routinely, and before the first detailed conversation if you prefer. We can work from your template or send ours." },
-    { "id": "start", "category": "Process", "question": "How does a project start?", "answer": "A short call, then a written brief we both agree on before any work begins. For most engagements we also run a kickoff workshop in the first week to settle scope and success measures." },
-    { "id": "timeline", "category": "Process", "question": "How long does a typical project take?", "answer": "An email template set runs one to two weeks. A marketing site is four to six. A product design engagement is usually eight to twelve. You get a dated plan before anything starts, and we flag slippage the week it happens rather than at the end." },
-    { "id": "involvement", "category": "Process", "question": "How involved do I need to be?", "answer": "One workshop at the start, a weekly review of about forty-five minutes, and prompt answers to unblocking questions. Beyond that, as involved as you want to be." },
-    { "id": "to-start", "category": "Process", "question": "What do you need from me to get started?", "answer": "A signed proposal, one decision-maker who can approve work, and access to whatever already exists — brand files, analytics, the current site. If some of that is missing we will work around it." },
-    { "id": "free", "category": "Pricing", "question": "Are the free first deliverables really free?", "answer": "Yes. One email template, one UI/UX screen or one small development task, with no obligation and no card required. It is how we would rather introduce ourselves than with a deck." },
-    { "id": "revisions", "category": "Pricing", "question": "Do you charge for revisions?", "answer": "Starter includes two revisions per request. Growth and Scale include unlimited revisions within the agreed scope. Changing the scope itself is a separate conversation, and we tell you before the meter starts." },
-    { "id": "cancel", "category": "Pricing", "question": "Can I pause or cancel a retainer?", "answer": "Yes. Retainers are monthly with no minimum term. Pause or cancel with fourteen days' notice and you keep everything produced up to that point." },
-    { "id": "payment", "category": "Pricing", "question": "What payment methods do you accept?", "answer": "Bank transfer and card. Fixed-scope projects are billed 50% at kickoff and 50% at handover. Retainers are billed monthly in advance." },
-    { "id": "maintenance", "category": "Support", "question": "Do you maintain things after launch?", "answer": "Every build includes thirty days of post-launch support. After that you can move to a maintenance retainer or take the codebase in-house — it is documented either way, and there is no lock-in." },
-    { "id": "white-label", "category": "Support", "question": "Can I outsource white-label work to you?", "answer": "Yes. A reasonable share of our work is white-label for other agencies. We stay invisible, work in your tools, and sign whatever you need us to sign." }
+    {
+      "id": "what-we-do",
+      "category": "General",
+      "question": "What does DotGrey actually do?",
+      "answer": "We design and build digital products end to end: product and brand design, websites and apps, custom software, automation and integrations, data pipelines and dashboards, and machine-learning features. Most engagements combine two or three of those in one team."
+    },
+    {
+      "id": "who",
+      "category": "General",
+      "question": "Who do you usually work with?",
+      "answer": "Founders and established teams who need something built properly, or rebuilt because it has outgrown its first version. We are happy to say no when a project is not a fit, and to point you somewhere better."
+    },
+    {
+      "id": "where",
+      "category": "General",
+      "question": "Where is the team based?",
+      "answer": "Our studio is in Dhaka and part of the team works remotely across four time zones. We keep a daily overlap window with every client and agree it at kickoff."
+    },
+    {
+      "id": "nda",
+      "category": "General",
+      "question": "Do you sign NDAs?",
+      "answer": "Yes, routinely, and before the first detailed conversation if you prefer. We can work from your template or send ours."
+    },
+    {
+      "id": "start",
+      "category": "Process",
+      "question": "How does a project start?",
+      "answer": "A short call, then a written brief we both agree on before any paid work begins. Larger engagements open with a discovery phase to settle scope, risks and how success will be measured."
+    },
+    {
+      "id": "rhythm",
+      "category": "Process",
+      "question": "How will we know how it is going?",
+      "answer": "You get a working demo every week and a short written update: what shipped, what is next, and anything at risk. You also have direct access to the people doing the work, not an account layer."
+    },
+    {
+      "id": "existing",
+      "category": "Process",
+      "question": "Can you work with our existing code or team?",
+      "answer": "Yes. We often join an in-house team, take over a codebase, or extend a system someone else started. We begin with an audit so we know what we are inheriting before we promise anything."
+    },
+    {
+      "id": "own",
+      "category": "Process",
+      "question": "Who owns the work?",
+      "answer": "You do. Code, designs, models and documentation transfer to you as the work is paid for, in your repositories and accounts from day one wherever possible."
+    },
+    {
+      "id": "pricing",
+      "category": "Pricing & engagement",
+      "question": "How do you price projects?",
+      "answer": "Fixed price for well-defined scopes such as a discovery sprint or a website, and a monthly team rate for products that evolve. Every proposal states what is included, what is not, and what would change the price."
+    },
+    {
+      "id": "budget",
+      "category": "Pricing & engagement",
+      "question": "Do we need a big budget to work with you?",
+      "answer": "No. Many relationships start small, with an audit, an automation that saves a team a day a week, or a dashboard that answers one question well. We scope to what moves the needle first."
+    },
+    {
+      "id": "change",
+      "category": "Pricing & engagement",
+      "question": "What happens if the scope changes?",
+      "answer": "It usually does. We flag the change as soon as we see it, explain the trade-off in time and cost, and only proceed once you agree in writing."
+    },
+    {
+      "id": "ai-responsible",
+      "category": "AI & data",
+      "question": "How do you use AI responsibly?",
+      "answer": "We use models where judgement is needed and people where accountability is. Every ML or LLM feature ships with an evaluation set, monitoring and a way for a person to review or override it."
+    },
+    {
+      "id": "ai-data",
+      "category": "AI & data",
+      "question": "What happens to our data?",
+      "answer": "It stays in infrastructure you control or approve. We do not use client data to train third-party models, we document every place data flows, and we follow your security and retention policies."
+    },
+    {
+      "id": "ai-fit",
+      "category": "AI & data",
+      "question": "How do we know if AI is even the right answer?",
+      "answer": "We test that first. Often a rule, a better form or a clean data pipeline beats a model. When a model is the right tool, we prove it against a baseline before building around it."
+    },
+    {
+      "id": "support",
+      "category": "Support",
+      "question": "What happens after launch?",
+      "answer": "Every engagement includes a support period for fixes. After that, most clients keep a small retainer for improvements, monitoring and updates, or we hand over fully to your team with documentation."
+    },
+    {
+      "id": "handover",
+      "category": "Support",
+      "question": "Can our team take it over later?",
+      "answer": "Yes, and we plan for it from the start: documented code, a real design system, tests and runbooks, plus handover sessions with your engineers."
+    }
   ]
 }

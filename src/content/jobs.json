@@ -1,9 +1,21 @@
 {
   "benefits": [
-    { "title": "Flexible hours", "body": "Core overlap from 11am to 4pm. The rest is yours to arrange." },
-    { "title": "Remote-friendly", "body": "Work from the studio, from home, or somewhere in between." },
-    { "title": "Learning budget", "body": "An annual budget for courses, conferences and books, with no approval theatre." },
-    { "title": "Health cover", "body": "Private health cover for you and immediate family, from day one." }
+    {
+      "title": "Flexible hours",
+      "body": "Core overlap from 11am to 4pm. The rest is yours to arrange."
+    },
+    {
+      "title": "Remote-friendly",
+      "body": "Work from the studio, from home, or somewhere in between."
+    },
+    {
+      "title": "Learning budget",
+      "body": "An annual budget for courses, conferences and books, with no approval theatre."
+    },
+    {
+      "title": "Health cover",
+      "body": "Private health cover for you and immediate family, from day one."
+    }
   ],
   "jobs": [
     {
@@ -27,7 +39,12 @@
         "Comfortable running a client workshop alone",
         "Working knowledge of accessibility standards"
       ],
-      "niceToHave": ["Front-end experience", "Motion design skills", "Agency background", "Regulated-industry experience"]
+      "niceToHave": [
+        "Front-end experience",
+        "Motion design skills",
+        "Agency background",
+        "Regulated-industry experience"
+      ]
     },
     {
       "slug": "frontend-engineer",
@@ -50,30 +67,66 @@
         "Comfortable owning a build from setup to launch",
         "Clear written communication — much of the team is remote"
       ],
-      "niceToHave": ["Next.js App Router", "GSAP or WebGL", "E-commerce builds", "Open-source contributions"]
+      "niceToHave": [
+        "Next.js App Router",
+        "GSAP or WebGL",
+        "E-commerce builds",
+        "Open-source contributions"
+      ]
     },
     {
-      "slug": "email-developer",
-      "title": "Email Developer",
-      "department": "Production",
-      "location": "Dhaka",
+      "slug": "automation-engineer",
+      "title": "Automation Engineer",
+      "department": "Engineering",
+      "location": "Dhaka / Remote",
       "type": "Full-time",
-      "summary": "Hand-build responsive email and Veeva content that renders correctly everywhere it lands.",
+      "summary": "Design and run the workflows that move data between our clients' tools, and make sure they say so when something fails.",
       "responsibilities": [
-        "Hand-code responsive email templates",
-        "Test across major clients, devices and dark mode",
-        "Build and maintain modular template libraries",
-        "Produce Veeva Approved Email and CLM content",
-        "Document handover for client ESP teams"
+        "Map a client's manual process and turn it into a reliable workflow",
+        "Build integrations against CRMs, ERPs and internal APIs",
+        "Add retries, alerts and audit logs to everything you ship",
+        "Document each automation so the client's team can own it",
+        "Work with designers on the moments where a person still decides"
       ],
       "requirements": [
-        "Two or more years building production email",
-        "Deep familiarity with Outlook and Gmail quirks",
-        "Comfortable with table-based layout and MSO conditionals",
-        "Experience with at least one major ESP",
-        "Careful, methodical QA habits"
+        "Three or more years building integrations or backend services",
+        "Solid TypeScript or Python",
+        "Experience with queues, webhooks and idempotent jobs",
+        "Comfort explaining a process back to the person who runs it",
+        "Care for error handling and monitoring"
       ],
-      "niceToHave": ["Veeva Vault experience", "Klaviyo or HubSpot", "Automation scripting", "Accessibility in email"]
+      "niceToHave": [
+        "n8n, Temporal or similar orchestration tools",
+        "Document processing or OCR pipelines",
+        "Agency or consulting background"
+      ]
+    },
+    {
+      "slug": "ml-engineer",
+      "title": "Machine Learning Engineer",
+      "department": "Data & AI",
+      "location": "Remote",
+      "type": "Full-time",
+      "summary": "Take models and LLM features from notebook to production, with evaluation and monitoring built in from the first week.",
+      "responsibilities": [
+        "Frame the problem with the client and agree a baseline to beat",
+        "Build retrieval, classification and prediction features",
+        "Write evaluation sets and track quality over time",
+        "Deploy and monitor models in the client's infrastructure",
+        "Explain trade-offs in plain language to non-specialists"
+      ],
+      "requirements": [
+        "Three or more years shipping ML or LLM features to real users",
+        "Strong Python and familiarity with PyTorch or scikit-learn",
+        "Experience with evaluation, not just training",
+        "Understanding of data privacy and responsible-AI practice",
+        "Clear written communication"
+      ],
+      "niceToHave": [
+        "RAG and agent frameworks",
+        "MLOps tooling such as MLflow",
+        "Data engineering with dbt or similar"
+      ]
     },
     {
       "slug": "motion-designer",
@@ -96,7 +149,12 @@
         "Experience exporting Lottie or CSS-ready animation",
         "Available for an initial six-month contract"
       ],
-      "niceToHave": ["3D in Blender or Cinema 4D", "Sound design", "Illustration", "Live-action editing"]
+      "niceToHave": [
+        "3D in Blender or Cinema 4D",
+        "Sound design",
+        "Illustration",
+        "Live-action editing"
+      ]
     }
   ]
 }
