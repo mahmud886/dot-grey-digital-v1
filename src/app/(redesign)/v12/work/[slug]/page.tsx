@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ProjectArt } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { getNextWork, getWorkBySlug, works } from "@/redesign/content";
 import { Em, WorkCard } from "@/redesign/v12/Chrome";
 import s from "@/redesign/v12/v12.module.css";
@@ -53,7 +53,7 @@ export default async function V12Case({ params }: PageProps<"/v12/work/[slug]">)
         </section>
 
         <div className={`${s.wrap} ${s.cover}`}>
-          <ProjectArt slug={w.slug} label={w.client} variant="contour" ink="var(--art-b-ink)" paper="var(--art-b-paper)" ratio={2.2} title={`${w.title} — cover artwork`} />
+          <ProjectMockup slug={w.slug} ink="var(--art-b-ink)" paper="var(--art-b-paper)" ratio={2.2} title={`${w.title} — cover artwork`} />
         </div>
 
         <section className={`${s.wrap} ${s.section} ${s.twoUp}`}>
@@ -117,7 +117,7 @@ export default async function V12Case({ params }: PageProps<"/v12/work/[slug]">)
         <section className={`${s.wrap} ${s.gallery}`} aria-label="Gallery">
           {(["rings", "halftone", "contour"] as const).map((v, i) => (
             <div key={v} className={s.galleryItem} style={{ ["--r" as string]: `${[-2.5, 1.8, -1.2][i]}deg` }}>
-              <ProjectArt slug={w.slug} label={w.client} variant={v} frame={i + 2} ink={i === 1 ? "var(--art-b-ink)" : "var(--art-a-ink)"} paper={i === 1 ? "var(--art-b-paper)" : "var(--art-a-paper)"} ratio={i === 0 ? 1.6 : 1.1} />
+              <ProjectMockup slug={w.slug} frame={i + 2} ink={i === 1 ? "var(--art-b-ink)" : "var(--art-a-ink)"} paper={i === 1 ? "var(--art-b-paper)" : "var(--art-a-paper)"} ratio={i === 0 ? 1.6 : 1.1} />
             </div>
           ))}
         </section>

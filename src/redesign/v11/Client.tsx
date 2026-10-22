@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { BrandMark } from "@/redesign/shared/BrandMark";
 import { ProjectArt, type ArtVariant } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { useMotion } from "@/redesign/shared/useMotion";
 import { ThemeToggle } from "@/redesign/shared/ThemeToggle";
 import s from "./v11.module.css";
@@ -344,7 +345,7 @@ export function FeaturedGrid({ items }: { items: Card[] }) {
           <li key={w.slug} data-i={i} data-on={active === i}>
             <Link href={`/v11/work/${w.slug}`} className={s.fourCard} onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)}>
               <span className={s.fourArt}>
-                <ProjectArt slug={w.slug} label={w.client} variant={i % 2 ? "halftone" : "poster"} ink={i % 2 ? "var(--art-l-ink)" : "var(--art-d-ink)"} paper={i % 2 ? "var(--art-l-paper)" : "var(--art-d-paper)"} ratio={0.78} />
+                <ProjectMockup slug={w.slug} ink={i % 2 ? "var(--art-l-ink)" : "var(--art-d-ink)"} paper={i % 2 ? "var(--art-l-paper)" : "var(--art-d-paper)"} ratio={0.78} />
               </span>
               <span className={s.fourMeta}>
                 <span className={s.fourNum}>{String(i + 1).padStart(2, "0")}</span>
@@ -443,10 +444,8 @@ export function DragCarousel({ items }: { items: Card[] }) {
             <li key={w.slug}>
               <Link href={`/v11/work/${w.slug}`} className={s.engCard} draggable={false}>
                 <span className={s.engArt}>
-                  <ProjectArt
+                  <ProjectMockup
                     slug={w.slug}
-                    label={w.client}
-                    variant={(["halftone", "poster", "contour", "halftone", "rings", "poster"] as const)[i % 6]}
                     ink={i % 3 === 1 ? "var(--art-l-ink)" : "var(--art-d-ink)"}
                     paper={i % 3 === 1 ? "var(--art-l-paper)" : "var(--art-d-paper)"}
                     ratio={0.7}

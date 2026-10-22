@@ -2,8 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getNextWork, getWorkBySlug, works } from "@/redesign/content";
-import { ProjectArt } from "@/redesign/shared/ProjectArt";
-import { variantFor } from "@/redesign/v8/art";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { Footer, SecHead, Stop } from "@/redesign/v8/Chrome";
 import s from "@/redesign/v8/v8.module.css";
 
@@ -68,7 +67,7 @@ export default async function V8Case({ params }: PageProps<"/v8/work/[slug]">) {
         </section>
 
         <div className={s.caseHeroArt}>
-          <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug)} ink="var(--art-ink)" paper="var(--art-paper)" ratio={2} title={`${w.title} — key visual`} />
+          <ProjectMockup slug={w.slug} ink="var(--art-ink)" paper="var(--art-paper)" ratio={2} title={`${w.title} — key visual`} />
         </div>
 
         <section className={s.caseBlocks} aria-label="Problem and approach">
@@ -88,13 +87,13 @@ export default async function V8Case({ params }: PageProps<"/v8/work/[slug]">) {
 
         <div className={s.gallery}>
           <div className={s.galA}>
-            <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug, 1)} frame={1} ink="var(--art-ink)" paper="var(--art-paper)" ratio={0.92} title={`${w.title} — detail 1`} />
+            <ProjectMockup slug={w.slug} frame={1} ink="var(--art-ink)" paper="var(--art-paper)" ratio={0.92} title={`${w.title} — detail 1`} />
           </div>
           <div className={s.galB}>
-            <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug, 2)} frame={2} ink="var(--deck-b-ink)" paper="var(--deck-b)" ratio={1.5} title={`${w.title} — detail 2`} />
+            <ProjectMockup slug={w.slug} frame={2} ink="var(--deck-b-ink)" paper="var(--deck-b)" ratio={1.5} title={`${w.title} — detail 2`} />
           </div>
           <div className={s.galC}>
-            <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug, 3)} frame={3} ink="var(--art-ink)" paper="var(--art-paper-2)" ratio={1.5} title={`${w.title} — detail 3`} />
+            <ProjectMockup slug={w.slug} frame={3} ink="var(--art-ink)" paper="var(--art-paper-2)" ratio={1.5} title={`${w.title} — detail 3`} />
           </div>
         </div>
 
@@ -142,7 +141,7 @@ export default async function V8Case({ params }: PageProps<"/v8/work/[slug]">) {
             {next.title} <span aria-hidden="true">→</span>
           </span>
           <span className={s.nextArt} aria-hidden="true">
-            <ProjectArt slug={next.slug} label={next.client} variant={variantFor(next.slug)} ink="var(--art-ink)" paper="var(--art-paper)" ratio={4} />
+            <ProjectMockup slug={next.slug} ink="var(--art-ink)" paper="var(--art-paper)" ratio={4} />
           </span>
         </Link>
       </main>

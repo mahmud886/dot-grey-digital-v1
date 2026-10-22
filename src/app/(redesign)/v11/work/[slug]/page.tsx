@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getNextWork, getWorkBySlug, works } from "@/redesign/content";
-import { ProjectArt } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import s from "@/redesign/v11/v11.module.css";
 
 export function generateStaticParams() {
@@ -25,7 +25,7 @@ export default async function V11Case({ params }: PageProps<"/v11/work/[slug]">)
     <>
       <main>
         <section className={s.cover} aria-labelledby="case-title">
-          <ProjectArt slug={w.slug} label={w.client} variant="halftone" ink="var(--art-d-ink)" paper="var(--art-d-paper)" ratio={1.6} className={s.coverArt} />
+          <ProjectMockup slug={w.slug} ink="var(--art-d-ink)" paper="var(--art-d-paper)" ratio={1.6} className={s.coverArt} />
           <div className={s.coverText}>
             <p className={s.label}>
               Case ● {w.category} ● {w.year}
@@ -64,13 +64,13 @@ export default async function V11Case({ params }: PageProps<"/v11/work/[slug]">)
 
         <section className={s.gallery} aria-label="Project frames">
           <div className={s.gWide}>
-            <ProjectArt slug={w.slug} label={w.client} variant="poster" ink="var(--art-l-ink)" paper="var(--art-l-paper)" ratio={2.2} frame={1} />
+            <ProjectMockup slug={w.slug} ink="var(--art-l-ink)" paper="var(--art-l-paper)" ratio={2.2} frame={1} />
           </div>
           <div className={s.gTall}>
-            <ProjectArt slug={w.slug} label={w.client} variant="contour" ink="var(--art-d-ink)" paper="var(--art-d-paper)" ratio={0.75} frame={2} />
+            <ProjectMockup slug={w.slug} ink="var(--art-d-ink)" paper="var(--art-d-paper)" ratio={0.75} frame={2} />
           </div>
           <div className={s.gTall}>
-            <ProjectArt slug={w.slug} label={w.client} variant="matrix" ink="var(--art-l-ink)" paper="var(--art-l-paper)" ratio={0.75} frame={3} />
+            <ProjectMockup slug={w.slug} ink="var(--art-l-ink)" paper="var(--art-l-paper)" ratio={0.75} frame={3} />
           </div>
         </section>
 
@@ -147,7 +147,7 @@ export default async function V11Case({ params }: PageProps<"/v11/work/[slug]">)
 
         {/* Basic-style chaining: the page runs straight into the next case's cover. */}
         <Link href={`/v11/work/${next.slug}`} className={`${s.cover} ${s.nextCover}`} aria-label={`Next case: ${next.title}`}>
-          <ProjectArt slug={next.slug} label={next.client} variant="halftone" ink="var(--art-d-ink)" paper="var(--art-d-paper)" ratio={1.6} className={s.coverArt} />
+          <ProjectMockup slug={next.slug} ink="var(--art-d-ink)" paper="var(--art-d-paper)" ratio={1.6} className={s.coverArt} />
           <span className={s.coverText}>
             <span className={s.label}>
               Next case <span aria-hidden="true">●</span> {next.category}

@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { sectors, worksFor } from "@/redesign/agency";
-import { ProjectArt } from "@/redesign/shared/ProjectArt";
-import { variantFor } from "@/redesign/v8/art";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { Footer, PageCover } from "@/redesign/v8/Chrome";
 import s from "@/redesign/v8/v8.module.css";
 
@@ -41,7 +40,7 @@ export default function V8Industries() {
                       <li key={w.slug}>
                         <Link href={`/v8/work/${w.slug}`}>
                           <span>
-                            <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug)} ink="var(--art-ink)" paper="var(--art-paper)" ratio={1.5} />
+                            <ProjectMockup slug={w.slug} ink="var(--art-ink)" paper="var(--art-paper)" ratio={1.5} />
                           </span>
                           <span>{w.title} →</span>
                         </Link>

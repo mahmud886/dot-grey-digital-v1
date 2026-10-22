@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getNextWork, getWorkBySlug, works } from "@/redesign/content";
-import { ProjectArt } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { SectionHead } from "@/redesign/v9/Chrome";
 import { PixelReveal, Scramble } from "@/redesign/v9/Client";
-import { artFor } from "@/redesign/v9/art";
 import { G } from "@/redesign/v9/Glyphs";
 import s from "@/redesign/v9/v9.module.css";
 
@@ -63,7 +62,7 @@ export default async function V9Case({ params }: PageProps<"/v9/work/[slug]">) {
         </section>
 
         <PixelReveal className={s.caseCover}>
-          <ProjectArt slug={w.slug} label={w.client} variant={artFor(works.indexOf(w))} ink="#f7f7f5" paper="#0b0b0b" ratio={16 / 9} title={`${w.title} — cover artwork`} />
+          <ProjectMockup slug={w.slug} ink="#f7f7f5" paper="#0b0b0b" ratio={16 / 9} title={`${w.title} — cover artwork`} />
         </PixelReveal>
 
         <section className={s.section}>
@@ -122,10 +121,8 @@ export default async function V9Case({ params }: PageProps<"/v9/work/[slug]">) {
             <div className={s.gallery}>
               {[1, 2, 3].map((f) => (
                 <PixelReveal key={f} className={s.galleryItem}>
-                  <ProjectArt
+                  <ProjectMockup
                     slug={w.slug}
-                    label={w.client}
-                    variant={artFor(works.indexOf(w), f)}
                     frame={f}
                     ink={f === 2 ? "#0b0b0b" : "#f7f7f5"}
                     paper={f === 2 ? "#e4e4e1" : "#0b0b0b"}

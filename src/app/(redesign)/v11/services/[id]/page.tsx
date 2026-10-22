@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { disciplines, getWorkBySlug, process } from "@/redesign/content";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { Crumb, Dot, SectionHead } from "@/redesign/v11/Chrome";
 import { Accordion } from "@/redesign/v11/Client";
 import { CRAFT_ART, CRAFT_FAQ, RELATED } from "@/redesign/v11/related";
@@ -87,10 +88,8 @@ export default async function V11Service({ params }: PageProps<"/v11/services/[i
               <li key={w.slug}>
                 <Link href={`/v11/work/${w.slug}`} className={s.workCard}>
                   <span className={s.workArt}>
-                    <ProjectArt
+                    <ProjectMockup
                       slug={w.slug}
-                      label={w.client}
-                      variant={k % 2 ? "halftone" : "poster"}
                       ink={k % 2 ? "var(--art-l-ink)" : "var(--art-d-ink)"}
                       paper={k % 2 ? "var(--art-l-paper)" : "var(--art-d-paper)"}
                       ratio={0.78}

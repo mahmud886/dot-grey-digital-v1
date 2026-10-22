@@ -3,10 +3,9 @@
 import Link from "next/link";
 import { useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
-import { ProjectArt } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { ThemeToggle } from "@/redesign/shared/ThemeToggle";
 import type { Discipline, Post, Work } from "@/redesign/content";
-import { artFor } from "./art";
 import { G } from "./Glyphs";
 import s from "./v9.module.css";
 
@@ -221,8 +220,7 @@ export function PixelReveal({ children, className }: { children: React.ReactNode
  * the mosaic for each row. Touch: every row carries its own thumbnail instead.
  * ---------------------------------------------------------------------------------------- */
 
-export function WorkIndex({ works, initial = 6, source }: { works: Work[]; initial?: number; source?: Work[] }) {
-  const artList = source ?? works;
+export function WorkIndex({ works, initial = 6 }: { works: Work[]; initial?: number; source?: Work[] }) {
   const [all, setAll] = useState(false);
   const listRef = useRef<HTMLOListElement>(null);
   const previewRef = useRef<HTMLDivElement>(null);
@@ -320,7 +318,7 @@ export function WorkIndex({ works, initial = 6, source }: { works: Work[]; initi
                 <span>{w.year}</span>
               </span>
               <span className={s.rowThumb}>
-                <ProjectArt slug={w.slug} label={w.client} variant={artFor(artList.indexOf(w))} ink="#f7f7f5" paper="#0b0b0b" ratio={4 / 3} />
+                <ProjectMockup slug={w.slug} ink="#f7f7f5" paper="#0b0b0b" ratio={4 / 3} />
               </span>
             </Link>
           </li>

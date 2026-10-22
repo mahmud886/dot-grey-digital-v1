@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import type { LegalPage } from "@/data/legal";
 import { offices, site, type Work } from "@/redesign/content";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
-import { variantFor } from "./art";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { DhakaClock, ThemePill } from "./Client";
 import { Newsletter } from "./More";
 import { V8_MAP } from "./nav";
@@ -67,7 +67,7 @@ export function WorkStackItem({ work, index }: { work: Work; index: number }) {
   return (
     <Link href={`${BASE}/work/${work.slug}`} className={s.stackItem}>
       <span className={s.stackArt}>
-        <ProjectArt slug={work.slug} label={work.client} variant={variantFor(work.slug)} ink="var(--art-ink)" paper="var(--art-paper)" ratio={2.1} />
+        <ProjectMockup slug={work.slug} ink="var(--art-ink)" paper="var(--art-paper)" ratio={2.1} />
       </span>
       <span className={s.stackMeta}>
         <span className={s.cardKicker}>
@@ -89,7 +89,7 @@ export function WorkGridItem({ work, index }: { work: Work; index: number }) {
   return (
     <Link href={`${BASE}/work/${work.slug}`} className={s.gridItem}>
       <span className={s.cardArt}>
-        <ProjectArt slug={work.slug} label={work.client} variant={variantFor(work.slug)} ink="var(--art-ink)" paper="var(--art-paper)" ratio={1.5} />
+        <ProjectMockup slug={work.slug} ink="var(--art-ink)" paper="var(--art-paper)" ratio={1.5} />
       </span>
       <span className={s.cardMeta}>
         <span>

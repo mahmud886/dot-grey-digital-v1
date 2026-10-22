@@ -3,9 +3,9 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { disciplines, process, works } from "@/redesign/content";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { PageHead, SectionHead } from "@/redesign/v9/Chrome";
 import { PixelReveal } from "@/redesign/v9/Client";
-import { artFor } from "@/redesign/v9/art";
 import { G } from "@/redesign/v9/Glyphs";
 import { CRAFT_ART, CRAFT_FAQ, RELATED } from "@/redesign/v9/related";
 import s from "@/redesign/v9/v9.module.css";
@@ -86,7 +86,7 @@ export default async function V9Service({ params }: PageProps<"/v9/services/[id]
                 <li key={w.slug}>
                   <Link href={`/v9/work/${w.slug}`} className={s.miniRow}>
                     <span className={s.miniThumb}>
-                      <ProjectArt slug={w.slug} label={w.client} variant={artFor(works.indexOf(w))} ink="#f7f7f5" paper="#0b0b0b" ratio={4 / 3} />
+                      <ProjectMockup slug={w.slug} ink="#f7f7f5" paper="#0b0b0b" ratio={4 / 3} />
                     </span>
                     <span className={s.miniTitle}>{w.title}</span>
                     <span className={s.miniMeta}>

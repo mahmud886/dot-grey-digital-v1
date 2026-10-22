@@ -8,6 +8,7 @@ import { useMotion } from "@/redesign/shared/useMotion";
 import { useAccent, useTheme } from "@/redesign/shared/useTheme";
 import { ThemeToggle } from "@/redesign/shared/ThemeToggle";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import type { Discipline, Post, Work } from "@/redesign/content";
 import { buildFormation, buildFormations, buildRandoms, type FormationId } from "./formations";
 import { readPalette, startEngine, type Engine, type EngineState } from "./engine";
@@ -358,7 +359,7 @@ export function WorkIndex({ works }: { works: Work[] }) {
               </span>
               <span className={s.rowStat}>{x.stats[0].value}</span>
               <span className={s.rowArt} aria-hidden="true">
-                <ProjectArt slug={x.slug} label={x.client} variant="matrix" ratio={2.2} ink="var(--fg)" paper="var(--bg)" />
+                <ProjectMockup slug={x.slug} ratio={2.2} ink="var(--fg)" paper="var(--bg)" />
               </span>
             </Link>
           </li>
@@ -366,7 +367,7 @@ export function WorkIndex({ works }: { works: Work[] }) {
       </ol>
       <aside className={s.preview} aria-hidden="true">
         <div className={s.previewArt}>
-          <ProjectArt key={w.slug} slug={w.slug} label={w.client} variant="matrix" ratio={1.25} ink="var(--fg)" paper="var(--bg)" />
+          <ProjectMockup key={w.slug} slug={w.slug} ratio={1.25} ink="var(--fg)" paper="var(--bg)" />
         </div>
         <p className={s.previewSum}>{w.summary}</p>
         <p className={s.previewStat}>

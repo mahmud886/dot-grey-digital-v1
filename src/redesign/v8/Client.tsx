@@ -5,12 +5,11 @@ import { usePathname } from "next/navigation";
 import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { BrandMark } from "@/redesign/shared/BrandMark";
-import { ProjectArt } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { useMotion } from "@/redesign/shared/useMotion";
 import { ThemeToggle } from "@/redesign/shared/ThemeToggle";
 import { useTheme } from "@/redesign/shared/useTheme";
 import type { Work } from "@/redesign/content";
-import { variantFor } from "./art";
 import s from "./v8.module.css";
 
 /* ------------------------------------------------------------------ motion */
@@ -553,7 +552,7 @@ export function WorkReel({ items }: { items: Work[] }) {
         {items.map((w, i) => (
           <Link key={w.slug} href={`/v8/work/${w.slug}`} className={s.card}>
             <div className={s.cardArt}>
-              <ProjectArt slug={w.slug} label={w.client} variant={variantFor(w.slug)} ink="var(--fg)" paper="var(--art-paper)" ratio={1.5} />
+              <ProjectMockup slug={w.slug} ink="var(--fg)" paper="var(--art-paper)" ratio={1.5} />
             </div>
             <div className={s.cardMeta}>
               <div>

@@ -1,7 +1,8 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import { BrandMark } from "@/redesign/shared/BrandMark";
-import { ProjectArt, type ArtVariant } from "@/redesign/shared/ProjectArt";
+import { ProjectArt } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { ThemeIcon, ThemeToggle } from "@/redesign/shared/ThemeToggle";
 import { offices, site, type Work } from "@/redesign/content";
 import { MenuToggle, NavLinks } from "./Client";
@@ -61,23 +62,20 @@ export function PageHead({ label, title, lead, children }: { label: ReactNode; t
   );
 }
 
-const VARIANTS: ArtVariant[] = ["contour", "rings", "halftone"];
 
 /**
  * A work card: two tilted art "mockups" on a stage that straighten and scale up on hover.
  * Frame colours are theme tokens, so the cards re-ink with the theme.
  */
 export function WorkCard({ work, index, size = "md" }: { work: Work; index: number; size?: "md" | "lg" }) {
-  const a = VARIANTS[index % VARIANTS.length];
-  const b = VARIANTS[(index + 1) % VARIANTS.length];
   return (
     <Link href={`${BASE}/work/${work.slug}`} className={s.card} data-size={size} data-cursor="view">
       <div className={s.stage2}>
         <div className={`${s.frame} ${s.frameBack}`}>
-          <ProjectArt slug={work.slug} label={work.client} variant={a} ink="var(--art-a-ink)" paper="var(--art-a-paper)" ratio={1.25} frame={1} />
+          <ProjectMockup slug={work.slug} ink="var(--art-a-ink)" paper="var(--art-a-paper)" ratio={1.25} frame={1} label={false} />
         </div>
         <div className={`${s.frame} ${s.frameFront}`}>
-          <ProjectArt slug={work.slug} label={work.client} variant={b} ink="var(--art-b-ink)" paper="var(--art-b-paper)" ratio={1.25} />
+          <ProjectMockup slug={work.slug} ink="var(--art-b-ink)" paper="var(--art-b-paper)" ratio={1.25} frame={index % 2 ? 2 : 0} />
         </div>
       </div>
       <div className={s.cardMeta}>
@@ -99,7 +97,7 @@ export function WorkRow({ work, index }: { work: Work; index: number }) {
     <Link href={`${BASE}/work/${work.slug}`} className={s.workRow} data-cursor="view">
       <span className={s.serviceNum}>{String(index + 1).padStart(2, "0")}</span>
       <span className={s.workRowArt}>
-        <ProjectArt slug={work.slug} label={work.client} variant={VARIANTS[index % 3]} ink="var(--art-a-ink)" paper="var(--art-a-paper)" ratio={1.25} />
+        <ProjectMockup slug={work.slug} ink="var(--art-a-ink)" paper="var(--art-a-paper)" ratio={1.25} />
       </span>
       <span className={s.workRowTitle}>{work.title}</span>
       <span className={s.workRowCat}>

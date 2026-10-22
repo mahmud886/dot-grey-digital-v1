@@ -1,14 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { works } from "@/redesign/content";
-import { ProjectArt, type ArtVariant } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { PageHead } from "@/redesign/v11/Chrome";
 import { Filtered } from "@/redesign/v11/Client";
 import s from "@/redesign/v11/v11.module.css";
 
 export const metadata: Metadata = { title: "Work" };
-
-const VARIANTS: ArtVariant[] = ["poster", "halftone", "contour", "rings", "matrix", "halftone"];
 
 export default function V11Work() {
   const categories = [...new Set(works.map((w) => w.category))];
@@ -28,10 +26,8 @@ export default function V11Work() {
               node: (
                 <Link href={`/v11/work/${w.slug}`} className={s.workCard}>
                   <span className={s.workArt}>
-                    <ProjectArt
+                    <ProjectMockup
                       slug={w.slug}
-                      label={w.client}
-                      variant={VARIANTS[i % VARIANTS.length]}
                       ink={light ? "var(--art-l-ink)" : "var(--art-d-ink)"}
                       paper={light ? "var(--art-l-paper)" : "var(--art-d-paper)"}
                       ratio={0.78}

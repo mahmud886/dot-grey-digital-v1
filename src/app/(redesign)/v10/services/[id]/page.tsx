@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { disciplines, process, site, works } from "@/redesign/content";
-import { ProjectArt } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { Page, PageHero, SecHead } from "@/redesign/v10/Chrome";
 import { Ask } from "@/redesign/v10/Client";
 import type { FormationId } from "@/redesign/v10/formations";
@@ -81,7 +81,7 @@ export default async function V10Service({ params }: PageProps<"/v10/services/[i
             {related.map((w) => (
               <li key={w.slug}>
                 <Link href={`/v10/work/${w.slug}`} className={s.card}>
-                  <ProjectArt slug={w.slug} label={w.client} variant="matrix" ratio={1.6} ink="var(--fg)" paper="var(--bg)" />
+                  <ProjectMockup slug={w.slug} ratio={1.6} ink="var(--fg)" paper="var(--bg)" />
                   <span className={s.cardMeta}>
                     {w.category} · {w.year}
                   </span>

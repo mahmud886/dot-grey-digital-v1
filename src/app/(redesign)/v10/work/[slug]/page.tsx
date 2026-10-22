@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getNextWork, getWorkBySlug, works } from "@/redesign/content";
-import { ProjectArt } from "@/redesign/shared/ProjectArt";
+import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import { Footer } from "@/redesign/v10/Chrome";
 import s from "@/redesign/v10/v10.module.css";
 
@@ -54,7 +54,7 @@ export default async function V10Case({ params }: PageProps<"/v10/work/[slug]">)
         </section>
 
         <div className={s.caseCover}>
-          <ProjectArt slug={w.slug} label={w.client} variant="matrix" ratio={2.4} ink="var(--fg)" paper="var(--bg)" title={`${w.title} — cover`} />
+          <ProjectMockup slug={w.slug} ratio={2.4} ink="var(--fg)" paper="var(--bg)" title={`${w.title} — cover`} />
         </div>
 
         <section className={s.caseCols}>
@@ -100,7 +100,7 @@ export default async function V10Case({ params }: PageProps<"/v10/work/[slug]">)
         <section className={s.gallery} aria-label="Gallery">
           {(["halftone", "contour", "rings"] as const).map((v, i) => (
             <div key={v} className={s.galleryItem}>
-              <ProjectArt slug={w.slug} label={w.client} variant={v} frame={i + 1} ratio={i === 0 ? 2.2 : 1.3} ink="var(--fg)" paper="var(--bg)" title={`${w.title} — study ${i + 1}`} />
+              <ProjectMockup slug={w.slug} frame={i + 1} ratio={i === 0 ? 2.2 : 1.3} ink="var(--fg)" paper="var(--bg)" title={`${w.title} — study ${i + 1}`} />
             </div>
           ))}
         </section>
@@ -143,7 +143,7 @@ export default async function V10Case({ params }: PageProps<"/v10/work/[slug]">)
             {next.title}
           </span>
           <span className={s.nextArt} aria-hidden="true">
-            <ProjectArt slug={next.slug} label={next.client} variant="matrix" ratio={3} ink="var(--fg)" paper="var(--bg)" />
+            <ProjectMockup slug={next.slug} ratio={3} ink="var(--fg)" paper="var(--bg)" />
           </span>
         </Link>
         <div className={s.caseFoot}>
