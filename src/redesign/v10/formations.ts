@@ -244,8 +244,19 @@ function dust(count: number) {
   );
 }
 
+const BUILDERS = [dot, design, development, software, automation, data, ml, dust];
+
+/** Formation order: 0 hero sphere, 1–6 the disciplines, 7 dust. */
+export const FORMATION = { hero: 0, design: 1, development: 2, software: 3, automation: 4, data: 5, ml: 6, dust: 7 } as const;
+export type FormationId = keyof typeof FORMATION;
+
 export function buildFormations(count: number) {
-  return [dot, design, development, software, automation, data, ml, dust].map((f) => f(count));
+  return BUILDERS.map((f) => f(count));
+}
+
+/** One formation only, for the quieter fields behind inner pages. */
+export function buildFormation(id: FormationId, count: number) {
+  return BUILDERS[FORMATION[id]](count);
 }
 
 /** Per-point random values: stagger, size and drift direction. */

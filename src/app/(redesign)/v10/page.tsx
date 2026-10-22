@@ -1,6 +1,7 @@
 import type { CSSProperties } from "react";
 import { disciplines, featuredWorks, site, stats, testimonials } from "@/redesign/content";
-import { Footer, Header } from "@/redesign/v10/Chrome";
+import Link from "next/link";
+import { Footer } from "@/redesign/v10/Chrome";
 import { Ask, Loader, WorkIndex, World } from "@/redesign/v10/Client";
 import s from "@/redesign/v10/v10.module.css";
 
@@ -11,13 +12,15 @@ export default function V10Home() {
   return (
     <>
       <Loader />
-      <Header home />
       <World chapters={disciplines.map((d) => ({ id: d.id, label: d.short }))}>
         <main className={s.layer}>
           <section id="top" data-ch="0" className={s.hero}>
             <p className={s.kicker}>DotGrey Digital — Dhaka / remote</p>
             <h1 className={s.heroTitle}>
-              <span>We build</span> <span>thinking</span> <span>software.</span>
+              <span>We build</span> <span>thinking</span>{" "}
+              <span>
+                software<span className={s.acc}>.</span>
+              </span>
             </h1>
             <p className={s.heroSub}>Design, engineering, automation, data and machine learning. One team, one system.</p>
             <a href="#design" className={s.scrollCue}>
@@ -45,6 +48,9 @@ export default function V10Home() {
                   <p className={s.stack}>
                     <span>Stack</span> {d.stack.join(" · ")}
                   </p>
+                  <Link href={`/v10/services/${d.id}`} className={s.chLink}>
+                    Open {d.short} <span aria-hidden="true">→</span>
+                  </Link>
                 </div>
               </section>
             );
@@ -59,7 +65,12 @@ export default function V10Home() {
               <h2 id="work-h" className={s.secTitle}>
                 Work
               </h2>
-              <p className={s.secNote}>Six projects. Each with the one number the client cared about.</p>
+              <p className={s.secNote}>
+                Six of nine projects. Each with the one number the client cared about.{" "}
+                <Link href="/v10/work" className={s.inlineLink}>
+                  Full index →
+                </Link>
+              </p>
             </div>
             <WorkIndex works={featuredWorks} />
           </section>
@@ -86,11 +97,19 @@ export default function V10Home() {
 
           <section id="contact" className={s.contact} aria-labelledby="contact-h">
             <h2 id="contact-h" className={s.contactTitle}>
-              <span>Let&apos;s</span> <span>build.</span>
+              <span>Let&apos;s</span>{" "}
+              <span>
+                build<span className={s.acc}>.</span>
+              </span>
             </h2>
-            <a href={`mailto:${site.email}`} className={s.mail}>
-              {site.email} <span aria-hidden="true">↗</span>
-            </a>
+            <div className={s.contactRow}>
+              <a href={`mailto:${site.email}`} className={s.mail}>
+                {site.email} <span aria-hidden="true">↗</span>
+              </a>
+              <Link href="/v10/contact" className={s.cta}>
+                Run a brief <span aria-hidden="true">→</span>
+              </Link>
+            </div>
             <Footer />
           </section>
         </main>
