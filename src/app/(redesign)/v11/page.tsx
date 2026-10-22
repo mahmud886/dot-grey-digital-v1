@@ -46,9 +46,14 @@ export default function V11Home() {
           </h2>
           <div className={s.statementFoot}>
             <p className={s.lede}>Eighteen people in Dhaka and four time zones. One team from first sketch to the model in production.</p>
-            <Link href="/v11/services" className={s.arrowLink}>
-              What we do <span aria-hidden="true">→</span>
-            </Link>
+            <div className={s.ctaRowInline}>
+              <Link href="/v11/start" className={s.btn}>
+                Start a project <span aria-hidden="true">→</span>
+              </Link>
+              <Link href="/v11/services" className={s.arrowLink}>
+                What we do <span aria-hidden="true">→</span>
+              </Link>
+            </div>
           </div>
           <p className={s.lockup} aria-hidden="true">
             DotGrey<sup>®</sup>
@@ -96,7 +101,9 @@ export default function V11Home() {
         {/* Process as news-style rows */}
         <section id="process" className={s.section} aria-labelledby="how">
           <SectionHead title="How we work" count={process.length} id="how">
-            <p className={s.headNote}>Weekly releases. No black boxes.</p>
+            <Link href="/v11/process" className={s.arrowLink}>
+              The full process <span aria-hidden="true">→</span>
+            </Link>
           </SectionHead>
           <ol className={s.rows}>
             {process.map((p, i) => (

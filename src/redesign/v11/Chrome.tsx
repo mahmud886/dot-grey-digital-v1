@@ -1,7 +1,9 @@
 import Link from "next/link";
 import { BrandMark } from "@/redesign/shared/BrandMark";
 import { disciplines, offices, site } from "@/redesign/content";
-import { Header as ClientHeader, LiveTime } from "./Client";
+import { SITE_MAP } from "./agency-extra";
+import { Header as ClientHeader, LiveTime, ThemeText } from "./Client";
+import { Newsletter } from "./More";
 import s from "./v11.module.css";
 
 export function Header() {
@@ -24,7 +26,7 @@ export function SectionHead({ title, count, children, id }: { title: string; cou
 export function Footer() {
   return (
     <footer id="contact" className={s.footer}>
-      <Link href="/v11/contact" className={s.cta}>
+      <Link href="/v11/start" className={s.cta}>
         <span>Got a project?</span>{" "}
         <span className={s.ctaLine}>
           <span className={s.dot} aria-hidden="true">
@@ -63,23 +65,24 @@ export function Footer() {
             )}
           </div>
         ))}
-        <div>
-          <span className={s.label}>Index</span>
-          <ul className={s.footNav}>
-            {[
-              ["Work", "/v11/work"],
-              ["Services", "/v11/services"],
-              ["About", "/v11/about"],
-              ["Insights", "/v11/insights"],
-              ["Careers", "/v11/careers"],
-              ["Contact", "/v11/contact"],
-              ["FAQ", "/v11/faq"],
-            ].map(([l, h]) => (
-              <li key={h}>
-                <Link href={h}>{l}</Link>
-              </li>
-            ))}
-          </ul>
+      </div>
+
+      <div className={s.footMap}>
+        {SITE_MAP.map((g) => (
+          <nav key={g.title} aria-label={g.title}>
+            <span className={s.label}>{g.title}</span>
+            <ul className={s.footNav}>
+              {g.links.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href}>{l.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </nav>
+        ))}
+        <div className={s.footNews}>
+          <Newsletter email={site.email} id="nl-foot" />
+          <ThemeText className={s.footTheme} />
         </div>
       </div>
 

@@ -17,10 +17,21 @@ type DrawerItem = { id: string; number: string; title: string; line: string };
 const NAV = [
   { label: "Work", href: "/v11/work" },
   { label: "Services", href: "/v11/services" },
+  { label: "Process", href: "/v11/process" },
   { label: "About", href: "/v11/about" },
   { label: "Insights", href: "/v11/insights" },
   { label: "Careers", href: "/v11/careers" },
   { label: "Contact", href: "/v11/contact" },
+];
+
+const MORE = [
+  { label: "Engagements", href: "/v11/engagements" },
+  { label: "AI", href: "/v11/ai" },
+  { label: "Industries", href: "/v11/industries" },
+  { label: "Capabilities", href: "/v11/capabilities" },
+  { label: "Inside", href: "/v11/culture" },
+  { label: "Resources", href: "/v11/resources" },
+  { label: "FAQ", href: "/v11/faq" },
 ];
 
 /** Uppercase text switch: shows the mode you would switch to ("● Dark" in light, "● Light" in dark). */
@@ -76,6 +87,9 @@ export function Header({ items }: { items: DrawerItem[] }) {
             </Link>
           ))}
         </nav>
+        <Link href="/v11/start" className={s.headerStart}>
+          Start a project
+        </Link>
         <ThemeText className={s.headerTheme} />
         <button
           ref={triggerRef}
@@ -115,6 +129,16 @@ export function Header({ items }: { items: DrawerItem[] }) {
         </ol>
         <nav className={s.drawerNav} aria-label="Menu">
           {NAV.map((n) => (
+            <Link key={n.href} href={n.href} onClick={() => setOpen(false)} aria-current={current(n.href) ? "page" : undefined}>
+              {n.label}
+            </Link>
+          ))}
+        </nav>
+        <Link href="/v11/start" className={s.drawerStart} onClick={() => setOpen(false)}>
+          Start a project <span aria-hidden="true">→</span>
+        </Link>
+        <nav className={s.drawerMore} aria-label="More">
+          {MORE.map((n) => (
             <Link key={n.href} href={n.href} onClick={() => setOpen(false)} aria-current={current(n.href) ? "page" : undefined}>
               {n.label}
             </Link>

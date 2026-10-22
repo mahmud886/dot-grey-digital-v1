@@ -113,6 +113,24 @@ export default async function V11Service({ params }: PageProps<"/v11/services/[i
         )}
       </section>
 
+      <section className={s.band} aria-labelledby="svc-band">
+        <p className={s.label}>(04) Next step</p>
+        <h2 id="svc-band" className={s.bandTitle}>
+          Ready when you are. <Dot />
+        </h2>
+        <div className={s.ctaRowInline}>
+          <Link href="/v11/start" className={s.btn}>
+            Start a project <span aria-hidden="true">→</span>
+          </Link>
+          <Link href="/v11/engagements" className={s.arrowLink}>
+            How we engage <span aria-hidden="true">→</span>
+          </Link>
+          <Link href="/v11/process" className={s.arrowLink}>
+            Our process <span aria-hidden="true">→</span>
+          </Link>
+        </div>
+      </section>
+
       <section className={s.section} aria-labelledby="svc-faq">
         <SectionHead title="Questions" count={CRAFT_FAQ[d.id]?.length ?? 0} id="svc-faq" />
         <Accordion items={(CRAFT_FAQ[d.id] ?? []).map((f, k) => ({ id: `${d.id}-${k}`, title: f.q, body: <p className={s.bodyLg}>{f.a}</p> }))} />
