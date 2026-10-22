@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Schibsted_Grotesk } from "next/font/google";
 import { VersionBar } from "@/redesign/shared/VersionBar";
+import { Footer, Header } from "@/redesign/v11/Chrome";
 import s from "@/redesign/v11/v11.module.css";
 
 const grotesk = Schibsted_Grotesk({ subsets: ["latin"], variable: "--v11-font" });
@@ -12,7 +13,9 @@ export const metadata: Metadata = {
 export default function V11Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className={`${s.root} ${grotesk.variable}`}>
+      <Header />
       {children}
+      <Footer />
       <div className={s.grain} aria-hidden="true" />
       <VersionBar current="v11" />
     </div>

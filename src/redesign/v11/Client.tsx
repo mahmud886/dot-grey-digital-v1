@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { BrandMark } from "@/redesign/shared/BrandMark";
 import { ProjectArt, type ArtVariant } from "@/redesign/shared/ProjectArt";
 import { useMotion } from "@/redesign/shared/useMotion";
+import { ThemeToggle } from "@/redesign/shared/ThemeToggle";
 import s from "./v11.module.css";
 
 /* ------------------------------------------------------------------ header + drawer */
@@ -12,19 +14,33 @@ import s from "./v11.module.css";
 type DrawerItem = { id: string; number: string; title: string; line: string };
 
 const NAV = [
-  { label: "Work", href: "/v11#work" },
-  { label: "Services", href: "/v11#services" },
-  { label: "Process", href: "/v11#process" },
-  { label: "Contact", href: "/v11#contact" },
+  { label: "Work", href: "/v11/work" },
+  { label: "Services", href: "/v11/services" },
+  { label: "About", href: "/v11/about" },
+  { label: "Insights", href: "/v11/insights" },
+  { label: "Careers", href: "/v11/careers" },
+  { label: "Contact", href: "/v11/contact" },
 ];
+
+/** Uppercase text switch: shows the mode you would switch to ("● Dark" in light, "● Light" in dark). */
+export function ThemeText({ className }: { className?: string }) {
+  return (
+    <ThemeToggle className={`${s.themeText} ${className ?? ""}`}>
+      <span className={s.themeDot} aria-hidden="true" />
+      <span className={s.themeToDark}>Dark</span>
+      <span className={s.themeToLight}>Light</span>
+    </ThemeToggle>
+  );
+}
 
 /**
  * Fixed header set in `mix-blend-mode: difference`, so the same white type reads on the
- * black reel, the grain paper and the charcoal chapters. The ●●● button opens a dark
- * capabilities drawer.
+ * black reel, the grain paper and the charcoal chapters in either theme. The ●●● button
+ * opens a capabilities drawer that also carries the full menu on mobile.
  */
 export function Header({ items }: { items: DrawerItem[] }) {
   const [open, setOpen] = useState(false);
+  const pathname = usePathname();
   const closeRef = useRef<HTMLButtonElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
 
@@ -46,24 +62,27 @@ export function Header({ items }: { items: DrawerItem[] }) {
     };
   }, [open]);
 
+  const current = (href: string) => pathname === href || pathname.startsWith(`${href}/`);
+
   return (
     <>
       <header className={s.header}>
         <BrandMark href="/v11" ink="#ffffff" accent="#8c8c8c" className={s.logo} />
         <nav className={s.nav} aria-label="Main">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href}>
+            <Link key={n.href} href={n.href} aria-current={current(n.href) ? "page" : undefined}>
               {n.label}
             </Link>
           ))}
         </nav>
+        <ThemeText className={s.headerTheme} />
         <button
           ref={triggerRef}
           type="button"
           className={s.dots}
           aria-expanded={open}
           aria-controls="v11-drawer"
-          aria-label="Open capabilities"
+          aria-label="Open menu and capabilities"
           onClick={() => setOpen(true)}
         >
           <span />
@@ -73,7 +92,7 @@ export function Header({ items }: { items: DrawerItem[] }) {
       </header>
 
       <div className={s.scrim} data-open={open} onClick={() => setOpen(false)} aria-hidden="true" />
-      <aside id="v11-drawer" className={s.drawer} data-open={open} role="dialog" aria-modal="true" aria-label="Capabilities" inert={!open}>
+      <aside id="v11-drawer" className={s.drawer} data-open={open} role="dialog" aria-modal="true" aria-label="Menu" inert={!open}>
         <div className={s.drawerTop}>
           <span className={s.label}>
             Capabilities <span className={s.count}>({String(items.length).padStart(2, "0")})</span>
@@ -85,7 +104,7 @@ export function Header({ items }: { items: DrawerItem[] }) {
         <ol className={s.drawerList}>
           {items.map((d) => (
             <li key={d.id}>
-              <Link href="/v11#services" onClick={() => setOpen(false)}>
+              <Link href={`/v11/services/${d.id}`} onClick={() => setOpen(false)}>
                 <span className={s.drawerNum}>{d.number}</span>
                 <span className={s.drawerTitle}>{d.title}</span>
                 <span className={s.drawerLine}>{d.line}</span>
@@ -93,13 +112,17 @@ export function Header({ items }: { items: DrawerItem[] }) {
             </li>
           ))}
         </ol>
-        <nav className={s.drawerNav} aria-label="Drawer">
+        <nav className={s.drawerNav} aria-label="Menu">
           {NAV.map((n) => (
-            <Link key={n.href} href={n.href} onClick={() => setOpen(false)}>
+            <Link key={n.href} href={n.href} onClick={() => setOpen(false)} aria-current={current(n.href) ? "page" : undefined}>
               {n.label}
             </Link>
           ))}
         </nav>
+        <div className={s.drawerFoot}>
+          <span className={s.label}>Colour mode</span>
+          <ThemeText className={s.drawerTheme} />
+        </div>
       </aside>
     </>
   );
@@ -146,8 +169,8 @@ function ReelFrame({ cut, big = false }: { cut: Cut; big?: boolean }) {
             slug={cut.slug}
             label={cut.label}
             variant={cut.variant}
-            ink={invert ? "#141414" : "#f4f4f2"}
-            paper={invert ? "#ecece9" : "#0d0d0d"}
+            ink={invert ? "var(--art-l-ink)" : "var(--art-d-ink)"}
+            paper={invert ? "var(--art-l-paper)" : "var(--art-d-paper)"}
             ratio={1.6}
             className={s.cutArt}
           />
@@ -321,7 +344,7 @@ export function FeaturedGrid({ items }: { items: Card[] }) {
           <li key={w.slug} data-i={i} data-on={active === i}>
             <Link href={`/v11/work/${w.slug}`} className={s.fourCard} onMouseEnter={() => setActive(i)} onFocus={() => setActive(i)}>
               <span className={s.fourArt}>
-                <ProjectArt slug={w.slug} label={w.client} variant={i % 2 ? "halftone" : "poster"} ink={i % 2 ? "#141414" : "#f4f4f2"} paper={i % 2 ? "#dcdcd8" : "#161616"} ratio={0.78} />
+                <ProjectArt slug={w.slug} label={w.client} variant={i % 2 ? "halftone" : "poster"} ink={i % 2 ? "var(--art-l-ink)" : "var(--art-d-ink)"} paper={i % 2 ? "var(--art-l-paper)" : "var(--art-d-paper)"} ratio={0.78} />
               </span>
               <span className={s.fourMeta}>
                 <span className={s.fourNum}>{String(i + 1).padStart(2, "0")}</span>
@@ -424,8 +447,8 @@ export function DragCarousel({ items }: { items: Card[] }) {
                     slug={w.slug}
                     label={w.client}
                     variant={(["halftone", "poster", "contour", "halftone", "rings", "poster"] as const)[i % 6]}
-                    ink={i % 3 === 1 ? "#141414" : "#f4f4f2"}
-                    paper={i % 3 === 1 ? "#e2e2de" : "#151515"}
+                    ink={i % 3 === 1 ? "var(--art-l-ink)" : "var(--art-d-ink)"}
+                    paper={i % 3 === 1 ? "var(--art-l-paper)" : "var(--art-d-paper)"}
                     ratio={0.7}
                     frame={2}
                   />
@@ -501,6 +524,9 @@ export function ServiceRows({ items }: { items: Service[] }) {
                 <p className={s.serviceStack}>
                   <span className={s.muted}>Stack —</span> {d.stack.join(", ")}
                 </p>
+                <Link href={`/v11/services/${d.id}`} className={s.arrowLink}>
+                  More on {d.title} <span aria-hidden="true">→</span>
+                </Link>
               </div>
             </div>
           </li>
@@ -525,4 +551,229 @@ export function LiveTime({ tz }: { tz: string }) {
     () => "--:--",
   );
   return <time suppressHydrationWarning>{time}</time>;
+}
+
+/* ------------------------------------------------------------------ filters */
+
+/**
+ * Basic-style radio filters ("View all / Design / Web …") over a list rendered on the
+ * server. Items stay in the DOM; filtered-out ones are hidden, so links remain crawlable.
+ */
+export function Filtered({
+  label,
+  categories,
+  items,
+  className,
+}: {
+  label: string;
+  categories: string[];
+  items: { key: string; category: string; node: ReactNode }[];
+  className?: string;
+}) {
+  const [cat, setCat] = useState("All");
+  const shown = cat === "All" ? items.length : items.filter((i) => i.category === cat).length;
+  return (
+    <>
+      <div className={s.filters} role="radiogroup" aria-label={label}>
+        {["All", ...categories.filter((c) => c !== "All")].map((c) => {
+          const n = c === "All" ? items.length : items.filter((i) => i.category === c).length;
+          if (!n) return null;
+          return (
+            <button key={c} type="button" role="radio" aria-checked={cat === c} className={s.filter} onClick={() => setCat(c)}>
+              <span className={s.filterRing} aria-hidden="true" />
+              {c === "All" ? "View all" : c}
+              <span className={s.filterCount}>({String(n).padStart(2, "0")})</span>
+            </button>
+          );
+        })}
+        <span className={s.filterShown} aria-live="polite">
+          Showing {String(shown).padStart(2, "0")}
+        </span>
+      </div>
+      <ol className={className}>
+        {items.map((i) => (
+          <li key={i.key} hidden={cat !== "All" && i.category !== cat}>
+            {i.node}
+          </li>
+        ))}
+      </ol>
+    </>
+  );
+}
+
+/* ------------------------------------------------------------------ accordion */
+
+/** Uppercase rows that open one at a time (careers departments, FAQ). */
+export function Accordion({ items, first = false }: { items: { id: string; title: string; meta?: string; body: ReactNode }[]; first?: boolean }) {
+  const [open, setOpen] = useState<string | null>(first ? (items[0]?.id ?? null) : null);
+  return (
+    <ul className={s.acc}>
+      {items.map((it) => {
+        const on = open === it.id;
+        return (
+          <li key={it.id} data-open={on}>
+            <h3 className={s.accHead}>
+              <button type="button" aria-expanded={on} aria-controls={`acc-${it.id}`} onClick={() => setOpen(on ? null : it.id)}>
+                <span className={s.accTitle}>{it.title}</span>
+                {it.meta && <span className={s.accMeta}>{it.meta}</span>}
+                <span className={s.accSign} aria-hidden="true" />
+              </button>
+            </h3>
+            <div id={`acc-${it.id}`} className={s.accPanel} role="region" aria-label={it.title}>
+              <div>{it.body}</div>
+            </div>
+          </li>
+        );
+      })}
+    </ul>
+  );
+}
+
+/* ------------------------------------------------------------------ brief form */
+
+type Brief = { name: string; email: string; company: string; needs: string[]; budget: string; timeline: string; message: string };
+
+/**
+ * Project brief. The prototypes have no backend, so a valid brief opens the visitor's email
+ * app with everything filled in — and the page says exactly that.
+ */
+export function BriefForm({ email, needs, budgets, timelines }: { email: string; needs: string[]; budgets: string[]; timelines: string[] }) {
+  const [f, setF] = useState<Brief>({ name: "", email: "", company: "", needs: [], budget: "", timeline: "", message: "" });
+  const [errors, setErrors] = useState<Partial<Record<keyof Brief, string>>>({});
+  const [sent, setSent] = useState(false);
+  const set = <K extends keyof Brief>(k: K, v: Brief[K]) => setF((x) => ({ ...x, [k]: v }));
+
+  const submit = (e: React.FormEvent) => {
+    e.preventDefault();
+    const err: typeof errors = {};
+    if (!f.name.trim()) err.name = "Tell us who you are.";
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) err.email = "We need an email address to reply to.";
+    if (!f.needs.length) err.needs = "Pick at least one.";
+    if (f.message.trim().length < 20) err.message = "A sentence or two, please — at least 20 characters.";
+    setErrors(err);
+    if (Object.keys(err).length) {
+      document.getElementById(`brief-${Object.keys(err)[0]}`)?.focus();
+      return;
+    }
+    const body = [
+      `Name: ${f.name}`,
+      `Email: ${f.email}`,
+      f.company ? `Company: ${f.company}` : null,
+      `Needs: ${f.needs.join(", ")}`,
+      f.budget ? `Budget: ${f.budget}` : null,
+      f.timeline ? `Timeline: ${f.timeline}` : null,
+      "",
+      f.message,
+    ]
+      .filter((x) => x !== null)
+      .join("\n");
+    window.location.href = `mailto:${email}?subject=${encodeURIComponent(`Project brief — ${f.company || f.name}`)}&body=${encodeURIComponent(body)}`;
+    setSent(true);
+  };
+
+  if (sent) {
+    return (
+      <div className={s.sent} role="status">
+        <p className={s.label}>Almost there</p>
+        <p className={s.sentTitle}>
+          Your email app should open with the brief filled in. <span className={s.dot} aria-hidden="true">●</span>
+        </p>
+        <p className={s.bodyLg}>
+          Press send there and we reply within a working day. Nothing opened? Write to <a href={`mailto:${email}`}>{email}</a>.
+        </p>
+        <button type="button" className={s.btn} onClick={() => setSent(false)}>
+          Edit the brief
+        </button>
+      </div>
+    );
+  }
+
+  const text = (k: "name" | "email" | "company", label: string, type = "text", auto?: string) => (
+    <div className={s.field} data-error={!!errors[k]}>
+      <label htmlFor={`brief-${k}`}>{label}</label>
+      <input
+        id={`brief-${k}`}
+        type={type}
+        autoComplete={auto}
+        value={f[k]}
+        onChange={(e) => set(k, e.target.value)}
+        aria-invalid={!!errors[k]}
+        aria-describedby={errors[k] ? `brief-${k}-err` : undefined}
+      />
+      {errors[k] && (
+        <small id={`brief-${k}-err`} className={s.err}>
+          {errors[k]}
+        </small>
+      )}
+    </div>
+  );
+
+  const pick = (k: "budget" | "timeline", label: string, opts: string[]) => (
+    <fieldset className={s.fieldSet}>
+      <legend>{label}</legend>
+      <div className={s.chips}>
+        {opts.map((o) => (
+          <label key={o} className={s.chip}>
+            <input type="radio" name={k} value={o} checked={f[k] === o} onChange={() => set(k, o)} />
+            <span>{o}</span>
+          </label>
+        ))}
+      </div>
+    </fieldset>
+  );
+
+  return (
+    <form className={s.form} onSubmit={submit} noValidate>
+      <div className={s.formTwo}>
+        {text("name", "Your name", "text", "name")}
+        {text("email", "Email", "email", "email")}
+      </div>
+      {text("company", "Company (optional)", "text", "organization")}
+      <fieldset className={s.fieldSet} data-error={!!errors.needs} aria-describedby={errors.needs ? "brief-needs-err" : undefined}>
+        <legend>What do you need?</legend>
+        <div className={s.chips}>
+          {needs.map((n, i) => (
+            <label key={n} className={s.chip}>
+              <input
+                id={i === 0 ? "brief-needs" : undefined}
+                type="checkbox"
+                checked={f.needs.includes(n)}
+                onChange={() => set("needs", f.needs.includes(n) ? f.needs.filter((x) => x !== n) : [...f.needs, n])}
+              />
+              <span>{n}</span>
+            </label>
+          ))}
+        </div>
+        {errors.needs && (
+          <small id="brief-needs-err" className={s.err}>
+            {errors.needs}
+          </small>
+        )}
+      </fieldset>
+      {pick("budget", "Budget (optional)", budgets)}
+      {pick("timeline", "Timeline (optional)", timelines)}
+      <div className={s.field} data-error={!!errors.message}>
+        <label htmlFor="brief-message">What are you trying to do?</label>
+        <textarea
+          id="brief-message"
+          rows={5}
+          value={f.message}
+          onChange={(e) => set("message", e.target.value)}
+          aria-invalid={!!errors.message}
+          aria-describedby={errors.message ? "brief-message-err" : undefined}
+        />
+        {errors.message && (
+          <small id="brief-message-err" className={s.err}>
+            {errors.message}
+          </small>
+        )}
+      </div>
+      <div className={s.formFoot}>
+        <button type="submit" className={s.btn}>
+          Send brief <span aria-hidden="true">→</span>
+        </button>
+        <p className={s.muted}>Opens your email app with the brief filled in. Nothing is stored on this site.</p>
+      </div>
+    </form>
+  );
 }

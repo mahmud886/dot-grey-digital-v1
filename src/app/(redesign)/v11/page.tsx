@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { disciplines, featuredWorks, process, stats, testimonials, works, type Work } from "@/redesign/content";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
-import { Footer, Header, SectionHead } from "@/redesign/v11/Chrome";
+import { SectionHead } from "@/redesign/v11/Chrome";
 import { DragCarousel, FeaturedGrid, HeroReel, ServiceRows, type Card, type Cut } from "@/redesign/v11/Client";
 import s from "@/redesign/v11/v11.module.css";
 
@@ -28,7 +28,6 @@ export default function V11Home() {
   const quote = testimonials[0];
   return (
     <>
-      <Header />
       <main>
         <HeroReel cuts={CUTS}>
           <h1 className={s.heroTitle}>
@@ -47,7 +46,7 @@ export default function V11Home() {
           </h2>
           <div className={s.statementFoot}>
             <p className={s.lede}>Eighteen people in Dhaka and four time zones. One team from first sketch to the model in production.</p>
-            <Link href="/v11#services" className={s.arrowLink}>
+            <Link href="/v11/services" className={s.arrowLink}>
               What we do <span aria-hidden="true">→</span>
             </Link>
           </div>
@@ -59,7 +58,7 @@ export default function V11Home() {
         {/* Featured work 4-up */}
         <section id="work" className={s.section} aria-labelledby="featured">
           <SectionHead title="Featured work" count={4} id="featured">
-            <Link href="/v11#engagements" className={s.arrowLink}>
+            <Link href="/v11/work" className={s.arrowLink}>
               All work <span aria-hidden="true">→</span>
             </Link>
           </SectionHead>
@@ -103,7 +102,7 @@ export default function V11Home() {
             {process.map((p, i) => (
               <li key={p.title} className={s.row}>
                 <span className={s.rowThumb} aria-hidden="true">
-                  <ProjectArt slug={`process-${p.title}`} variant={i % 2 ? "rings" : "contour"} ink="#141414" paper="#e4e4e0" ratio={1} frame={i} />
+                  <ProjectArt slug={`process-${p.title}`} variant={i % 2 ? "rings" : "contour"} ink="var(--art-l-ink)" paper="var(--art-l-paper)" ratio={1} frame={i} />
                 </span>
                 <span className={s.rowNum}>{String(i + 1).padStart(2, "0")}</span>
                 <h3 className={s.rowTitle}>{p.title}</h3>
@@ -131,7 +130,6 @@ export default function V11Home() {
           </figure>
         </section>
       </main>
-      <Footer />
     </>
   );
 }

@@ -3,7 +3,6 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getNextWork, getWorkBySlug, works } from "@/redesign/content";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
-import { Footer, Header } from "@/redesign/v11/Chrome";
 import s from "@/redesign/v11/v11.module.css";
 
 export function generateStaticParams() {
@@ -24,10 +23,9 @@ export default async function V11Case({ params }: PageProps<"/v11/work/[slug]">)
 
   return (
     <>
-      <Header />
       <main>
         <section className={s.cover} aria-labelledby="case-title">
-          <ProjectArt slug={w.slug} label={w.client} variant="halftone" ink="#f4f4f2" paper="#111111" ratio={1.6} className={s.coverArt} />
+          <ProjectArt slug={w.slug} label={w.client} variant="halftone" ink="var(--art-d-ink)" paper="var(--art-d-paper)" ratio={1.6} className={s.coverArt} />
           <div className={s.coverText}>
             <p className={s.label}>
               Case ● {w.category} ● {w.year}
@@ -66,13 +64,13 @@ export default async function V11Case({ params }: PageProps<"/v11/work/[slug]">)
 
         <section className={s.gallery} aria-label="Project frames">
           <div className={s.gWide}>
-            <ProjectArt slug={w.slug} label={w.client} variant="poster" ink="#141414" paper="#e2e2de" ratio={2.2} frame={1} />
+            <ProjectArt slug={w.slug} label={w.client} variant="poster" ink="var(--art-l-ink)" paper="var(--art-l-paper)" ratio={2.2} frame={1} />
           </div>
           <div className={s.gTall}>
-            <ProjectArt slug={w.slug} label={w.client} variant="contour" ink="#f4f4f2" paper="#151515" ratio={0.75} frame={2} />
+            <ProjectArt slug={w.slug} label={w.client} variant="contour" ink="var(--art-d-ink)" paper="var(--art-d-paper)" ratio={0.75} frame={2} />
           </div>
           <div className={s.gTall}>
-            <ProjectArt slug={w.slug} label={w.client} variant="matrix" ink="#141414" paper="#dcdcd8" ratio={0.75} frame={3} />
+            <ProjectArt slug={w.slug} label={w.client} variant="matrix" ink="var(--art-l-ink)" paper="var(--art-l-paper)" ratio={0.75} frame={3} />
           </div>
         </section>
 
@@ -149,7 +147,7 @@ export default async function V11Case({ params }: PageProps<"/v11/work/[slug]">)
 
         {/* Basic-style chaining: the page runs straight into the next case's cover. */}
         <Link href={`/v11/work/${next.slug}`} className={`${s.cover} ${s.nextCover}`} aria-label={`Next case: ${next.title}`}>
-          <ProjectArt slug={next.slug} label={next.client} variant="halftone" ink="#f4f4f2" paper="#111111" ratio={1.6} className={s.coverArt} />
+          <ProjectArt slug={next.slug} label={next.client} variant="halftone" ink="var(--art-d-ink)" paper="var(--art-d-paper)" ratio={1.6} className={s.coverArt} />
           <span className={s.coverText}>
             <span className={s.label}>
               Next case <span aria-hidden="true">●</span> {next.category}
@@ -161,7 +159,6 @@ export default async function V11Case({ params }: PageProps<"/v11/work/[slug]">)
           </span>
         </Link>
       </main>
-      <Footer />
     </>
   );
 }
