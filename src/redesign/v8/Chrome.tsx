@@ -1,10 +1,12 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
 import type { LegalPage } from "@/data/legal";
-import { disciplines, offices, site, type Work } from "@/redesign/content";
+import { offices, site, type Work } from "@/redesign/content";
 import { ProjectArt } from "@/redesign/shared/ProjectArt";
 import { variantFor } from "./art";
-import { DhakaClock } from "./Client";
+import { DhakaClock, ThemePill } from "./Client";
+import { Newsletter } from "./More";
+import { V8_MAP } from "./nav";
 import s from "./v8.module.css";
 
 export const BASE = "/v8";
@@ -159,40 +161,18 @@ export function Legal({ page }: { page: LegalPage }) {
   );
 }
 
-const SITEMAP = [
-  {
-    label: "Explore",
-    links: [
-      { href: `${BASE}/work`, label: "Work" },
-      { href: `${BASE}/services`, label: "Services" },
-      { href: `${BASE}/about`, label: "About" },
-      { href: `${BASE}/insights`, label: "Insights" },
-    ],
-  },
-  {
-    label: "Studio",
-    links: [
-      { href: `${BASE}/careers`, label: "Careers" },
-      { href: `${BASE}/faq`, label: "FAQ" },
-      { href: `${BASE}/contact`, label: "Contact" },
-      { href: `${BASE}/privacy`, label: "Privacy" },
-      { href: `${BASE}/terms`, label: "Terms" },
-    ],
-  },
-];
-
 /** Every page ends on a giant one-word sign-off: "Bye." on the homepage, "Done." on a case. */
 export function Footer({ signoff = "Bye." }: { signoff?: string }) {
   return (
     <footer id="contact" className={`${s.chapterDark} ${s.footer}`}>
-      <div className={s.footGrid}>
+      <div className={s.footTop}>
         <div className={s.footLead}>
           <p className={s.footKicker}>Got a product, a process or a pile of data?</p>
           <a href={`mailto:${site.email}`} className={s.footMail}>
             {site.email}
           </a>
           <div className={s.footCtas}>
-            <Link href={`${BASE}/contact`} className={s.pillLight}>
+            <Link href={`${BASE}/start`} className={s.pillLight}>
               Start a project →
             </Link>
             <a href={`mailto:${site.email}?subject=Hello`} className={s.pillGhost}>
@@ -200,28 +180,6 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
             </a>
           </div>
         </div>
-        <div>
-          <p className={s.footHead}>What we do</p>
-          <ul className={s.footList}>
-            {disciplines.map((d) => (
-              <li key={d.id}>
-                <Link href={`${BASE}/services/${d.id}`}>{d.title}</Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        {SITEMAP.map((col) => (
-          <div key={col.label}>
-            <p className={s.footHead}>{col.label}</p>
-            <ul className={s.footList}>
-              {col.links.map((l) => (
-                <li key={l.href}>
-                  <Link href={l.href}>{l.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-        ))}
         <div>
           <p className={s.footHead}>Find us</p>
           {offices.map((o) => (
@@ -235,7 +193,25 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
             <DhakaClock />
           </p>
         </div>
+        <div className={s.footSide}>
+          <Newsletter email={site.email} compact />
+          <ThemePill className={s.pill} />
+        </div>
       </div>
+      <nav className={`${s.footGrid} ${s.footMap}`} aria-label="Footer">
+        {V8_MAP.map((col) => (
+          <div key={col.label}>
+            <p className={s.footHead}>{col.label}</p>
+            <ul className={s.footList}>
+              {col.links.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href}>{l.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </nav>
       <p className={s.bye} aria-hidden="true" style={{ ["--len" as string]: signoff.length }}>
         <Stop>{signoff}</Stop>
       </p>

@@ -127,6 +127,18 @@ export default async function V8Service({ params }: PageProps<"/v8/services/[id]
           </section>
         )}
 
+        <div className={s.ctaBand}>
+          <p>Need this? Pick how to start.</p>
+          <span style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+            <Link href="/v8/engagements" className={s.pillGhost}>
+              Engagements
+            </Link>
+            <Link href="/v8/start" className={s.pillAccent}>
+              Start a project →
+            </Link>
+          </span>
+        </div>
+
         <Link href={`/v8/services/${next.id}`} className={s.next}>
           <span className={s.kicker}>
             <Stop>Next.</Stop>

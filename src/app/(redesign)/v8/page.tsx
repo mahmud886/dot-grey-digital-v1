@@ -34,7 +34,7 @@ export default function V8Home() {
                 <Link href="/v8/services">What we do</Link>
               </li>
               <li>
-                <Link href="/v8/contact">Start a project</Link>
+                <Link href="/v8/start">Start a project</Link>
               </li>
             </ul>
           </div>

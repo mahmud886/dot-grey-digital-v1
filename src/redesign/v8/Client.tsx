@@ -68,13 +68,14 @@ function Ticker() {
 const LEFT = [
   { href: "/v8/work", label: "Work" },
   { href: "/v8/services", label: "Services" },
-  { href: "/v8/about", label: "About" },
+  { href: "/v8/process", label: "Process" },
 ];
 const RIGHT = [
+  { href: "/v8/about", label: "About" },
   { href: "/v8/insights", label: "Insights" },
   { href: "/v8/contact", label: "Contact" },
 ];
-const SHEET = [...LEFT, RIGHT[0], { href: "/v8/careers", label: "Careers" }, RIGHT[1]];
+const SHEET = [...LEFT, { href: "/v8/engagements", label: "Engagements" }, ...RIGHT.slice(0, 2), { href: "/v8/careers", label: "Careers" }, RIGHT[2], { href: "/v8/start", label: "Start a project" }];
 
 /** "Light" or "Dark" — the mode you are in. Neutral until the pre-paint script's answer is read. */
 function ModeLabel() {
@@ -136,6 +137,9 @@ export function Header() {
               </Link>
             ))}
           </nav>
+          <Link href="/v8/start" className={`${s.pill} ${s.startPill}`} aria-current={current("/v8/start")}>
+            Start a project
+          </Link>
           <ThemePill className={`${s.pill} ${s.headerMode}`} />
           <MotionToggle />
           <button type="button" className={`${s.pill} ${s.menuBtn}`} aria-expanded={open} aria-controls="v8-menu" onClick={() => setOpen(true)}>
