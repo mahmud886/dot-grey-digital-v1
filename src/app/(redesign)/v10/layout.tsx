@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Doto, Geist, Geist_Mono } from "next/font/google";
-import { VersionBar } from "@/redesign/shared/VersionBar";
 import { Header } from "@/redesign/v10/Chrome";
 import s from "@/redesign/v10/v10.module.css";
 
@@ -18,7 +17,6 @@ export default function V10Layout({ children }: { children: React.ReactNode }) {
     <div className={`${s.root} ${dot.variable} ${mono.variable} ${sans.variable}`}>
       <Header />
       {children}
-      <VersionBar current="v10" />
     </div>
   );
 }

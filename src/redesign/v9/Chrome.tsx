@@ -161,9 +161,6 @@ export function Footer() {
             <ThemeToggle className={s.themeBtn}>
               <ThemeLabel />
             </ThemeToggle>
-            <p>
-              V9 — Index <G name="slash" /> <Link href="/">All versions</Link>
-            </p>
           </div>
         </div>
       </div>

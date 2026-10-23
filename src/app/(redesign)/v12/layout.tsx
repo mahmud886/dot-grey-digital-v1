@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Cormorant_Garamond, Onest } from "next/font/google";
-import { VersionBar } from "@/redesign/shared/VersionBar";
 import { Footer, Header } from "@/redesign/v12/Chrome";
 import { Cursor, ScrollProgress } from "@/redesign/v12/Client";
 import s from "@/redesign/v12/v12.module.css";
@@ -20,7 +19,6 @@ export default function V12Layout({ children }: { children: React.ReactNode }) {
       {children}
       <Footer />
       <Cursor />
-      <VersionBar current="v12" />
     </div>
   );
 }

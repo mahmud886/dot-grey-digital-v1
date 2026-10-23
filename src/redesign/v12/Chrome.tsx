@@ -169,9 +169,6 @@ export function Footer() {
                 <ThemeIcon /> <span>Colour mode</span>
               </ThemeToggle>
             </li>
-            <li>
-              <Link href="/">All prototypes ↗</Link>
-            </li>
             <li>© {new Date().getFullYear()} DotGrey Digital</li>
           </ul>
         </div>

@@ -217,9 +217,6 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
       </p>
       <div className={s.footBar}>
         <span>© {new Date().getFullYear()} DotGrey Digital</span>
-        <span>
-          Prototype v8 · <Link href="/">All versions</Link>
-        </span>
       </div>
     </footer>
   );

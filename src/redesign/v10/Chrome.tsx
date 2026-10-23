@@ -79,7 +79,6 @@ export function Footer() {
         <span>© {new Date().getFullYear()} DotGrey Digital</span>
         <ThemePill />
         <Link href="/v10/sitemap">Sitemap</Link>
-        <Link href="/">All prototypes</Link>
       </div>
     </footer>
   );

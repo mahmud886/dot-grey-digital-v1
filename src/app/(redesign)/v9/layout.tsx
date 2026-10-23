@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Gloock, Hanken_Grotesk } from "next/font/google";
-import { VersionBar } from "@/redesign/shared/VersionBar";
 import { Footer, Header } from "@/redesign/v9/Chrome";
 import s from "@/redesign/v9/v9.module.css";
 
@@ -21,7 +20,6 @@ export default function V9Layout({ children }: { children: React.ReactNode }) {
       <Header />
       {children}
       <Footer />
-      <VersionBar current="v9" />
     </div>
   );
 }

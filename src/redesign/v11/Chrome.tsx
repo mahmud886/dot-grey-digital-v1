@@ -91,7 +91,7 @@ export function Footer() {
       </div>
       <div className={s.footBase}>
         <span>
-          ©26 DotGrey® ● <Link href="/v11/privacy">Privacy</Link> ● <Link href="/v11/terms">Terms</Link> ● <Link href="/">All prototypes</Link>
+          ©26 DotGrey® ● <Link href="/v11/privacy">Privacy</Link> ● <Link href="/v11/terms">Terms</Link>
         </span>
         <span>Design ● Software ● Automation ● Data ● ML</span>
         <span>Since {site.founded}</span>

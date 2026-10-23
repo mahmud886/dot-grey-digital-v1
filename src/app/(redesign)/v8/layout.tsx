@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { Bodoni_Moda, Inter_Tight } from "next/font/google";
-import { VersionBar } from "@/redesign/shared/VersionBar";
 import { Header, MotionProvider } from "@/redesign/v8/Client";
 import s from "@/redesign/v8/v8.module.css";
 
@@ -19,7 +18,6 @@ export default function V8Layout({ children }: { children: React.ReactNode }) {
         <Header />
         {children}
       </MotionProvider>
-      <VersionBar current="v8" />
     </div>
   );
 }
