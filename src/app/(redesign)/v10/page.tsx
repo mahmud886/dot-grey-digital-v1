@@ -106,7 +106,7 @@ export default function V10Home() {
               <a href={`mailto:${site.email}`} className={s.mail}>
                 {site.email} <span aria-hidden="true">↗</span>
               </a>
-              <Link href="/v10/contact" className={s.cta}>
+              <Link href="/v10/start" className={s.cta}>
                 Run a brief <span aria-hidden="true">→</span>
               </Link>
             </div>

@@ -12,6 +12,7 @@ import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
 import type { Discipline, Post, Work } from "@/redesign/content";
 import { buildFormation, buildFormations, buildRandoms, type FormationId } from "./formations";
 import { readPalette, startEngine, type Engine, type EngineState } from "./engine";
+import { MENU_EXTRA } from "./agency-extra";
 import s from "./v10.module.css";
 
 // Where each formation sits on screen and how bright it is: hero, six disciplines, dust.
@@ -540,7 +541,7 @@ export function MobileMenu() {
         </div>
         <nav aria-label="Mobile">
           <ol className={s.menuList}>
-            {[{ href: "/v10", label: "Home" }, ...NAV].map((l, i) => (
+            {[{ href: "/v10", label: "Home" }, ...NAV, ...MENU_EXTRA].map((l, i) => (
               <li key={l.href} style={{ animationDelay: `${40 + i * 40}ms` }}>
                 <Link href={l.href} onClick={() => setOpen(false)} aria-current={path === l.href ? "page" : undefined}>
                   <span className={s.rowNum}>{String(i).padStart(2, "0")}</span>

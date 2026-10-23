@@ -1,9 +1,11 @@
 import Link from "next/link";
 import type { CSSProperties, ReactNode } from "react";
 import { BrandMark } from "@/redesign/shared/BrandMark";
-import { disciplines, offices, site } from "@/redesign/content";
+import { offices, site } from "@/redesign/content";
 import { DhakaTime, Field, MobileMenu, NavLinks, ThemePill } from "./Client";
 import type { FormationId } from "./formations";
+import { V10_MAP } from "./agency-extra";
+import { Newsletter } from "./More";
 import s from "./v10.module.css";
 
 /** Top HUD: logo left, the nav pill and theme pill right. Fixed on every v10 page. */
@@ -16,51 +18,48 @@ export function Header() {
           <NavLinks />
         </nav>
         <ThemePill className={s.themeTop} />
+        <Link href="/v10/start" className={s.xTopCta}>
+          Start a project <span aria-hidden="true">→</span>
+        </Link>
         <MobileMenu />
       </div>
     </header>
   );
 }
 
-/** Footer as a HUD readout: four columns of links and live studio time. */
+/** Footer as a HUD readout: the full site map, live studio time and the newsletter. */
 export function Footer() {
   const [dhaka, remote] = offices;
   return (
     <footer className={s.footer}>
-      <div className={s.footGrid}>
+      <div className={s.xFootTop}>
         <div>
-          <p className={s.label}>Index</p>
-          <ul>
-            <li>
-              <Link href="/v10/work">Work</Link>
-            </li>
-            <li>
-              <Link href="/v10/services">Services</Link>
-            </li>
-            <li>
-              <Link href="/v10/about">About</Link>
-            </li>
-            <li>
-              <Link href="/v10/insights">Insights</Link>
-            </li>
-            <li>
-              <Link href="/v10/careers">Careers</Link>
-            </li>
-            <li>
-              <Link href="/v10/faq">FAQ</Link>
-            </li>
-          </ul>
+          <p className={s.label}>Signal</p>
+          <p className={s.xFootLine}>
+            Got a problem worth solving<span className={s.acc}>?</span>
+          </p>
+          <Link href="/v10/start" className={s.cta}>
+            Start a project <span aria-hidden="true">→</span>
+          </Link>
         </div>
         <div>
-          <p className={s.label}>Services</p>
-          <ul>
-            {disciplines.map((d) => (
-              <li key={d.id}>
-                <Link href={`/v10/services/${d.id}`}>{d.short}</Link>
-              </li>
-            ))}
-          </ul>
+          <p className={s.label}>Monthly notes</p>
+          <Newsletter email={site.email} />
         </div>
+      </div>
+      <div className={s.xFootGrid}>
+        {V10_MAP.map((g) => (
+          <div key={g.label}>
+            <p className={s.label}>{g.label}</p>
+            <ul>
+              {g.links.map((l) => (
+                <li key={l.href}>
+                  <Link href={l.href}>{l.label}</Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
         <div>
           <p className={s.label}>Studio</p>
           <ul>
@@ -69,25 +68,17 @@ export function Footer() {
               <DhakaTime /> in Dhaka
             </li>
             <li>{remote.lines.join(" ")}</li>
-          </ul>
-        </div>
-        <div>
-          <p className={s.label}>Signal</p>
-          <ul>
             <li>
               <a href={`mailto:${site.email}`}>{site.email}</a>
             </li>
             <li>{site.phone}</li>
-            <li>
-              <Link href="/v10/contact">Start a project</Link>
-            </li>
           </ul>
         </div>
       </div>
       <div className={s.footBar}>
         <span>© {new Date().getFullYear()} DotGrey Digital</span>
-        <Link href="/v10/privacy">Privacy</Link>
-        <Link href="/v10/terms">Terms</Link>
+        <ThemePill />
+        <Link href="/v10/sitemap">Sitemap</Link>
         <Link href="/">All prototypes</Link>
       </div>
     </footer>

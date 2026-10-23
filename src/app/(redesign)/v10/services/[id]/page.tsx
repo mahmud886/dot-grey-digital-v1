@@ -122,10 +122,13 @@ export default async function V10Service({ params }: PageProps<"/v10/services/[i
           <Link href={`/v10/services/${next.id}`} className={s.nextLink}>
             {next.short} <span aria-hidden="true">→</span>
           </Link>
-          <Link href="/v10/contact" className={s.cta}>
+          <Link href="/v10/start" className={s.cta}>
             Start a {d.short.toLowerCase()} project <span aria-hidden="true">→</span>
           </Link>
         </div>
+        <p className={s.xCross}>
+          Not sure how to start? See the <Link href="/v10/engagements">engagement modes</Link> or <Link href="/v10/process">how a project runs</Link>.
+        </p>
       </section>
     </Page>
   );
