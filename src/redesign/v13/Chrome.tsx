@@ -135,6 +135,11 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
         <Stop>{signoff}</Stop>
       </p>
 
+      {/* V12's sign-off under V8's: the name, set as wide as the page. */}
+      <p className={s.giant} aria-hidden="true">
+        dotgrey
+      </p>
+
       <div className={`${s.wrap} ${s.footBar}`}>
         <span>© {new Date().getFullYear()} DotGrey Digital</span>
         <span>Design · Software · Automation · Data · ML</span>

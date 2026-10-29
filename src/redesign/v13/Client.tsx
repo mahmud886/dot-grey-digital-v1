@@ -239,7 +239,7 @@ function useWire(initial: number, follow: boolean, fill: number, speed: number) 
  */
 export function Sculpture({ labels }: { labels: string[] }) {
   const { paused, toggle } = useMotionCtx();
-  const { ref, wire, reduced } = useWire(0, true, 0.5, 0.00018);
+  const { ref, wire, reduced } = useWire(0, true, 0.6, 0.00018);
   const [index, setIndex] = useState(0);
   const go = (i: number) => {
     setIndex(i);
@@ -504,26 +504,219 @@ function lineFor(day: number, h: number) {
   return "Late one. Big ideas don't clock out either.";
 }
 
-/** "Hello." plus a line written for the visitor's time of day. Neutral on the server. */
+/**
+ * The hero row under the wordmark: a giant italic "Hello." and, beside it, a line written for
+ * the visitor's time of day, both clocks and the two ways in. Neutral on the server.
+ */
 export function Greeting() {
   const key = useSyncExternalStore(subscribeMinute, nowKey, () => "");
   const [day, hour, local, dhaka] = key.split("|");
   const line = key ? lineFor(Number(day), Number(hour)) : "One studio for design, software, automation, data and machine learning.";
   return (
-    <div className={s.greeting}>
+    <div className={s.heroRow}>
       <p className={s.hello}>
         Hello<span className={s.stop}>.</span>
       </p>
-      <p className={s.greetLine}>{line}</p>
-      <p className={s.greetMeta} suppressHydrationWarning>
-        {key ? (
-          <>
-            {local} for you · {dhaka} in Dhaka
-          </>
-        ) : (
-          "Dhaka · Worldwide"
-        )}
-      </p>
+      <div className={s.greetSide}>
+        <p className={s.greetLine}>{line}</p>
+        <p className={s.greetMeta} suppressHydrationWarning>
+          {key ? (
+            <>
+              <span>{local} for you</span>
+              <span>{dhaka} in Dhaka</span>
+            </>
+          ) : (
+            <span>Dhaka · Worldwide</span>
+          )}
+        </p>
+        <div className={s.greetCtas}>
+          <a href="#start" className={s.pillInk}>
+            Start a project <span aria-hidden="true">↗</span>
+          </a>
+          <a href="#work" className={s.textLink}>
+            See the work
+          </a>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------ halftone field (from v8) */
+
+const FIELD_WORDS = ["Design", "Software", "Automation", "Data", "ML"];
+
+/** The page's one Pause control, as a small pill. */
+export function MotionPill({ className }: { className?: string }) {
+  const { paused, toggle } = useMotionCtx();
+  return (
+    <button type="button" className={className ?? s.fieldPause} onClick={toggle} aria-pressed={paused}>
+      <span aria-hidden="true" className={s.motionIcon} data-paused={paused} />
+      {paused ? "Play" : "Pause"}
+    </button>
+  );
+}
+
+/**
+ * V8's signature panel: a field of dots that spells each discipline in turn, wiping from
+ * left to right. Dots swell around the pointer. Ink comes from CSS, so it follows the theme;
+ * it stops on Pause, offscreen and under reduced motion (first word, still).
+ */
+export function HalftoneField({ words = FIELD_WORDS, caption = "Six disciplines, one team." }: { words?: string[]; caption?: string }) {
+  const wrap = useRef<HTMLDivElement>(null);
+  const canvas = useRef<HTMLCanvasElement>(null);
+  const { paused } = useMotionCtx();
+  const theme = useTheme();
+  const [word, setWord] = useState(0);
+
+  useEffect(() => {
+    const cv = canvas.current!;
+    const box = wrap.current!;
+    const ctx = cv.getContext("2d")!;
+    let W = 0;
+    let H = 0;
+    let step = 16;
+    let cols = 0;
+    let rows = 0;
+    let masks: Float32Array[] = [];
+    let raf = 0;
+    let visible = false;
+    let shown = -1;
+    const pointer = { x: -9999, y: -9999, k: 0 };
+    const start = performance.now();
+    const ink = getComputedStyle(cv).color;
+
+    const build = () => {
+      const dpr = Math.min(2, devicePixelRatio || 1);
+      W = box.clientWidth;
+      H = box.clientHeight;
+      if (!W || !H) {
+        masks = [];
+        return;
+      }
+      cv.width = Math.round(W * dpr);
+      cv.height = Math.round(H * dpr);
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      // Fewer, larger dots on small screens so each word still reads.
+      step = W < 640 ? 9 : W < 1100 ? 12 : 15;
+      cols = Math.ceil(W / step);
+      rows = Math.ceil(H / step);
+      const off = document.createElement("canvas");
+      off.width = cols;
+      off.height = rows;
+      const o = off.getContext("2d", { willReadFrequently: true })!;
+      const family = getComputedStyle(cv).fontFamily;
+      masks = words.map((w) => {
+        o.clearRect(0, 0, cols, rows);
+        let size = rows * 0.62;
+        o.font = `900 ${size}px ${family}`;
+        const tw = o.measureText(w).width;
+        if (tw > cols * 0.86) size *= (cols * 0.86) / tw;
+        o.font = `900 ${size}px ${family}`;
+        o.textAlign = "center";
+        o.textBaseline = "middle";
+        o.fillStyle = "#fff";
+        o.fillText(w, cols / 2, rows / 2 + size * 0.04);
+        const data = o.getImageData(0, 0, cols, rows).data;
+        const m = new Float32Array(cols * rows);
+        for (let i = 0; i < m.length; i++) m[i] = data[i * 4 + 3] / 255;
+        return m;
+      });
+    };
+
+    const draw = (now: number) => {
+      if (!masks.length) return;
+      const t = (now - start) / 1000;
+      const hold = 2.6;
+      const phase = paused ? 0 : t / hold;
+      const a = Math.floor(phase) % words.length;
+      const b = (a + 1) % words.length;
+      const f = phase - Math.floor(phase);
+      // The label follows the word you can read: it switches once the wipe is mostly done.
+      const readable = f > 0.84 ? b : a;
+      if (readable !== shown) {
+        shown = readable;
+        setWord(readable);
+      }
+      ctx.clearRect(0, 0, W, H);
+      ctx.fillStyle = ink;
+      pointer.k += ((pointer.x > -999 ? 1 : 0) - pointer.k) * 0.08;
+      for (let j = 0; j < rows; j++) {
+        for (let i = 0; i < cols; i++) {
+          const x = (i + 0.5) * step;
+          const y = (j + 0.5) * step;
+          // Wipe from left to right during the last 35% of each hold.
+          const local = Math.min(1, Math.max(0, ((f - 0.65) / 0.35) * 1.6 - (i / cols) * 0.6));
+          const m = masks[a][j * cols + i] * (1 - local) + masks[b][j * cols + i] * local;
+          const wave = paused ? 0.5 : 0.5 + 0.5 * Math.sin(x * 0.011 + y * 0.007 - t * 1.4);
+          const d = Math.hypot(x - pointer.x, y - pointer.y);
+          const near = pointer.k * Math.exp(-(d * d) / 14000);
+          const r = step * 0.5 * Math.min(1, 0.1 + wave * 0.1 + m * 0.82 + near * 0.55);
+          if (r < 0.5) continue;
+          ctx.beginPath();
+          ctx.arc(x, y, r, 0, Math.PI * 2);
+          ctx.fill();
+        }
+      }
+    };
+
+    const loop = (now: number) => {
+      draw(now);
+      if (!paused && visible) raf = requestAnimationFrame(loop);
+    };
+
+    build();
+    draw(performance.now());
+    const io = new IntersectionObserver(([e]) => {
+      visible = e.isIntersecting;
+      cancelAnimationFrame(raf);
+      if (visible) raf = requestAnimationFrame(loop);
+    });
+    io.observe(box);
+    const ro = new ResizeObserver(() => {
+      build();
+      draw(performance.now());
+    });
+    ro.observe(box);
+    document.fonts?.ready.then(() => {
+      build();
+      draw(performance.now());
+    });
+    const move = (e: PointerEvent) => {
+      const r = box.getBoundingClientRect();
+      pointer.x = e.clientX - r.left;
+      pointer.y = e.clientY - r.top;
+      if (paused) draw(performance.now());
+    };
+    const leave = () => {
+      pointer.x = pointer.y = -9999;
+      if (paused) draw(performance.now());
+    };
+    box.addEventListener("pointermove", move);
+    box.addEventListener("pointerleave", leave);
+    return () => {
+      cancelAnimationFrame(raf);
+      io.disconnect();
+      ro.disconnect();
+      box.removeEventListener("pointermove", move);
+      box.removeEventListener("pointerleave", leave);
+    };
+  }, [paused, theme, words]);
+
+  const n = (x: number) => String(x).padStart(2, "0");
+  return (
+    <div ref={wrap} className={s.field} role="img" aria-label={`Dot field spelling ${words.join(", ")}`}>
+      <canvas ref={canvas} className={s.fieldCanvas} />
+      <div className={s.fieldTop} aria-hidden="true">
+        <span>
+          {n(word + 1)} / {n(words.length)}
+        </span>
+        <span className={s.fieldWord}>{words[word]}</span>
+      </div>
+      <div className={s.fieldCaption}>
+        <span>{caption}</span>
+        <MotionPill />
+      </div>
     </div>
   );
 }

@@ -453,8 +453,7 @@
   display: flex;
   flex-direction: column;
   gap: clamp(20px, 2.6vw, 40px);
-  min-height: calc(100svh - var(--header));
-  padding-block: clamp(8px, 1.2vw, 20px) clamp(24px, 3vw, 44px);
+  padding-block: clamp(8px, 1.2vw, 20px) clamp(28px, 3.4vw, 52px);
 }
 
 .wordmarkWrap {
@@ -480,44 +479,202 @@
 .heroRow {
   display: grid;
   flex: 1;
-  grid-template-columns: minmax(0, 5fr) minmax(0, 6fr);
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  align-items: end;
   gap: clamp(24px, 4vw, 72px);
   padding-top: clamp(16px, 1.8vw, 26px);
   border-top: 1px solid var(--fg);
-}
-
-.greeting {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: 1.5rem;
 }
 
 .hello {
   font-family: var(--v13-serif), Georgia, serif;
   font-style: italic;
   font-weight: 400;
-  font-size: clamp(6rem, 15vw, 16rem);
+  font-size: clamp(7rem, 19vw, 21rem);
   letter-spacing: -0.035em;
   line-height: 0.74;
   margin-left: -0.04em;
+  padding-bottom: 0.06em;
+}
+
+.greetSide {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(18px, 2vw, 28px);
+  padding-bottom: clamp(6px, 1vw, 14px);
 }
 
 .greetLine {
-  max-width: 24ch;
-  margin-top: auto;
-  font-size: clamp(1.25rem, 1.9vw, 1.85rem);
-  font-weight: 500;
-  letter-spacing: -0.025em;
-  line-height: 1.15;
+  max-width: 17ch;
+  font-size: clamp(1.9rem, 3.4vw, 3.6rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  text-wrap: balance;
 }
 
 .greetMeta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 22px;
+  padding-top: 14px;
+  border-top: 1px solid var(--rule);
   color: var(--muted);
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
+}
+
+.greetCtas {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 26px;
+}
+
+.textLink {
+  display: inline-block;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 2px;
+  transition: border-color 0.3s;
+}
+
+.textLink:hover {
+  border-color: var(--accent);
+}
+
+/* Halftone field (from v8) ------------------------------------------------- */
+
+.fieldSec {
+  padding-bottom: clamp(8px, 1vw, 16px);
+}
+
+.field {
+  position: relative;
+  height: clamp(420px, 52vw, 800px);
+  overflow: hidden;
+  border-radius: 24px;
+  outline: 1px solid var(--chap-line);
+  outline-offset: -1px;
+  background: var(--chap);
+  color: var(--chap-ink);
+}
+
+.fieldCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  color: var(--chap-ink);
+  font-family: var(--v13-sans), "Helvetica Neue", Arial, sans-serif;
+}
+
+.fieldTop,
+.fieldCaption {
+  position: absolute;
+  left: clamp(16px, 2vw, 28px);
+  right: clamp(16px, 2vw, 28px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+}
+
+.fieldTop {
+  top: clamp(16px, 1.8vw, 24px);
+  color: var(--chap-grey);
+}
+
+.fieldWord {
+  font-family: var(--v13-serif), Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 1.5rem;
+  letter-spacing: -0.01em;
+  text-transform: none;
+  color: var(--chap-ink);
+}
+
+.fieldCaption {
+  bottom: clamp(14px, 1.6vw, 22px);
+}
+
+.fieldPause {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 14px;
+  border: 1px solid var(--chap-line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--chap-ink);
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 0.3s;
+}
+
+.fieldPause:hover {
+  border-color: var(--chap-ink);
+}
+
+.motionIcon {
+  display: inline-block;
+  width: 8px;
+  height: 9px;
+  border-left: 3px solid currentColor;
+  border-right: 3px solid currentColor;
+}
+
+.motionIcon[data-paused="true"] {
+  width: 0;
+  height: 0;
+  border-right: 0;
+  border-left: 8px solid currentColor;
+  border-top: 4.5px solid transparent;
+  border-bottom: 4.5px solid transparent;
+}
+
+/* Sculpture chapter (from v12) -------------------------------------------- */
+
+.shape {
+  display: grid;
+  grid-template-columns: minmax(0, 4fr) minmax(0, 7fr);
+  align-items: center;
+  gap: clamp(32px, 5vw, 96px);
+  padding-block: clamp(100px, 12vw, 200px);
+}
+
+.shapeText {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: clamp(20px, 2vw, 28px);
+}
+
+.shapeTitle {
+  font-size: clamp(3.4rem, 7vw, 8rem);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+}
+
+.shapeTitle .em {
+  display: inline-block;
+  font-weight: 400;
+}
+
+.shapeLead {
+  max-width: 32ch;
+  color: var(--muted);
+  font-size: clamp(1.05rem, 1.3vw, 1.25rem);
+  line-height: 1.45;
 }
 
 /* Sculpture ---------------------------------------------------------------- */
@@ -534,7 +691,7 @@
   display: block;
   flex: 1;
   width: 100%;
-  min-height: clamp(260px, 38vh, 520px);
+  min-height: clamp(380px, 58vh, 700px);
   padding: 0;
   border: 0;
   background: none;
@@ -627,7 +784,7 @@
 /* ---------------------------------------------------------------- statement */
 
 .statement {
-  padding-block: clamp(110px, 14vw, 220px) clamp(100px, 13vw, 200px);
+  padding-block: clamp(90px, 11vw, 180px) clamp(90px, 11vw, 180px);
   border-top: 1px solid var(--rule);
 }
 
@@ -1016,52 +1173,219 @@
 /* ---------------------------------------------------------------- process */
 
 .process {
-  padding-block: clamp(80px, 10vw, 160px);
+  padding-block: clamp(100px, 12vw, 190px);
 }
 
 .steps {
+  display: grid;
+  grid-template-columns: repeat(var(--cols, 5), minmax(0, 1fr));
   padding: 0;
   list-style: none;
   border-top: 1px solid var(--fg);
 }
 
 .step {
-  display: grid;
-  grid-template-columns: 80px minmax(0, 1fr) minmax(0, 1.15fr);
-  align-items: baseline;
-  gap: 16px 32px;
-  padding: clamp(20px, 2.4vw, 32px) 0;
-  border-bottom: 1px solid var(--rule);
-  transition:
-    background-color 0.3s,
-    color 0.3s,
-    padding 0.45s var(--ease);
+  display: flex;
+  flex-direction: column;
+  padding: clamp(24px, 2.4vw, 36px) clamp(14px, 1.6vw, 24px) 0 0;
 }
 
-.step:hover {
-  padding-inline: 20px;
-  background: var(--fg);
-  color: var(--bg);
+.step + .step {
+  padding-left: clamp(14px, 1.6vw, 24px);
+  border-left: 1px solid var(--rule);
+}
+
+.rings {
+  display: block;
+  width: clamp(84px, 8vw, 128px);
+  height: clamp(84px, 8vw, 128px);
+  margin-bottom: clamp(28px, 3vw, 48px);
+}
+
+.rings circle {
+  fill: none;
+  stroke: var(--rule);
+  stroke-width: 0.8;
+  transition: stroke 0.6s var(--ease);
+}
+
+.rings circle[data-on="true"] {
+  stroke: var(--fg);
+}
+
+.step:hover .rings circle[data-on="true"]:last-of-type,
+.rings circle[data-on="true"]:nth-child(1) {
+  stroke: var(--accent);
 }
 
 .stepNum {
-  font-size: 13px;
+  color: var(--muted);
+  font-size: 12px;
   font-weight: 600;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.12em;
 }
 
 .stepTitle {
-  font-size: clamp(2.2rem, 5vw, 5rem);
+  margin: 10px 0 14px;
+  font-size: clamp(1.7rem, 2.6vw, 2.8rem);
+  font-weight: 800;
+  letter-spacing: -0.045em;
+  line-height: 0.95;
+}
+
+.stepBody {
+  max-width: 28ch;
+  color: var(--muted);
+  font-size: 0.975rem;
+  line-height: 1.5;
+}
+
+/* ---------------------------------------------------------------- perspective (from v12) */
+
+.perspective {
+  padding-block: clamp(100px, 12vw, 190px) clamp(80px, 9vw, 150px);
+  border-top: 1px solid var(--rule);
+}
+
+.perspHead {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.perspTitle {
+  font-size: clamp(3.2rem, 9vw, 9.6rem);
   font-weight: 800;
   letter-spacing: -0.05em;
   line-height: 0.95;
 }
 
-.stepBody {
-  max-width: 40ch;
-  font-size: clamp(1rem, 1.25vw, 1.2rem);
-  line-height: 1.4;
-  opacity: 0.72;
+.perspStatement {
+  max-width: 26ch;
+  margin-top: clamp(48px, 6vw, 100px);
+  margin-left: auto;
+  font-size: clamp(2.1rem, 4.6vw, 5rem);
+  font-weight: 400;
+  letter-spacing: -0.04em;
+  line-height: 1.02;
+  text-wrap: balance;
+}
+
+.perspective .statGrid {
+  margin-top: clamp(64px, 8vw, 128px);
+}
+
+/* ---------------------------------------------------------------- more work (from v12) */
+
+.more {
+  padding-block: clamp(90px, 10vw, 170px) clamp(130px, 16vw, 260px);
+}
+
+.moreTitle {
+  font-size: clamp(3rem, 6.5vw, 7.4rem);
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 0.9;
+}
+
+.moreTitle .em {
+  display: inline-block;
+  font-weight: 400;
+}
+
+.moreGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 48px);
+}
+
+/* The middle card drops, so the row reads like a spread rather than a table. */
+.moreGrid > :nth-child(3n + 2) {
+  transform: translateY(clamp(40px, 7vw, 120px));
+}
+
+/* ---------------------------------------------------------------- faq (from v12) */
+
+.faqWrap {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+  gap: clamp(32px, 5vw, 96px);
+  align-items: start;
+  padding-block: clamp(90px, 10vw, 170px);
+  border-top: 1px solid var(--rule);
+}
+
+.faqHead {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.faq {
+  border-bottom: 1px solid var(--fg);
+}
+
+.faq details {
+  border-top: 1px solid var(--fg);
+}
+
+.faq summary {
+  position: relative;
+  display: block;
+  padding: 1.6rem 3.5rem 1.6rem 0;
+  font-size: clamp(1.15rem, 1.7vw, 1.55rem);
+  font-weight: 600;
+  letter-spacing: -0.025em;
+  line-height: 1.25;
+  list-style: none;
+  cursor: pointer;
+  transition: padding 0.45s var(--ease);
+}
+
+.faq summary:hover {
+  padding-left: 12px;
+}
+
+.faq summary::-webkit-details-marker {
+  display: none;
+}
+
+.faq summary i {
+  position: absolute;
+  right: 0.25rem;
+  top: 50%;
+  width: 18px;
+  height: 18px;
+  margin-top: -9px;
+  transition: transform 0.5s var(--ease);
+}
+
+.faq summary i::before,
+.faq summary i::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 8.5px;
+  width: 18px;
+  height: 1.5px;
+  background: currentColor;
+}
+
+.faq summary i::after {
+  transform: rotate(90deg);
+}
+
+.faq details[open] summary i {
+  transform: rotate(45deg);
+  color: var(--accent);
+}
+
+.faq details p {
+  max-width: 58ch;
+  padding: 0 3.5rem 1.8rem 0;
+  color: var(--muted);
+  font-size: 1.05rem;
+  line-height: 1.55;
 }
 
 /* ---------------------------------------------------------------- numbers */
@@ -1109,8 +1433,11 @@
 }
 
 .stat dd sup {
-  font-size: 0.4em;
-  vertical-align: 1em;
+  position: relative;
+  top: -0.95em;
+  margin-left: 0.04em;
+  font-size: 0.38em;
+  vertical-align: baseline;
   line-height: 0;
 }
 
@@ -1121,7 +1448,8 @@
 /* ---------------------------------------------------------------- quotes */
 
 .voices {
-  padding-block: clamp(100px, 12vw, 200px);
+  padding-block: clamp(70px, 8vw, 130px);
+  border-top: 1px solid var(--rule);
 }
 
 .voices > .label {
@@ -1324,10 +1652,27 @@
   font-style: italic;
   font-weight: 400;
   /* "Bye." fills the width; longer sign-offs shrink so they still fit on one line. */
-  font-size: min(42vw, calc(220vw / var(--len, 4)));
+  font-size: min(30vw, calc(160vw / var(--len, 4)));
   letter-spacing: -0.05em;
   line-height: 0.74;
   white-space: nowrap;
+}
+
+.giant {
+  margin: clamp(48px, 5vw, 90px) 0 0;
+  padding-top: clamp(18px, 2vw, 32px);
+  border-top: 1px solid var(--rule);
+  font-family: var(--v13-sans), "Helvetica Neue", Arial, sans-serif;
+  /* Sized so the word spans the full width; the descender of "y" is cropped by the edge. */
+  font-size: 28.4vw;
+  font-weight: 500;
+  letter-spacing: -0.075em;
+  line-height: 0.92;
+  text-align: center;
+  white-space: nowrap;
+  user-select: none;
+  overflow: hidden;
+  padding-bottom: 0.06em;
 }
 
 .footBar {
@@ -1708,6 +2053,38 @@
 
   .heroRow {
     grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .shape,
+  .faqWrap {
+    grid-template-columns: 1fr;
+  }
+
+  .steps {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .step:nth-child(odd) {
+    padding-left: 0;
+    border-left: 0;
+  }
+
+  .step:nth-child(n + 3) {
+    margin-top: 36px;
+    border-top: 1px solid var(--rule);
+  }
+
+  .moreGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .moreGrid > :nth-child(3n + 2) {
+    transform: none;
+  }
+
+  .moreGrid > :nth-child(even) {
+    transform: translateY(clamp(30px, 6vw, 60px));
   }
 
   .statementBody {
@@ -1739,15 +2116,76 @@
   }
 
   .hello {
-    font-size: 34vw;
+    font-size: 36vw;
   }
 
-  .greeting {
-    gap: 1rem;
+  .greetLine {
+    font-size: clamp(1.7rem, 7.4vw, 2.2rem);
+  }
+
+  .field {
+    height: 112vw;
+    border-radius: 16px;
+  }
+
+  .fieldWord {
+    font-size: 1.2rem;
   }
 
   .stage {
-    min-height: 300px;
+    min-height: 92vw;
+  }
+
+  .shape {
+    padding-block: 80px;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .step,
+  .step + .step {
+    display: grid;
+    grid-template-columns: 64px minmax(0, 1fr);
+    column-gap: 18px;
+    padding: 22px 0;
+    margin-top: 0;
+    border-left: 0;
+    border-top: 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .rings {
+    grid-row: span 3;
+    width: 64px;
+    height: 64px;
+    margin: 0;
+  }
+
+  .stepTitle {
+    margin: 4px 0 8px;
+  }
+
+  .moreGrid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .moreGrid > :nth-child(even) {
+    transform: none;
+  }
+
+  .more {
+    padding-bottom: 90px;
+  }
+
+  .faq summary {
+    padding-right: 2.5rem;
+  }
+
+  .faq details p {
+    padding-right: 0;
   }
 
   .formList {

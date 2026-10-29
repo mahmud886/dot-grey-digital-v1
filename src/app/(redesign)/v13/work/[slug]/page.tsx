@@ -101,14 +101,19 @@ export default async function V13Case({ params }: PageProps<"/v13/work/[slug]">)
 
         <section className={`${s.wrap} ${s.process}`} aria-labelledby="steps-title">
           <SecHead id="steps-title" title="How it went." note={`${w.duration}, with a team of ${w.team.toLowerCase()}.`} />
-          <ol className={s.steps}>
+          <ol className={s.steps} style={{ ["--cols" as string]: w.approach.length }}>
             {w.approach.map((a, i) => (
               <li key={a.title} className={s.step}>
+                <svg viewBox="0 0 120 120" className={s.rings} aria-hidden="true">
+                  {w.approach.map((_, k) => (
+                    <circle key={k} cx="60" cy="60" r={14 + k * 13} data-on={k <= i} />
+                  ))}
+                </svg>
                 <span className={s.stepNum}>{String(i + 1).padStart(2, "0")}</span>
-                <span className={s.stepTitle}>
+                <h3 className={s.stepTitle}>
                   <Stop>{`${a.title}.`}</Stop>
-                </span>
-                <span className={s.stepBody}>{a.body}</span>
+                </h3>
+                <p className={s.stepBody}>{a.body}</p>
               </li>
             ))}
           </ol>

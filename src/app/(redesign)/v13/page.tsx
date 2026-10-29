@@ -1,21 +1,28 @@
-import { disciplines, featuredWorks, formatPostDate, posts, process, stats, testimonials } from "@/redesign/content";
-import { Em, Footer, SecHead, Stop } from "@/redesign/v13/Chrome";
-import { Deck, Form, Greeting, Quotes, RotatingWord, ScrubText, Sculpture, Wordmark, WorkReel } from "@/redesign/v13/Client";
+import { disciplines, faqs, featuredWorks, formatPostDate, posts, process, stats, testimonials, works } from "@/redesign/content";
+import { BASE, Em, Footer, SecHead, Stop } from "@/redesign/v13/Chrome";
+import { Deck, Form, Greeting, HalftoneField, Quotes, RotatingWord, ScrubText, Sculpture, TiltCard, Wordmark, WorkReel } from "@/redesign/v13/Client";
 import s from "@/redesign/v13/v13.module.css";
+
+// The reel carries the six featured projects; the grid below shows the rest, so nothing repeats.
+const MORE_WORK = works.filter((w) => !featuredWorks.some((f) => f.slug === w.slug));
+const FAQ_IDS = ["what-we-do", "start", "pricing", "ai-fit", "ai-data", "support"];
+const FAQS = FAQ_IDS.map((id) => faqs.find((f) => f.id === id)).filter((f) => f !== undefined);
 
 export default function V13Home() {
   return (
     <>
       <main id="main">
+        {/* Hello — V8's opening, set on V12's paper. */}
         <section className={`${s.wrap} ${s.hero}`}>
           <h1 className={s.wordmarkWrap}>
             <Wordmark text="DOTGREY" />
             <span className={s.srOnly}>DotGrey Digital — design, software, automation, data and machine learning studio</span>
           </h1>
-          <div className={s.heroRow}>
-            <Greeting />
-            <Sculpture labels={disciplines.map((d) => d.short)} />
-          </div>
+          <Greeting />
+        </section>
+
+        <section className={`${s.wrap} ${s.fieldSec}`} aria-label="Six disciplines, one team">
+          <HalftoneField />
         </section>
 
         <section className={`${s.wrap} ${s.statement}`} aria-labelledby="statement-title">
@@ -49,6 +56,23 @@ export default function V13Home() {
             }
           />
         </div>
+
+        {/* V12's centrepiece: the sculpture, given a chapter of its own. */}
+        <section className={`${s.wrap} ${s.shape}`} aria-labelledby="shape-title">
+          <div className={s.shapeText}>
+            <p className={s.label}>The shape of it</p>
+            <h2 id="shape-title" className={s.shapeTitle}>
+              Software, <Em>by design.</Em>
+            </h2>
+            <p className={s.shapeLead}>
+              Six crafts, six forms. Tap the sculpture to shift between them — each one is a discipline we staff on day one.
+            </p>
+            <a href="#services" className={s.textLink}>
+              Meet the six crafts
+            </a>
+          </div>
+          <Sculpture labels={disciplines.map((d) => d.short)} />
+        </section>
 
         <section id="services" className={`${s.wrap} ${s.services}`} aria-labelledby="services-title">
           <SecHead
@@ -88,51 +112,73 @@ export default function V13Home() {
           </Deck>
         </section>
 
-        <section id="process" className={`${s.wrap} ${s.process}`} aria-labelledby="process-title">
-          <SecHead
-            id="process-title"
-            title="How it goes."
-            note={
-              <>
-                Five stages, run in weekly loops. You see <Em>working software</Em> from week two.
-              </>
-            }
-          />
-          <ol className={s.steps}>
-            {process.map((p, i) => (
-              <li key={p.title} className={s.step}>
-                <span className={s.stepNum}>{String(i + 1).padStart(2, "0")}</span>
-                <span className={s.stepTitle}>
-                  <Stop>{`${p.title}.`}</Stop>
-                </span>
-                <span className={s.stepBody}>{p.body}</span>
-              </li>
+        {/* V12's "connected perspective", carrying V8's numbers. */}
+        <section id="about" className={`${s.wrap} ${s.perspective}`} aria-labelledby="about-title">
+          <div className={s.perspHead}>
+            <p className={s.label}>A connected perspective</p>
+            <h2 id="about-title" className={s.perspTitle}>
+              <Stop>Small on purpose.</Stop>
+            </h2>
+          </div>
+          <p className={s.perspStatement}>
+            Most problems cross a boundary — a design problem that is really a data problem, a workflow that needs a model. We keep all six crafts{" "}
+            <Em>in one room,</Em> and the people in the first workshop are <Em>the people who build it.</Em>
+          </p>
+          <dl className={s.statGrid}>
+            {stats.map((st) => (
+              <div key={st.label} className={s.stat}>
+                <dt>{st.label}</dt>
+                <dd>
+                  {st.value}
+                  {st.suffix && <sup>{st.suffix}</sup>}
+                </dd>
+              </div>
             ))}
-          </ol>
+          </dl>
         </section>
 
-        <section id="about" className={`${s.chapter} ${s.numbers}`} aria-labelledby="about-title">
+        <section className={`${s.wrap} ${s.more}`} aria-labelledby="more-title">
+          <div className={s.secHead}>
+            <h2 id="more-title" className={s.moreTitle}>
+              Ambition, <Em>in practice.</Em>
+            </h2>
+            <p className={s.secNote}>Three more from the archive. Hover a card — the frames straighten up.</p>
+          </div>
+          <div className={s.moreGrid}>
+            {MORE_WORK.map((w, i) => (
+              <TiltCard key={w.slug} work={w} index={featuredWorks.length + i} href={`${BASE}/work/${w.slug}`} />
+            ))}
+          </div>
+        </section>
+
+        {/* Process on V12's deep chapter: each step gains a ring. */}
+        <section id="process" className={`${s.chapter} ${s.process}`} aria-labelledby="process-title">
           <div className={s.wrap}>
             <SecHead
-              id="about-title"
-              title="Small on purpose."
+              id="process-title"
+              title="How it goes."
               note={
                 <>
-                  A senior team in Dhaka, working across four time zones. The people in the first workshop are <Em>the people who build it.</Em>
+                  Five stages, run in weekly loops. You see <Em>working software</Em> from week two.
                 </>
               }
             />
-            <dl className={s.statGrid}>
-              {stats.map((st) => (
-                <div key={st.label} className={s.stat}>
-                  <dt>{st.label}</dt>
-                  <dd>
-                    {st.value}
-                    {st.suffix && <sup>{st.suffix}</sup>}
-                  </dd>
-                </div>
+            <ol className={s.steps}>
+              {process.map((p, i) => (
+                <li key={p.title} className={s.step} style={{ ["--i" as string]: i }}>
+                  <svg viewBox="0 0 120 120" className={s.rings} aria-hidden="true">
+                    {Array.from({ length: process.length }, (_, k) => (
+                      <circle key={k} cx="60" cy="60" r={12 + k * 11} data-on={k <= i} />
+                    ))}
+                  </svg>
+                  <span className={s.stepNum}>{String(i + 1).padStart(2, "0")}</span>
+                  <h3 className={s.stepTitle}>
+                    <Stop>{`${p.title}.`}</Stop>
+                  </h3>
+                  <p className={s.stepBody}>{p.body}</p>
+                </li>
               ))}
-            </dl>
+            </ol>
           </div>
         </section>
 
@@ -141,6 +187,26 @@ export default function V13Home() {
             In their words
           </h2>
           <Quotes items={testimonials} />
+        </section>
+
+        <section className={`${s.wrap} ${s.faqWrap}`} aria-labelledby="faq-title">
+          <div className={s.faqHead}>
+            <p className={s.label}>Questions</p>
+            <h2 id="faq-title" className={s.moreTitle}>
+              Fair <Em>questions.</Em>
+            </h2>
+          </div>
+          <div className={s.faq}>
+            {FAQS.map((f) => (
+              <details key={f.id}>
+                <summary>
+                  {f.question}
+                  <i aria-hidden="true" />
+                </summary>
+                <p>{f.answer}</p>
+              </details>
+            ))}
+          </div>
         </section>
 
         <section id="insights" className={`${s.wrap} ${s.notes}`} aria-labelledby="insights-title">
