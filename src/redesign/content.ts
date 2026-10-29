@@ -1,5 +1,5 @@
 /**
- * Shared content for the redesign prototypes (/v1 – /v12).
+ * Shared content for the redesign prototypes (/v1 – /v13).
  *
  * Works, stats and testimonials come straight from the existing CMS content so every
  * version shows the same real material; only the service lineup is new, because the
@@ -228,6 +228,15 @@ export const versions = [
     signature: "Tap-to-shift wireframe sculpture with Pause, hairline service list, cards that straighten on hover",
     fonts: "Onest + Cormorant Garamond",
     palette: ["#eeede9", "#111111", "#6b6b68", "#d4d3ce"],
+  },
+  {
+    id: "v13",
+    set: "mono",
+    name: "Hybrid",
+    idea: "V8's voice in V12's material: the full-width wordmark, \"Hello.\" and the deck, on paper and ink with the sculpture.",
+    signature: "Wordmark hero with a tap-to-shift sculpture, pinned reel of tilted cards, a services deck where every card turns its own form",
+    fonts: "Inter Tight + Cormorant Garamond",
+    palette: ["#eeede9", "#111111", "#6b6b68", "#e2e1dc"],
   },
 ] as const;
 

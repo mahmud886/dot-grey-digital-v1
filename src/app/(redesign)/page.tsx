@@ -12,7 +12,7 @@ const mono = Geist_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: 
 
 export const metadata: Metadata = {
   title: { absolute: "DotGrey Digital — Redesign Lab" },
-  description: "Twelve redesign directions for DotGrey Digital, each with a working homepage and case study.",
+  description: "Thirteen redesign directions for DotGrey Digital, each with a working homepage and case study.",
 };
 
 /** Which reference site each black-and-white direction learned from. */
@@ -22,6 +22,7 @@ const AFTER: Partial<Record<string, string>> = {
   v10: "Active Theory",
   v11: "BASIC/DEPT®",
   v12: "Umber",
+  v13: "V8 + V12",
 };
 
 const ROUNDS = [
@@ -63,7 +64,7 @@ export default function Lab() {
         <section className={s.hero}>
           <p className={s.kicker}>DotGrey Digital · {versions.length} directions · 2 rounds</p>
           <h1 className={s.title}>
-            Twelve ways
+            Thirteen ways
             <br />
             to be <em>DotGrey.</em>
           </h1>
