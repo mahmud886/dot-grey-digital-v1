@@ -28,6 +28,17 @@
   --art-b-ink: #eeede9;
   --art-b-paper: #111111;
   --shadow: rgb(0 0 0 / 0.26);
+  --shadow-strong: rgb(0 0 0 / 0.38);
+  /* V12's deep chapter tokens, used by the inner pages (pages.module.css). */
+  --chapter: var(--chap);
+  --chapter-ink: var(--chap-ink);
+  --chapter-muted: #8d8c87;
+  --chapter-body: #b4b3ae;
+  --chapter-strong: #d6d5d0;
+  --chapter-line: var(--chap-line);
+  --chapter-line-2: #262624;
+  --chapter-ring: #3d3d3a;
+  --on-ink-muted: #b9b8b3;
 
   --pad: clamp(20px, 3vw, 48px);
   --header: 76px;
@@ -77,6 +88,11 @@
   --art-b-ink: #121211;
   --art-b-paper: #d9d8d2;
   --shadow: rgb(0 0 0 / 0.6);
+  --shadow-strong: rgb(0 0 0 / 0.75);
+  --chapter-muted: #8f8e88;
+  --chapter-line-2: #2d2d2a;
+  --chapter-ring: #45453f;
+  --on-ink-muted: #55544f;
 
   color-scheme: dark;
 }
@@ -2331,4 +2347,213 @@
     transition: none;
     animation: none;
   }
+}
+
+
+/* ================================================================ round 3: polish + pages */
+
+/* Type rhythm: balanced headlines, no orphans in paragraphs. */
+.root :where(h1, h2, h3) {
+  text-wrap: balance;
+}
+
+.root :where(p, li, dd, blockquote) {
+  text-wrap: pretty;
+}
+
+/* Anchors land below the sticky header, and glide unless motion is reduced. */
+:global(html):has(.root) {
+  scroll-padding-top: calc(var(--header) + 24px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  :global(html):has(.root) {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Magnetic pills: the transform is set by Magnet(); this makes it settle softly. */
+.root [data-magnetic] {
+  transition:
+    transform 0.5s var(--ease),
+    background 0.35s var(--ease),
+    color 0.35s var(--ease),
+    border-color 0.35s var(--ease);
+  will-change: transform;
+}
+
+/* Headline reveal: words rise out of a mask, one after another (armed by Reveal()). */
+.reveal .rw {
+  display: inline-block;
+  overflow: clip;
+  overflow-clip-margin: 0.12em;
+  vertical-align: top;
+  padding-bottom: 0.06em;
+  margin-bottom: -0.06em;
+}
+
+.reveal .rw > span {
+  display: inline-block;
+}
+
+.reveal[data-armed] .rw > span {
+  transform: translate3d(0, 105%, 0);
+  transition: transform 0.95s var(--ease) var(--d, 0ms);
+}
+
+.reveal[data-armed][data-in] .rw > span {
+  transform: none;
+}
+
+/* Inner-page opening: V8's headline over V12's sentence. */
+.pageHead {
+  padding-top: clamp(56px, 9vw, 150px);
+  padding-bottom: clamp(36px, 5vw, 80px);
+}
+
+.pageHead > .label {
+  margin-bottom: clamp(18px, 2vw, 28px);
+}
+
+.pageHead > .label a {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: var(--rule);
+}
+
+.pageHeadline {
+  font-size: clamp(3.4rem, 11.5vw, 12rem);
+  font-weight: 800;
+  letter-spacing: -0.06em;
+  line-height: 0.86;
+  margin-left: -0.04em;
+}
+
+.pageHeadline[data-size="m"] {
+  font-size: clamp(2.8rem, 7.6vw, 8rem);
+}
+
+.pageSentence {
+  max-width: 24ch;
+  margin-top: clamp(24px, 3vw, 44px);
+  font-size: clamp(1.7rem, 3.4vw, 3.4rem);
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  line-height: 1.04;
+}
+
+.pageLead {
+  max-width: 52ch;
+  margin-top: clamp(18px, 2vw, 28px);
+  color: var(--muted);
+  font-size: clamp(1.02rem, 1.3vw, 1.25rem);
+  line-height: 1.5;
+}
+
+.headBold {
+  font-weight: 800;
+  letter-spacing: -0.05em;
+}
+
+/* Single sculpture (service pages): a fixed stage, no tap target. */
+.sculptureSingle .stage {
+  height: max(360px, min(70vh, 640px));
+  min-height: 0;
+  flex: none;
+  cursor: default;
+}
+
+/* Footer: newsletter under the CTAs, then the full site map. */
+.footNews {
+  max-width: 560px;
+  margin-top: clamp(36px, 4vw, 56px);
+}
+
+.footMap {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 32px;
+  padding: clamp(36px, 4vw, 56px) 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.footMap .label {
+  margin-bottom: 14px;
+}
+
+/* Dark mode: the dot field and the deep chapters lift off the page with a hairline and a
+   faint inner light, so the rhythm reads without shouting. */
+:global([data-theme="dark"]) .root {
+  --chap: #1d1d1b;
+  --chap-line: #3d3d39;
+}
+
+:global([data-theme="dark"]) .field {
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgb(255 255 255 / 0.05), transparent 60%),
+    var(--chap);
+  outline-color: #3d3d39;
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.06),
+    0 40px 80px -40px rgb(0 0 0 / 0.8);
+}
+
+:global([data-theme="dark"]) .chapter {
+  background:
+    linear-gradient(rgb(255 255 255 / 0.025), transparent 240px),
+    var(--bg);
+  box-shadow:
+    inset 0 1px 0 rgb(255 255 255 / 0.07),
+    inset 0 -1px 0 rgb(255 255 255 / 0.04);
+}
+
+/* Refined hovers: rows and cards answer the pointer the same way everywhere. */
+.footList a,
+.textLink {
+  transition:
+    color 0.35s var(--ease),
+    text-decoration-color 0.35s var(--ease);
+}
+
+@media (max-width: 1100px) {
+  .footMap {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 640px) {
+  .footMap {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .pageSentence {
+    max-width: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal[data-armed] .rw > span {
+    transform: none;
+    transition: none;
+  }
+
+  .root [data-magnetic] {
+    transition: none;
+  }
+}
+
+/* Notes rows are links now: the title answers the pointer. */
+a.note {
+  transition: background 0.4s var(--ease);
+}
+
+a.note:hover .noteTitle {
+  text-decoration: underline;
+  text-decoration-color: var(--accent);
+  text-decoration-thickness: 1px;
+  text-underline-offset: 6px;
+}
+
+a.note:hover .noteRead {
+  color: var(--fg);
 }

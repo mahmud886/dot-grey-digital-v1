@@ -3,24 +3,22 @@ import type { ReactNode } from "react";
 import { BrandMark } from "@/redesign/shared/BrandMark";
 import { ThemeIcon, ThemeToggle } from "@/redesign/shared/ThemeToggle";
 import { offices, site } from "@/redesign/content";
-import { DhakaTime, MenuToggle, NavLinks, type NavLink } from "./Client";
+import { DhakaTime, MenuToggle, NavLinks, Reveal, type NavLink } from "./Client";
+import { Newsletter } from "./More";
+import { V13_MAP, V13_MOBILE } from "./nav";
 import s from "./v13.module.css";
 
 export const BASE = "/v13";
 
-/**
- * Phase 1 is one long homepage plus case studies, so the navigation points at its sections.
- * Each becomes a page of its own in phase 2.
- */
 const NAV: NavLink[] = [
-  { href: `${BASE}#work`, label: "Work", id: "work" },
-  { href: `${BASE}#services`, label: "Services", id: "services" },
-  { href: `${BASE}#process`, label: "Process", id: "process" },
-  { href: `${BASE}#about`, label: "About", id: "about" },
-  { href: `${BASE}#insights`, label: "Insights", id: "insights" },
+  { href: `${BASE}/work`, label: "Work", id: "work" },
+  { href: `${BASE}/services`, label: "Services", id: "services" },
+  { href: `${BASE}/process`, label: "Process", id: "process" },
+  { href: `${BASE}/about`, label: "About", id: "about" },
+  { href: `${BASE}/insights`, label: "Insights", id: "insights" },
 ];
 
-const MOBILE = [...NAV.map(({ href, label }) => ({ href, label })), { href: "#start", label: "Start a project" }];
+const MOBILE = V13_MOBILE;
 
 /** The accent marks the full stop at the end of a headline — "Hello." — and nothing louder. */
 export function Stop({ children }: { children: string }) {
@@ -42,9 +40,7 @@ export function Em({ children }: { children: ReactNode }) {
 export function SecHead({ id, title, note }: { id?: string; title: string; note?: ReactNode }) {
   return (
     <div className={s.secHead}>
-      <h2 id={id} className={s.chapterTitle}>
-        <Stop>{title}</Stop>
-      </h2>
+      <Reveal id={id} className={s.chapterTitle} text={title} />
       {note && <p className={s.secNote}>{note}</p>}
     </div>
   );
@@ -65,9 +61,9 @@ export function Header() {
           <ThemeToggle className={s.themeBtn}>
             <ThemeIcon />
           </ThemeToggle>
-          <a href="#start" className={`${s.pill} ${s.headerCta}`}>
+          <Link href={`${BASE}/start`} className={`${s.pill} ${s.headerCta}`} data-magnetic>
             Start a project <span aria-hidden="true">↗</span>
-          </a>
+          </Link>
           <MenuToggle links={MOBILE} />
         </div>
       </div>
@@ -92,26 +88,34 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
             {site.email}
           </a>
           <div className={s.footCtas}>
-            <a href={`mailto:${site.email}?subject=${encodeURIComponent("New project")}`} className={s.pillInk}>
-              Write to us <span aria-hidden="true">↗</span>
-            </a>
-            <Link href={`${BASE}#work`} className={s.pill}>
+            <Link href={`${BASE}/start`} className={s.pillInk} data-magnetic>
+              Start a project <span aria-hidden="true">↗</span>
+            </Link>
+            <Link href={`${BASE}/work`} className={s.pill} data-magnetic>
               See the work
             </Link>
           </div>
+          <div className={s.footNews}>
+            <Newsletter email={site.email} id="v13-news-foot" />
+          </div>
+        </div>
+
+        <div className={s.footMap}>
+          {V13_MAP.map((col) => (
+            <nav key={col.label} aria-label={col.label}>
+              <p className={s.label}>{col.label}</p>
+              <ul className={s.footList}>
+                {col.links.map((l) => (
+                  <li key={l.href}>
+                    <Link href={l.href}>{l.label}</Link>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          ))}
         </div>
 
         <div className={s.footGrid}>
-          <nav aria-label="Footer">
-            <p className={s.label}>Studio</p>
-            <ul className={s.footList}>
-              {NAV.map((l) => (
-                <li key={l.id}>
-                  <Link href={l.href}>{l.label}</Link>
-                </li>
-              ))}
-            </ul>
-          </nav>
           {offices.map((o) => (
             <div key={o.label}>
               <p className={s.label}>{o.label}</p>

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { createContext, useContext, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
+import { createContext, Fragment, useContext, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { ProjectMockup } from "@/redesign/shared/ProjectMockup";
@@ -31,7 +31,25 @@ const useMotionCtx = () => useContext(MotionCtx);
 const ease = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 const BUCKETS = 7;
 let FORMS: Float32Array[] | null = null;
+let NORMS: number[] | null = null;
 const getForms = () => (FORMS ??= forms());
+
+/**
+ * How much to scale each form so all six read at the same visual size: the sphere fills its
+ * bounding radius, the ribbon and the knot do not. Normalised to the median extent.
+ */
+function getNorms() {
+  if (NORMS) return NORMS;
+  const radii = getForms().map((f) => {
+    let r = 0;
+    for (let i = 0; i < f.length; i += 3) r = Math.max(r, Math.hypot(f[i], f[i + 1], f[i + 2]));
+    return r || 1;
+  });
+  const sorted = [...radii].sort((a, b) => a - b);
+  const mid = sorted[Math.floor(sorted.length / 2)];
+  NORMS = radii.map((r) => Math.min(1.15, Math.max(0.78, mid / r)));
+  return NORMS;
+}
 
 type Wire = { goTo: (i: number, instant: boolean) => void; repaint: () => void; start: () => void; destroy: () => void };
 
@@ -42,6 +60,9 @@ type Wire = { goTo: (i: number, instant: boolean) => void; repaint: () => void; 
 function createWire(canvas: HTMLCanvasElement, initial: number, opts: { live: () => boolean; follow: boolean; fill: number; speed: number }): Wire {
   const ctx = canvas.getContext("2d")!;
   const F = getForms();
+  const N = getNorms();
+  let norm = N[initial];
+  let normTo = N[initial];
   const cur = new Float32Array(F[initial]);
   let from = new Float32Array(F[initial]);
   let to = F[initial];
@@ -71,7 +92,7 @@ function createWire(canvas: HTMLCanvasElement, initial: number, opts: { live: ()
     const sy = Math.sin(ry);
     const cx = Math.cos(rx);
     const sx = Math.sin(rx);
-    const scale = Math.min(w, h) * opts.fill;
+    const scale = Math.min(w, h) * opts.fill * norm;
     const D = 3.4;
     const ox = w / 2;
     const oy = h / 2;
@@ -131,6 +152,8 @@ function createWire(canvas: HTMLCanvasElement, initial: number, opts: { live: ()
       }
       if (!morphing) morphStart = -1;
     }
+    norm += (normTo - norm) * 0.08;
+    if (Math.abs(normTo - norm) > 0.001) morphing = true;
     const live = opts.live();
     if (live) {
       ry += dt * opts.speed;
@@ -179,7 +202,9 @@ function createWire(canvas: HTMLCanvasElement, initial: number, opts: { live: ()
     goTo(i, instant) {
       from = new Float32Array(cur);
       to = F[i];
+      normTo = N[i];
       if (instant) {
+        norm = normTo;
         cur.set(to);
         morphStart = -1;
         draw();
@@ -219,10 +244,22 @@ function useWire(initial: number, follow: boolean, fill: number, speed: number) 
     wire.current?.repaint();
   }, [theme]);
 
+  // Created only when the canvas comes near the viewport, so a long page doesn't build six
+  // sculptures up front.
   useEffect(() => {
-    if (!ref.current) return;
-    wire.current = createWire(ref.current, initial, { live: () => live.current, follow, fill, speed });
+    const el = ref.current;
+    if (!el) return;
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting || wire.current) return;
+        wire.current = createWire(el, initial, { live: () => live.current, follow, fill, speed });
+        io.disconnect();
+      },
+      { rootMargin: "400px 0px" },
+    );
+    io.observe(el);
     return () => {
+      io.disconnect();
       wire.current?.destroy();
       wire.current = null;
     };
@@ -237,15 +274,32 @@ function useWire(initial: number, follow: boolean, fill: number, speed: number) 
  * Hero sculpture: tap to shift through the six forms, one per discipline. Caption, form
  * list and the page's single Pause control sit underneath.
  */
-export function Sculpture({ labels }: { labels: string[] }) {
+export function Sculpture({ labels, initial = 0, single = false }: { labels: string[]; initial?: number; single?: boolean }) {
   const { paused, toggle } = useMotionCtx();
-  const { ref, wire, reduced } = useWire(0, true, 0.6, 0.00018);
-  const [index, setIndex] = useState(0);
+  const { ref, wire, reduced } = useWire(initial, true, 0.6, 0.00018);
+  const [index, setIndex] = useState(initial);
   const go = (i: number) => {
     setIndex(i);
     wire.current?.goTo(i, reduced);
   };
   const n = (x: number) => String(x).padStart(2, "0");
+  if (single) {
+    return (
+      <div className={`${s.sculpture} ${s.sculptureSingle}`}>
+        <div className={s.stage}>
+          <canvas ref={ref} className={s.canvas} aria-hidden="true" />
+        </div>
+        <div className={s.caption}>
+          <p>
+            <span>The shape of it</span> — <b>{labels[index]}</b>
+          </p>
+          <button type="button" className={s.pause} onClick={toggle} aria-pressed={paused}>
+            {paused ? "Play motion" : "Pause motion"}
+          </button>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={s.sculpture}>
       <button
@@ -374,29 +428,11 @@ export function Cursor() {
 
 export type NavLink = { href: string; label: string; id: string };
 
-/**
- * Header links. The homepage is one long page in this phase, so links are anchors and the
- * underline follows the section in view; on a case study, "Work" stays underlined.
- */
+/** Header links; the underline marks the section of the site you are in (team pages count as About). */
 export function NavLinks({ links }: { links: NavLink[] }) {
   const path = usePathname();
-  const home = path === "/v13";
-  const [active, setActive] = useState("");
-
-  useEffect(() => {
-    if (!home) return;
-    const els = links.map((l) => document.getElementById(l.id)).filter((e): e is HTMLElement => !!e);
-    const io = new IntersectionObserver(
-      (entries) => {
-        for (const e of entries) if (e.isIntersecting) setActive(e.target.id);
-      },
-      { rootMargin: "-40% 0px -55% 0px" },
-    );
-    els.forEach((e) => io.observe(e));
-    return () => io.disconnect();
-  }, [home, links]);
-
-  const current = home ? active : path.startsWith("/v13/work") ? "work" : "";
+  const section = path.split("/")[2] ?? "";
+  const current = section === "team" ? "about" : section;
   return (
     <>
       {links.map((l) => (
@@ -530,9 +566,9 @@ export function Greeting() {
           )}
         </p>
         <div className={s.greetCtas}>
-          <a href="#start" className={s.pillInk}>
+          <Link href="/v13/start" className={s.pillInk} data-magnetic>
             Start a project <span aria-hidden="true">↗</span>
-          </a>
+          </Link>
           <a href="#work" className={s.textLink}>
             See the work
           </a>
@@ -949,4 +985,80 @@ const dhakaNow = () => timeFmt("Asia/Dhaka").format(new Date());
 export function DhakaTime() {
   const t = useSyncExternalStore(subscribeMinute, dhakaNow, () => "—");
   return <span suppressHydrationWarning>{t}</span>;
+}
+
+/* ------------------------------------------------------------------ reveal & magnet */
+
+/**
+ * A headline whose words rise out of a mask as it enters the viewport, one after another.
+ * Server markup is the plain, visible headline; the client arms the effect only for headlines
+ * still below the fold, so nothing flashes and reduced motion sees it as-is.
+ */
+export function Reveal({ as: Tag = "h2", text, className, id }: { as?: "h1" | "h2" | "h3" | "p"; text: string; className?: string; id?: string }) {
+  const ref = useRef<HTMLHeadingElement>(null);
+  const { reduced } = useMotionCtx();
+  useEffect(() => {
+    const el = ref.current;
+    if (!el || reduced) return;
+    const r = el.getBoundingClientRect();
+    if (r.top < window.innerHeight * 0.92) return;
+    el.dataset.armed = "true";
+    const io = new IntersectionObserver(
+      ([e]) => {
+        if (!e.isIntersecting) return;
+        el.dataset.in = "true";
+        io.disconnect();
+      },
+      { rootMargin: "0px 0px -12% 0px" },
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, [reduced]);
+  const last = text.slice(-1);
+  const stop = ".?!".includes(last);
+  const words = (stop ? text.slice(0, -1) : text).split(" ");
+  return (
+    <Tag ref={ref} id={id} className={`${className ?? ""} ${s.reveal}`}>
+      {words.map((w, i) => (
+        <Fragment key={i}>
+          <span className={s.rw}>
+            <span style={{ ["--d" as string]: `${i * 70}ms` }}>
+              {w}
+              {i === words.length - 1 && stop && <span className={s.stop}>{last}</span>}
+            </span>
+          </span>
+          {i < words.length - 1 && " "}
+        </Fragment>
+      ))}
+    </Tag>
+  );
+}
+
+/** Pills marked data-magnetic lean toward the pointer a little. Mouse only, motion allowed. */
+export function Magnet() {
+  const fine = useSyncExternalStore(subscribeFine, () => window.matchMedia(FINE).matches, () => false);
+  const reduced = useReducedMotion();
+  useEffect(() => {
+    if (!fine || reduced) return;
+    let cur: HTMLElement | null = null;
+    const reset = (el: HTMLElement) => {
+      el.style.transform = "";
+    };
+    const move = (e: PointerEvent) => {
+      const el = (e.target as Element | null)?.closest?.<HTMLElement>("[data-magnetic]") ?? null;
+      if (cur && cur !== el) reset(cur);
+      cur = el;
+      if (!el) return;
+      const r = el.getBoundingClientRect();
+      const dx = e.clientX - (r.left + r.width / 2);
+      const dy = e.clientY - (r.top + r.height / 2);
+      el.style.transform = `translate(${dx * 0.18}px, ${dy * 0.3}px)`;
+    };
+    window.addEventListener("pointermove", move, { passive: true });
+    return () => {
+      window.removeEventListener("pointermove", move);
+      if (cur) reset(cur);
+    };
+  }, [fine, reduced]);
+  return null;
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { disciplines, faqs, featuredWorks, formatPostDate, posts, process, stats, testimonials, works } from "@/redesign/content";
 import { BASE, Em, Footer, SecHead, Stop } from "@/redesign/v13/Chrome";
 import { Deck, Form, Greeting, HalftoneField, Quotes, RotatingWord, ScrubText, Sculpture, TiltCard, Wordmark, WorkReel } from "@/redesign/v13/Client";
@@ -7,6 +8,10 @@ import s from "@/redesign/v13/v13.module.css";
 const MORE_WORK = works.filter((w) => !featuredWorks.some((f) => f.slug === w.slug));
 const FAQ_IDS = ["what-we-do", "start", "pricing", "ai-fit", "ai-data", "support"];
 const FAQS = FAQ_IDS.map((id) => faqs.find((f) => f.id === id)).filter((f) => f !== undefined);
+
+export const metadata = {
+  title: { absolute: "DotGrey Digital — design, software, automation, data and AI" },
+};
 
 export default function V13Home() {
   return (
@@ -33,13 +38,13 @@ export default function V13Home() {
             <ScrubText text="Design, engineering, automation, data and machine learning under one roof. One team takes a product from the first sketch to the model behind it — and keeps improving it after launch." />
             <ul className={s.arrowList}>
               <li>
-                <a href="#work">See the work</a>
+                <Link href="/v13/work">See all the work</Link>
               </li>
               <li>
-                <a href="#services">What we do</a>
+                <Link href="/v13/services">What we do</Link>
               </li>
               <li>
-                <a href="#start">Start a project</a>
+                <Link href="/v13/start">Start a project</Link>
               </li>
             </ul>
           </div>
@@ -67,9 +72,9 @@ export default function V13Home() {
             <p className={s.shapeLead}>
               Six crafts, six forms. Tap the sculpture to shift between them — each one is a discipline we staff on day one.
             </p>
-            <a href="#services" className={s.textLink}>
+            <Link href="/v13/services" className={s.textLink}>
               Meet the six crafts
-            </a>
+            </Link>
           </div>
           <Sculpture labels={disciplines.map((d) => d.short)} />
         </section>
@@ -221,18 +226,22 @@ export default function V13Home() {
           />
           <ul className={s.noteList}>
             {posts.slice(0, 4).map((p) => (
-              <li key={p.slug} className={s.note}>
-                <span className={s.noteMeta}>
-                  {p.category} · {formatPostDate(p.date)}
-                </span>
-                <span className={s.noteTitle}>{p.title}</span>
-                <span className={s.noteExcerpt}>{p.excerpt}</span>
-                <span className={s.noteRead}>{p.readingMinutes} min read</span>
+              <li key={p.slug}>
+                <Link href={`/v13/insights/${p.slug}`} className={s.note}>
+                  <span className={s.noteMeta}>
+                    {p.category} · {formatPostDate(p.date)}
+                  </span>
+                  <span className={s.noteTitle}>{p.title}</span>
+                  <span className={s.noteExcerpt}>{p.excerpt}</span>
+                  <span className={s.noteRead}>{p.readingMinutes} min read →</span>
+                </Link>
               </li>
             ))}
           </ul>
           <p className={s.noteMore}>
-            The full journal arrives with the next phase of this site. Want an essay now? <a href="#start">Ask us</a>.
+            <Link href="/v13/insights" className={s.textLink}>
+              All notes
+            </Link>
           </p>
         </section>
       </main>
