@@ -1,10 +1,9 @@
-# DotGrey Digital — Redesign Lab
+# DotGrey Digital
 
-Twelve redesign directions for DotGrey Digital, each a working prototype with its own
-type, layout and motion: a homepage and a case-study page, built on the same content so
-the comparison is about design, not copy.
+The website for DotGrey Digital, a design and engineering studio in Dhaka: product and brand
+design, web and app development, custom software, automation, data and machine learning.
 
-The previous production site lives on the **`legacy`** branch.
+Next.js 16 (App Router), TypeScript, CSS Modules, GSAP. Every page is statically generated.
 
 ## Getting started
 
@@ -21,28 +20,37 @@ npx tsc --noEmit
 
 ## Routes
 
-| Route | What it is |
+| Route | Page |
 | --- | --- |
-| `/` | The lab: every direction with a preview, linking to its homepage and case study |
-| `/v1` – `/v7` | Round one, in colour: Signal, Editorial, Blueprint, Brutal, Terminal, Spatial, Warm Human |
-| `/v8` – `/v12` | Round two, black and white: Wordmark, Index, Engine, Grain, Sculpture |
-| `/vN/work/[slug]` | Each direction's case-study template, for all nine projects |
-
-Everything is excluded from search engines (`robots.ts` and a `noindex` layout).
+| `/` | Home |
+| `/work`, `/work/[slug]` | Work index and case studies |
+| `/services`, `/services/[id]` | Services and the six service pages |
+| `/process`, `/engagements`, `/start` | How we work, engagement models, start-a-project wizard |
+| `/about`, `/team/[slug]`, `/culture`, `/careers`, `/careers/[slug]` | Studio, people, culture and roles |
+| `/insights`, `/insights/[slug]`, `/resources` | Essays and resources |
+| `/industries`, `/capabilities`, `/ai` | Sectors, tool stack, AI and automation |
+| `/contact`, `/faq` | Contact brief and FAQ |
+| `/privacy`, `/terms`, `/cookies`, `/accessibility`, `/site-map` | Fine print and a human site map |
+| `/sitemap.xml`, `/robots.txt`, `/opengraph-image` | Generated for search engines and link previews |
 
 ## Where things are
 
 | Path | Contents |
 | --- | --- |
-| `src/app/(redesign)/` | The lab page and one route folder per direction |
-| `src/redesign/vN/` | Each direction's components and CSS module |
-| `src/redesign/lab/` | The lab page's styles and cursor |
-| `src/redesign/shared/` | Logo wrapper, version switcher, motion hook, generated black-and-white project art |
-| `src/redesign/content.ts` | Shared content: disciplines, process, version metadata, plus re-exports of `src/data` |
-| `src/content/`, `src/data/` | Works, stats, testimonials and site details carried over from the old site |
-| `public/previews/` | The hero screenshots used on the lab page |
+| `src/app/(site)/` | One folder per route; `layout.tsx` holds fonts, header, cursor and motion |
+| `src/site/` | Components (`Chrome`, `Client`, `Bits`, `Pages`, `More`, `Legal`), styles, navigation (`nav.ts`) and page metadata (`meta.ts`) |
+| `src/site/content.ts` | Services lineup and process, plus re-exports of everything in `src/data` |
+| `src/site/agency.ts` | Engagement models, process detail, industries, AI principles and other page copy |
+| `src/content/*.json`, `src/data/` | Works, stats, testimonials, team, posts, jobs, FAQ, values, legal text and site details |
+| `src/site/shared/` | Theme (light/dark cookie, pre-paint script, toggle), project mockups, generative art, logo |
 
-## Updating the lab previews
+## Editing content
 
-The images in `public/previews/vN.jpg` are 1440×900 screenshots of each homepage. Retake
-them after changing a hero so the lab page stays honest.
+Most copy lives in `src/content/*.json` and `src/site/agency.ts`. Before launch, confirm:
+team names and bios (`team.json`), engagement starting prices (`agency.ts`), and the
+privacy and terms text, which is marked as needing legal review.
+
+## Branches
+
+- `legacy` — the previous production site (CMS, forms, docs).
+- `prototypes-archive` — all thirteen redesign directions and the lab page they were compared on.

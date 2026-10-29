@@ -1,6 +1,10 @@
 import type { MetadataRoute } from "next";
+import { siteUrl } from "@/lib/site-url";
 
-// Design prototypes for review: keep the whole project out of search engines.
 export default function robots(): MetadataRoute.Robots {
-  return { rules: { userAgent: "*", disallow: "/" } };
+  return {
+    rules: { userAgent: "*", allow: "/" },
+    sitemap: `${siteUrl}/sitemap.xml`,
+    host: siteUrl,
+  };
 }

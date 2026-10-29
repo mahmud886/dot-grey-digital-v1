@@ -3,24 +3,12 @@ import { ImageResponse } from "next/og";
 export const size = { width: 32, height: 32 };
 export const contentType = "image/png";
 
+/** Favicon: the dot in DotGrey, ink on paper. */
 export default function Icon() {
   return new ImageResponse(
     (
-      <div
-        style={{
-          width: "100%",
-          height: "100%",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          background: "#ff5a3c",
-          color: "#ffffff",
-          fontSize: 20,
-          fontWeight: 700,
-          borderRadius: 7,
-        }}
-      >
-        DG
+      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", background: "#111111", borderRadius: 7 }}>
+        <div style={{ width: 14, height: 14, borderRadius: 7, background: "#eeede9" }} />
       </div>
     ),
     size,

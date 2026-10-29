@@ -1,45 +1,23 @@
 import type { Metadata } from "next";
-import { Kanit, Roboto } from "next/font/google";
 import { site } from "@/data/site";
 import { siteUrl } from "@/lib/site-url";
-import { ThemeScript } from "@/redesign/shared/ThemeScript";
+import { ThemeScript } from "@/site/shared/ThemeScript";
 import "./globals.css";
-
-// Only the weights the design actually uses: 500 (nav), 600 (buttons and eyebrows),
-// 700 (headings) and 800 (logo and footer wordmark). Every extra weight is another
-// font file on the critical path.
-const kanit = Kanit({
-  variable: "--font-kanit",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["500", "600", "700", "800"],
-  preload: true,
-});
-
-const roboto = Roboto({
-  variable: "--font-roboto",
-  subsets: ["latin"],
-  display: "swap",
-  weight: ["400", "500", "600"],
-  preload: true,
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: `${site.name} — Redesign Lab`,
+    default: `${site.name} — design, software, automation, data and AI`,
     template: `%s — ${site.name}`,
   },
-  description: "Twelve redesign directions for DotGrey Digital: design, software, automation, data and machine learning.",
-  // No title, description or url here on purpose. Metadata objects are merged field by
-  // field, so anything set at this level is inherited whole by every child route. A title
-  // made every case study share as "DotGrey Digital"; a url made every page claim to be the
-  // homepage, and Facebook follows og:url and scrapes *that* page — so every shared link
-  // previewed as the homepage regardless of its own card. Left unset, og:title and
-  // og:description come from each page, and platforms use the link that was actually shared.
+  description: site.description,
+  // No url here on purpose: metadata merges field by field, so a url set at this level would
+  // make every page claim to be the homepage, and link previews follow og:url. Each page sets
+  // its own canonical instead.
   openGraph: {
     type: "website",
     siteName: site.name,
+    locale: "en_US",
   },
   twitter: { card: "summary_large_image" },
 };
@@ -48,11 +26,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
     // suppressHydrationWarning must sit on <html> itself — ThemeScript mutates this exact
     // element, and on an ancestor the prop would silently do nothing.
-    <html
-      lang="en"
-      suppressHydrationWarning
-      className={`${kanit.variable} ${roboto.variable} antialiased`}
-    >
+    <html lang="en" suppressHydrationWarning className="antialiased">
       <head>
         <ThemeScript />
       </head>
