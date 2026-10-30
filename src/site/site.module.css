@@ -313,8 +313,37 @@
 
 .logo {
   display: block;
-  height: 24px;
+  height: 19px;
   flex: none;
+}
+
+/* Hover: the dot breathes and DOT takes the ink, like a light switched on. */
+.logo :global(.dg-dot) {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+
+.logo :global(.dg-accent) {
+  transition: fill 0.35s var(--ease, ease);
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .logo:hover :global(.dg-dot),
+  .logo:focus-visible :global(.dg-dot) {
+    animation: dgPulse 0.9s var(--ease, ease) both;
+  }
+}
+
+.logo:hover :global(.dg-accent),
+.logo:focus-visible :global(.dg-accent) {
+  fill: var(--accent);
+}
+
+@keyframes dgPulse {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.22); }
+  70% { transform: scale(0.94); }
+  100% { transform: scale(1); }
 }
 
 .tagline {
@@ -1680,19 +1709,46 @@
 
 .giant {
   margin: clamp(48px, 5vw, 90px) 0 0;
-  padding-top: clamp(18px, 2vw, 32px);
+  padding: clamp(18px, 2vw, 32px) var(--pad) clamp(10px, 1.4vw, 24px);
   border-top: 1px solid var(--rule);
-  font-family: var(--site-sans), "Helvetica Neue", Arial, sans-serif;
-  /* Sized so the word spans the full width; the descender of "y" is cropped by the edge. */
-  font-size: 28.4vw;
-  font-weight: 500;
-  letter-spacing: -0.075em;
-  line-height: 0.92;
-  text-align: center;
-  white-space: nowrap;
   user-select: none;
+}
+
+/* The dot-built name. A fixed aspect box, so swapping the plain word for the canvas
+   never shifts the layout. */
+.dotMark {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1000 / 230;
+  font-family: var(--site-sans), "Helvetica Neue", Arial, sans-serif;
+  color: var(--fg);
+  touch-action: pan-y;
+}
+
+.dotMarkText {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  font-size: 22vw;
+  font-weight: 800;
+  letter-spacing: -0.055em;
+  line-height: 0.8;
+  white-space: nowrap;
   overflow: hidden;
-  padding-bottom: 0.06em;
+  transition: opacity 0.4s var(--ease, ease);
+}
+
+.dotMark[data-ready] .dotMarkText {
+  opacity: 0;
+}
+
+.dotMarkCanvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
 }
 
 .footBar {
@@ -1937,7 +1993,7 @@
   }
 
   .logo {
-    height: 21px;
+    height: 17px;
   }
 
   .menuBtn {

@@ -4,6 +4,7 @@ import { BrandMark } from "@/site/shared/BrandMark";
 import { ThemeIcon, ThemeToggle } from "@/site/shared/ThemeToggle";
 import { offices, site } from "@/site/content";
 import { DhakaTime, MenuToggle, NavLinks, Reveal, type NavLink } from "./Client";
+import { DotWordmark } from "./DotWordmark";
 import { Newsletter } from "./More";
 import { SITE_MAP, SITE_MOBILE } from "./nav";
 import s from "./site.module.css";
@@ -49,7 +50,7 @@ export function Header() {
     <header className={s.header}>
       <div className={`${s.wrap} ${s.headerInner}`}>
         <div className={s.brand}>
-          <BrandMark href="/" ink="var(--ink)" accent="var(--grey)" className={s.logo} />
+          <BrandMark href="/" ink="var(--ink)" accent="var(--grey)" className={s.logo} compact />
           <span className={s.tagline}>Independent. Technical. Kind.</span>
         </div>
         <nav className={s.nav} aria-label="Main">
@@ -138,9 +139,9 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
       </p>
 
       {/* V12's sign-off under V8's: the name, set as wide as the page. */}
-      <p className={s.giant} aria-hidden="true">
-        dotgrey
-      </p>
+      <div className={s.giant}>
+        <DotWordmark />
+      </div>
 
       <div className={`${s.wrap} ${s.footBar}`}>
         <span>© {new Date().getFullYear()} DotGrey Digital</span>
