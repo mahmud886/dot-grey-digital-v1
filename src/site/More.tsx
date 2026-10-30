@@ -4,6 +4,9 @@ import { useEffect, useMemo, useRef, useState, type FormEvent } from "react";
 import type { Stage } from "@/site/agency";
 import { ACCENT_COOKIE, THEME_COOKIE } from "@/site/shared/theme";
 import { useAccent, useTheme } from "@/site/shared/useTheme";
+import { Honeypot } from "@/site/forms/Honeypot";
+import { sentCopy } from "@/site/forms/Status";
+import { submitForm, useFormGuard, type SubmitOutcome } from "@/site/forms/submit";
 import s from "./pages.module.css";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -106,14 +109,17 @@ const STEPS = ["Need", "Stage", "Budget", "Timing", "You", "Review"] as const;
 const QUESTIONS = ["What do you need?", "Where are you starting from?", "Roughly what budget?", "When would you like to start?", "Who should we reply to?", "Does this look right?"];
 
 /**
- * Start a project, one quiet question at a time. There is no backend: the last step opens
- * the visitor's email app with everything filled in, and the page says so.
+ * Start a project, one quiet question at a time. The last step sends the answers to the
+ * studio inbox; if no mail service answers, it opens the visitor's email app instead.
  */
 export function StartWizard({ email, needs, stages, budgets, timelines }: { email: string; needs: string[]; stages: Opt[]; budgets: string[]; timelines: string[] }) {
   const [step, setStep] = useState(0);
   const [d, setD] = useState<StartData>({ needs: [], stage: "", budget: "", timeline: "", name: "", email: "", company: "", message: "" });
   const [error, setError] = useState<Record<string, string>>({});
-  const [sent, setSent] = useState(false);
+  const [outcome, setOutcome] = useState<SubmitOutcome | null>(null);
+  const [busy, setBusy] = useState(false);
+  const guard = useFormGuard();
+  const sent = !!outcome && outcome.status !== "error";
   const head = useRef<HTMLHeadingElement>(null);
   const first = useRef(true);
   const set = <K extends keyof StartData>(k: K, v: StartData[K]) => setD((x) => ({ ...x, [k]: v }));
@@ -158,27 +164,34 @@ export function StartWizard({ email, needs, stages, budgets, timelines }: { emai
     ["Message", d.message, 4],
   ];
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
     if (step < STEPS.length - 1) return next();
-    const body = summary.map(([k, v]) => `${k}: ${v}`).join("\n");
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(`New project — ${d.company || d.name}`)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    if (busy) return;
+    setBusy(true);
+    const r = await submitForm("start", { ...d, stage: stageLabel }, guard.opts(email));
+    setBusy(false);
+    if (r.status === "invalid") {
+      // Server-side checks only cover the "You" step, so go back there.
+      setError(r.fields);
+      setStep(r.fields.needs ? 0 : 4);
+      return;
+    }
+    if (r.status === "fallback") window.location.href = r.mailto;
+    setOutcome(r);
   };
 
   if (sent) {
+    const c = sentCopy(outcome, email);
     return (
       <div className={s.sent} role="status">
-        <p className={s.label}>Almost there</p>
+        <p className={s.label}>{c.label}</p>
         <h2 ref={head} tabIndex={-1} className={s.sentTitle}>
-          Your email app should open with your answers filled in.
+          {c.title}
         </h2>
-        <p>
-          Press send there and we reply within a working day. Nothing opened? Write to <a href={`mailto:${email}`}>{email}</a>. Nothing has been
-          stored on this site.
-        </p>
-        <button type="button" className={s.pill} onClick={() => setSent(false)}>
-          Edit the answers
+        <p>{c.body}</p>
+        <button type="button" className={s.pill} onClick={() => setOutcome(null)}>
+          {outcome?.status === "sent" ? "Start another" : "Edit the answers"}
         </button>
       </div>
     );
@@ -221,7 +234,8 @@ export function StartWizard({ email, needs, stages, budgets, timelines }: { emai
   const [q, last] = [QUESTIONS[step].split(" ").slice(0, -1).join(" "), QUESTIONS[step].split(" ").slice(-1)[0]];
 
   return (
-    <form className={s.wizard} onSubmit={submit} noValidate>
+    <form className={s.wizard} onSubmit={submit} noValidate aria-busy={busy}>
+      <Honeypot inputRef={guard.hp} />
       <div className={s.wizTop}>
         <p className={s.kicker} aria-live="polite">
           Step {step + 1} of {STEPS.length} — {STEPS[step]}
@@ -317,11 +331,15 @@ export function StartWizard({ email, needs, stages, budgets, timelines }: { emai
         ) : (
           <span />
         )}
-        <button type="submit" className={s.pillInk}>
-          {step === STEPS.length - 1 ? "Send it" : "Next"} <span aria-hidden="true">→</span>
+        <button type="submit" className={s.pillInk} disabled={busy}>
+          {step === STEPS.length - 1 ? (busy ? "Sending…" : "Send it") : "Next"} <span aria-hidden="true">→</span>
         </button>
       </div>
-      {step === STEPS.length - 1 && <small className={s.note}>Opens your email app with these answers filled in. Nothing is stored on this site.</small>}
+      {step === STEPS.length - 1 && (
+        <small role="status" aria-live="polite" className={outcome?.status === "error" ? s.err : s.note}>
+          {outcome?.status === "error" ? outcome.error : "Goes straight to our inbox. We reply within one working day."}
+        </small>
+      )}
     </form>
   );
 }
@@ -368,18 +386,36 @@ export function StackFilter({ tools, groups }: { tools: { name: string; group: s
 
 /* ------------------------------------------------------------------ newsletter */
 
-/** No mailing list exists yet, so subscribing is an honest email to the studio. */
+/**
+ * Occasional notes. Adds the address to the Resend list when one is configured, otherwise
+ * emails the studio to add it by hand; with no mail service at all, opens an email instead.
+ */
 export function Newsletter({ email, id }: { email: string; id: string }) {
   const [addr, setAddr] = useState("");
-  const [state, setState] = useState<"idle" | "error" | "sent">("idle");
-  const submit = (e: FormEvent) => {
+  const [state, setState] = useState<"idle" | "busy" | "error" | "sent" | "fallback" | "failed">("idle");
+  const [msg, setMsg] = useState("");
+  const guard = useFormGuard();
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
+    if (state === "busy") return;
     if (!EMAIL.test(addr)) return setState("error");
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent("Add me to your notes")}&body=${encodeURIComponent(`Please send occasional notes to ${addr}.`)}`;
+    setState("busy");
+    const r = await submitForm("newsletter", { email: addr }, guard.opts(email));
+    if (r.status === "invalid") return setState("error");
+    if (r.status === "error") {
+      setMsg(r.error);
+      return setState("failed");
+    }
+    if (r.status === "fallback") {
+      window.location.href = r.mailto;
+      return setState("fallback");
+    }
+    setAddr("");
     setState("sent");
   };
   return (
-    <form className={s.news} onSubmit={submit} noValidate>
+    <form className={s.news} onSubmit={submit} noValidate aria-busy={state === "busy"}>
+      <Honeypot inputRef={guard.hp} />
       <label htmlFor={id} className={s.label}>
         Occasional notes
       </label>
@@ -394,16 +430,20 @@ export function Newsletter({ email, id }: { email: string; id: string }) {
           aria-invalid={state === "error"}
           aria-describedby={`${id}-msg`}
         />
-        <button type="submit">
-          Subscribe <span aria-hidden="true">↗</span>
+        <button type="submit" disabled={state === "busy"}>
+          {state === "busy" ? "Adding…" : "Subscribe"} <span aria-hidden="true">↗</span>
         </button>
       </div>
-      <small id={`${id}-msg`} className={state === "error" ? s.err : s.note} aria-live="polite">
+      <small id={`${id}-msg`} className={state === "error" || state === "failed" ? s.err : s.note} aria-live="polite">
         {state === "error"
           ? "That doesn't look like an email address."
-          : state === "sent"
-            ? "Your email app should open — send it and we'll add you by hand."
-            : "A few times a year. Subscribing opens an email to us, and we add you by hand."}
+          : state === "failed"
+            ? msg
+            : state === "sent"
+              ? "You're on the list. Expect a note a few times a year — no more."
+              : state === "fallback"
+                ? "We couldn't add you from here, so your email app should open — send it and we'll add you by hand."
+                : "A few times a year. Unsubscribe any time by replying to any note."}
       </small>
     </form>
   );
@@ -442,5 +482,106 @@ export function CookieReset() {
         {done ? "Cleared. The theme now follows your system setting again." : "Removes both cookies. Nothing else is stored."}
       </small>
     </div>
+  );
+}
+
+/* ------------------------------------------------------------------ job application */
+
+type Apply = { name: string; email: string; links: string; message: string };
+
+/**
+ * Apply for a role. Sends to the studio inbox like the brief; CVs travel as links, since
+ * email attachments through a web form are a spam magnet. Falls back to the email app.
+ */
+export function ApplyForm({ email, role }: { email: string; role: string }) {
+  const [f, setF] = useState<Apply>({ name: "", email: "", links: "", message: "" });
+  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [outcome, setOutcome] = useState<SubmitOutcome | null>(null);
+  const [busy, setBusy] = useState(false);
+  const guard = useFormGuard();
+  const set = (k: keyof Apply, v: string) => setF((x) => ({ ...x, [k]: v }));
+
+  const submit = async (e: FormEvent) => {
+    e.preventDefault();
+    if (busy) return;
+    setBusy(true);
+    const r = await submitForm("apply", { ...f, role }, guard.opts(email));
+    setBusy(false);
+    if (r.status === "invalid") {
+      setErrors(r.fields);
+      document.getElementById(`apply-${Object.keys(r.fields)[0]}`)?.focus();
+      return;
+    }
+    setErrors({});
+    if (r.status === "fallback") window.location.href = r.mailto;
+    setOutcome(r);
+  };
+
+  if (outcome && outcome.status !== "error") {
+    const c = sentCopy(outcome, email);
+    return (
+      <div className={s.sent} role="status">
+        <p className={s.label}>{c.label}</p>
+        <p className={s.sentTitle}>{outcome.status === "sent" ? "Thanks — we read every application and reply within a week." : c.title}</p>
+        <p>{c.body}</p>
+      </div>
+    );
+  }
+
+  const field = (k: keyof Apply, label: string, opts: { type?: string; auto?: string; area?: boolean; hint?: string } = {}) => (
+    <div className={s.field} data-error={!!errors[k]}>
+      <label htmlFor={`apply-${k}`}>{label}</label>
+      {opts.area ? (
+        <textarea
+          id={`apply-${k}`}
+          rows={k === "links" ? 2 : 5}
+          value={f[k]}
+          onChange={(e) => set(k, e.target.value)}
+          aria-invalid={!!errors[k]}
+          aria-describedby={errors[k] ? `apply-${k}-err` : opts.hint ? `apply-${k}-hint` : undefined}
+        />
+      ) : (
+        <input
+          id={`apply-${k}`}
+          type={opts.type ?? "text"}
+          autoComplete={opts.auto}
+          value={f[k]}
+          onChange={(e) => set(k, e.target.value)}
+          aria-invalid={!!errors[k]}
+          aria-describedby={errors[k] ? `apply-${k}-err` : undefined}
+        />
+      )}
+      {errors[k] ? (
+        <small id={`apply-${k}-err`} className={s.err}>
+          {errors[k]}
+        </small>
+      ) : (
+        opts.hint && (
+          <small id={`apply-${k}-hint`} className={s.note}>
+            {opts.hint}
+          </small>
+        )
+      )}
+    </div>
+  );
+
+  return (
+    <form className={s.form} onSubmit={submit} noValidate aria-busy={busy}>
+      <Honeypot inputRef={guard.hp} />
+      <div className={s.formRow}>
+        {field("name", "Your name", { auto: "name" })}
+        {field("email", "Email", { type: "email", auto: "email" })}
+      </div>
+      {field("links", "Links (optional)", { area: true, hint: "Portfolio, GitHub, LinkedIn or a CV link — one per line." })}
+      {field("message", "A few lines about you", { area: true })}
+      <div className={s.formFoot}>
+        <button type="submit" className={s.pillInk} disabled={busy}>
+          {busy ? "Sending…" : "Send application"} <span aria-hidden="true">↗</span>
+        </button>
+        <small role="status" aria-live="polite" className={outcome?.status === "error" ? s.err : undefined}>
+          {outcome?.status === "error" ? outcome.error : "Goes straight to the people hiring for this role."}
+        </small>
+      </div>
+    </form>
   );
 }

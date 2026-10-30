@@ -2,6 +2,9 @@
 
 import { useState, useSyncExternalStore, type FormEvent, type ReactNode } from "react";
 import type { Discipline } from "@/site/content";
+import { Honeypot } from "@/site/forms/Honeypot";
+import { sentCopy } from "@/site/forms/Status";
+import { submitForm, useFormGuard, type SubmitOutcome } from "@/site/forms/submit";
 import s from "./pages.module.css";
 
 /** Services as a hairline list. Rows invert on hover; click opens capabilities and stack. */
@@ -189,17 +192,21 @@ export function FaqTabs({ groups }: { groups: { id: string; items: { q: string; 
 type Brief = { name: string; email: string; company: string; needs: string[]; budget: string; timeline: string; message: string };
 
 /**
- * Project brief. There is no backend yet, so submitting validates the form,
- * then opens the visitor's email app with everything filled in — and says so.
+ * Project brief. Sends to the studio inbox through the forms endpoint (Resend or PHP);
+ * if no mail service answers, it opens the visitor's email app with the brief filled in
+ * instead, and says so.
  */
 export function BriefForm({ email, needs, budgets, timelines }: { email: string; needs: string[]; budgets: string[]; timelines: string[] }) {
   const [f, setF] = useState<Brief>({ name: "", email: "", company: "", needs: [], budget: "", timeline: "", message: "" });
   const [errors, setErrors] = useState<Partial<Record<keyof Brief, string>>>({});
-  const [sent, setSent] = useState(false);
+  const [outcome, setOutcome] = useState<SubmitOutcome | null>(null);
+  const [busy, setBusy] = useState(false);
+  const guard = useFormGuard();
   const set = <K extends keyof Brief>(k: K, v: Brief[K]) => setF((x) => ({ ...x, [k]: v }));
 
-  const submit = (e: FormEvent) => {
+  const submit = async (e: FormEvent) => {
     e.preventDefault();
+    if (busy) return;
     const err: typeof errors = {};
     if (!f.name.trim()) err.name = "Tell us who you are.";
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(f.email)) err.email = "We need an email address to reply to.";
@@ -211,33 +218,27 @@ export function BriefForm({ email, needs, budgets, timelines }: { email: string;
       document.getElementById(`brief-${first}`)?.focus();
       return;
     }
-    const body = [
-      `Name: ${f.name}`,
-      `Email: ${f.email}`,
-      f.company ? `Company: ${f.company}` : null,
-      `Needs: ${f.needs.join(", ")}`,
-      f.budget ? `Budget: ${f.budget}` : null,
-      f.timeline ? `Timeline: ${f.timeline}` : null,
-      "",
-      f.message,
-    ]
-      .filter((x) => x !== null)
-      .join("\n");
-    window.location.href = `mailto:${email}?subject=${encodeURIComponent(`Project brief — ${f.company || f.name}`)}&body=${encodeURIComponent(body)}`;
-    setSent(true);
+    setBusy(true);
+    const r = await submitForm("brief", f, guard.opts(email));
+    setBusy(false);
+    if (r.status === "invalid") {
+      setErrors(r.fields as typeof errors);
+      document.getElementById(`brief-${Object.keys(r.fields)[0]}`)?.focus();
+      return;
+    }
+    if (r.status === "fallback") window.location.href = r.mailto;
+    setOutcome(r);
   };
 
-  if (sent) {
+  if (outcome && outcome.status !== "error") {
+    const c = sentCopy(outcome, email);
     return (
       <div className={s.sent} role="status">
-        <p className={s.label}>Almost there</p>
-        <p className={s.sentTitle}>Your email app should open with the brief filled in.</p>
-        <p>
-          Press send there and we will reply within a working day. Nothing opened? Write to{" "}
-          <a href={`mailto:${email}`}>{email}</a>.
-        </p>
-        <button type="button" className={s.pill} onClick={() => setSent(false)}>
-          Edit the brief
+        <p className={s.label}>{c.label}</p>
+        <p className={s.sentTitle}>{c.title}</p>
+        <p>{c.body}</p>
+        <button type="button" className={s.pill} onClick={() => setOutcome(null)}>
+          {outcome.status === "sent" ? "Send another" : "Edit the brief"}
         </button>
       </div>
     );
@@ -278,7 +279,8 @@ export function BriefForm({ email, needs, budgets, timelines }: { email: string;
   );
 
   return (
-    <form className={s.form} onSubmit={submit} noValidate>
+    <form className={s.form} onSubmit={submit} noValidate aria-busy={busy}>
+      <Honeypot inputRef={guard.hp} />
       <div className={s.formRow}>
         {field("name", "Your name", "text", "name")}
         {field("email", "Email", "email", "email")}
@@ -324,10 +326,12 @@ export function BriefForm({ email, needs, budgets, timelines }: { email: string;
         )}
       </div>
       <div className={s.formFoot}>
-        <button type="submit" className={s.pillInk}>
-          Send the brief <span aria-hidden="true">↗</span>
+        <button type="submit" className={s.pillInk} disabled={busy}>
+          {busy ? "Sending…" : "Send the brief"} <span aria-hidden="true">↗</span>
         </button>
-        <small>Opens your email app with the brief filled in. No forms stored here.</small>
+        <small role="status" aria-live="polite" className={outcome?.status === "error" ? s.err : undefined}>
+          {outcome?.status === "error" ? outcome.error : "Goes straight to our inbox. We reply within one working day."}
+        </small>
       </div>
     </form>
   );

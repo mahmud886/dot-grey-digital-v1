@@ -8,14 +8,12 @@ import { Newsletter } from "./More";
 import { SITE_MAP, SITE_MOBILE } from "./nav";
 import s from "./site.module.css";
 
-export const BASE = "/";
-
 const NAV: NavLink[] = [
-  { href: `${BASE}/work`, label: "Work", id: "work" },
-  { href: `${BASE}/services`, label: "Services", id: "services" },
-  { href: `${BASE}/process`, label: "Process", id: "process" },
-  { href: `${BASE}/about`, label: "About", id: "about" },
-  { href: `${BASE}/insights`, label: "Insights", id: "insights" },
+  { href: "/work", label: "Work", id: "work" },
+  { href: "/services", label: "Services", id: "services" },
+  { href: "/process", label: "Process", id: "process" },
+  { href: "/about", label: "About", id: "about" },
+  { href: "/insights", label: "Insights", id: "insights" },
 ];
 
 const MOBILE = SITE_MOBILE;
@@ -51,7 +49,7 @@ export function Header() {
     <header className={s.header}>
       <div className={`${s.wrap} ${s.headerInner}`}>
         <div className={s.brand}>
-          <BrandMark href={BASE} ink="var(--ink)" accent="var(--grey)" className={s.logo} />
+          <BrandMark href="/" ink="var(--ink)" accent="var(--grey)" className={s.logo} />
           <span className={s.tagline}>Independent. Technical. Kind.</span>
         </div>
         <nav className={s.nav} aria-label="Main">
@@ -61,7 +59,7 @@ export function Header() {
           <ThemeToggle className={s.themeBtn}>
             <ThemeIcon />
           </ThemeToggle>
-          <Link href={`${BASE}/start`} className={`${s.pill} ${s.headerCta}`} data-magnetic>
+          <Link href="/start" className={`${s.pill} ${s.headerCta}`} data-magnetic>
             Start a project <span aria-hidden="true">↗</span>
           </Link>
           <MenuToggle links={MOBILE} />
@@ -88,10 +86,10 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
             {site.email}
           </a>
           <div className={s.footCtas}>
-            <Link href={`${BASE}/start`} className={s.pillInk} data-magnetic>
+            <Link href="/start" className={s.pillInk} data-magnetic>
               Start a project <span aria-hidden="true">↗</span>
             </Link>
-            <Link href={`${BASE}/work`} className={s.pill} data-magnetic>
+            <Link href="/work" className={s.pill} data-magnetic>
               See the work
             </Link>
           </div>

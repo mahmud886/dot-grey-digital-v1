@@ -3,6 +3,9 @@ import { siteUrl } from "@/lib/site-url";
 import { disciplines, jobs, posts, team, works } from "@/site/content";
 import { SITE_MAP } from "@/site/nav";
 
+// Rendered once at build time, so the static (cPanel) export can write it as a file.
+export const dynamic = "force-static";
+
 /** Every page: the static ones from the site map, then each case study, service, essay, role and person. */
 export default function sitemap(): MetadataRoute.Sitemap {
   const statics = [...new Set(SITE_MAP.flatMap((col) => col.links.map((l) => l.href as string)))];

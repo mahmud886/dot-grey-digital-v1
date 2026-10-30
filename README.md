@@ -3,7 +3,7 @@
 The website for DotGrey Digital, a design and engineering studio in Dhaka: product and brand
 design, web and app development, custom software, automation, data and machine learning.
 
-Next.js 16 (App Router), TypeScript, CSS Modules, GSAP. Every page is statically generated.
+Next.js 16 (App Router), TypeScript, CSS Modules, GSAP. Every page is statically generated; the forms endpoint is the only server route.
 
 ## Getting started
 
@@ -13,10 +13,14 @@ npm run dev     # http://localhost:3220
 ```
 
 ```bash
-npm run build
+npm run build          # Node / Vercel build (forms send through Resend)
+npm run build:static   # plain files in out/ for cPanel (forms send through api/forms.php)
 npm run lint
 npx tsc --noEmit
 ```
+
+Hosting, the forms and their email setup (Resend or PHP mail) are covered in
+[`DEPLOY.md`](DEPLOY.md). Editing content is covered in [`CONTENT.md`](CONTENT.md).
 
 ## Routes
 

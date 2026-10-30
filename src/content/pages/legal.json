@@ -17,9 +17,9 @@
           "We only collect what you choose to send us. This site has no accounts, no analytics and no advertising tags."
         ],
         "bullets": [
-          "Messages and project briefs you send by email, including through the contact form and the Start a project steps, which open your own email app with your answers filled in. Nothing you type is stored by this website.",
-          "Newsletter requests you send by email, so we can add your address to our list.",
-          "Job applications you email to us: your CV, portfolio links and anything else you include.",
+          "What you send through the contact form, the Start a project steps and the job application form: your name, email address, company, what you need, budget, timing, links and message. The form emails it to the studio inbox through our email delivery provider (Resend) or our web host's mail server. This website does not keep a copy in a database. If the form can't send, it opens your own email app instead. To block spam, the form server remembers how many messages came from your IP address in the last ten minutes, and nothing longer.",
+          "The email address you give us when you sign up for occasional notes. It is added to our mailing list at Resend, or emailed to us so we can add it by hand.",
+          "Job applications, through the form or by email: your CV or portfolio links and anything else you include.",
           "Two preference cookies that remember your colour mode and accent colour (see Cookies below)."
         ]
       },
@@ -50,8 +50,8 @@
           "We share personal information only with services we use to run the studio, and only as much as each needs:"
         ],
         "bullets": [
-          "Our email and document providers, which store our correspondence.",
-          "Vercel, which hosts this website and keeps standard server logs (such as IP address and request time) for security and reliability.",
+          "Our email and document providers, which store our correspondence, and Resend, which delivers form submissions and newsletter emails on our behalf.",
+          "Our web host (Vercel, or a standard web hosting provider), which serves this website, may deliver form emails through its mail server, and keeps standard server logs (such as IP address and request time) for security and reliability.",
           "Professional advisers such as accountants and lawyers, where required.",
           "Authorities, where the law requires it."
         ]

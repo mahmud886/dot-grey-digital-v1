@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/site/meta";
 import Link from "next/link";
-import { benefits, jobs } from "@/site/content";
+import { benefits, jobs, site } from "@/site/content";
 import { Em, Footer } from "@/site/Chrome";
 import { PageHead } from "@/site/Bits";
 import s from "@/site/pages.module.css";
@@ -67,7 +67,7 @@ export default function CareersPage() {
           Nothing that fits? <Em>Write anyway.</Em>
         </h2>
         <div className={s.ctas}>
-          <a href="mailto:hello@dotgreydigital.com?subject=Open%20application" className={s.pillInk}>
+          <a href={`mailto:${site.email}?subject=${encodeURIComponent("Open application")}`} className={s.pillInk}>
             Send an open application <span aria-hidden="true">↗</span>
           </a>
         </div>

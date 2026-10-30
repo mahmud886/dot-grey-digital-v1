@@ -20,3 +20,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+
+# Form settings with secrets (copy from config.example.php)
+php/config.php

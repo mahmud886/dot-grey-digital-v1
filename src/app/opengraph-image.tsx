@@ -2,6 +2,9 @@ import { readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ImageResponse } from "next/og";
 
+// Rendered once at build time, so the static (cPanel) export can write it as a file.
+export const dynamic = "force-static";
+
 export const alt = "DotGrey Digital — design, software, automation, data and AI";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";

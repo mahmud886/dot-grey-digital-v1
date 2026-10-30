@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { ProjectArt } from "@/site/shared/ProjectArt";
 import { ProjectMockup } from "@/site/shared/ProjectMockup";
 import type { Work } from "@/site/content";
-import { BASE, Em, Stop } from "./Chrome";
+import { Em, Stop } from "./Chrome";
 import { Reveal } from "./Client";
 import p from "./pages.module.css";
 import s from "./site.module.css";
@@ -25,7 +25,7 @@ export function PageHead({ label, head, title, lead, children }: { label: ReactN
 }
 
 /** The closing invitation on the agency pages: a big line with an italic turn and two ways in. */
-export function Closing({ title, turn, primary = { href: `${BASE}/start`, label: "Start a project" }, secondary }: { title: ReactNode; turn: ReactNode; primary?: { href: string; label: string }; secondary?: { href: string; label: string } }) {
+export function Closing({ title, turn, primary = { href: "/start", label: "Start a project" }, secondary }: { title: ReactNode; turn: ReactNode; primary?: { href: string; label: string }; secondary?: { href: string; label: string } }) {
   return (
     <section className={`${s.wrap} ${p.contact}`}>
       <h2 className={p.ctaSmall}>
@@ -64,7 +64,7 @@ export function Head({ id, label, title, turn, note }: { id: string; label: stri
  */
 export function WorkCard({ work, index, size = "md" }: { work: Work; index: number; size?: "md" | "lg" }) {
   return (
-    <Link href={`${BASE}/work/${work.slug}`} className={p.card} data-size={size} data-cursor="view">
+    <Link href={`/work/${work.slug}`} className={p.card} data-size={size} data-cursor="view">
       <div className={p.stage2}>
         <div className={`${p.frame} ${p.frameBack}`}>
           <ProjectMockup slug={work.slug} ink="var(--art-a-ink)" paper="var(--art-a-paper)" ratio={1.25} frame={1} label={false} />
@@ -89,7 +89,7 @@ export function WorkCard({ work, index, size = "md" }: { work: Work; index: numb
 /** The same project as a dense hairline row, for the list view. */
 export function WorkRow({ work, index }: { work: Work; index: number }) {
   return (
-    <Link href={`${BASE}/work/${work.slug}`} className={p.workRow} data-cursor="view">
+    <Link href={`/work/${work.slug}`} className={p.workRow} data-cursor="view">
       <span className={p.serviceNum}>{String(index + 1).padStart(2, "0")}</span>
       <span className={p.workRowArt}>
         <ProjectMockup slug={work.slug} ink="var(--art-a-ink)" paper="var(--art-a-paper)" ratio={1.25} />

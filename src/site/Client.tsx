@@ -431,7 +431,7 @@ export type NavLink = { href: string; label: string; id: string };
 /** Header links; the underline marks the section of the site you are in (team pages count as About). */
 export function NavLinks({ links }: { links: NavLink[] }) {
   const path = usePathname();
-  const section = path.split("/")[2] ?? "";
+  const section = path.split("/")[1] ?? "";
   const current = section === "team" ? "about" : section;
   return (
     <>

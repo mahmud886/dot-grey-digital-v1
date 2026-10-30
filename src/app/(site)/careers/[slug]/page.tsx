@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getJobBySlug, jobs, site } from "@/site/content";
 import { Em, Footer, Stop } from "@/site/Chrome";
+import { ApplyForm } from "@/site/More";
 import s13 from "@/site/site.module.css";
 import s from "@/site/pages.module.css";
 
@@ -21,7 +22,6 @@ export default async function JobPage({ params }: PageProps<"/careers/[slug]">) 
   const { slug } = await params;
   const j = getJobBySlug(slug);
   if (!j) notFound();
-  const apply = `mailto:${site.email}?subject=${encodeURIComponent(`Application — ${j.title}`)}`;
 
   return (
     <>
@@ -68,12 +68,8 @@ export default async function JobPage({ params }: PageProps<"/careers/[slug]">) 
         <h2 className={s.ctaSmall}>
           Sound like you? <Em>Say hello.</Em>
         </h2>
-        <div className={s.ctas}>
-          <a href={apply} className={s.pillInk}>
-            Apply by email <span aria-hidden="true">↗</span>
-          </a>
-          <span className={s.note}>A few lines about you and a link to work you are proud of is plenty.</span>
-        </div>
+        <p className={s.note}>A few lines about you and a link to work you are proud of is plenty.</p>
+        <ApplyForm email={site.email} role={j.title} />
       </section>
     </main>
       <Footer signoff="Good luck." />

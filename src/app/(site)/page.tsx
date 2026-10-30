@@ -3,7 +3,7 @@ import { site as siteInfo } from "@/data/site";
 import { pageMeta } from "@/site/meta";
 import Link from "next/link";
 import { disciplines, faqs, featuredWorks, formatPostDate, posts, process, stats, testimonials, works } from "@/site/content";
-import { BASE, Em, Footer, SecHead, Stop } from "@/site/Chrome";
+import { Em, Footer, SecHead, Stop } from "@/site/Chrome";
 import { Deck, Form, Greeting, HalftoneField, Quotes, RotatingWord, ScrubText, Sculpture, TiltCard, Wordmark, WorkReel } from "@/site/Client";
 import s from "@/site/site.module.css";
 
@@ -155,7 +155,7 @@ export default function HomePage() {
           </div>
           <div className={s.moreGrid}>
             {MORE_WORK.map((w, i) => (
-              <TiltCard key={w.slug} work={w} index={featuredWorks.length + i} href={`${BASE}/work/${w.slug}`} />
+              <TiltCard key={w.slug} work={w} index={featuredWorks.length + i} href={`/work/${w.slug}`} />
             ))}
           </div>
         </section>
