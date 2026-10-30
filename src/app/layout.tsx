@@ -1,9 +1,17 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { site } from "@/data/site";
 import { siteUrl } from "@/lib/site-url";
 import { ThemeScript } from "@/site/shared/ThemeScript";
 import { ConsentDefaults } from "@/site/analytics/Defaults";
 import "./globals.css";
+
+// viewport-fit=cover lets the page draw under the notch and home indicator; the header,
+// footer, menu and cookie banner pad themselves with env(safe-area-inset-*) to compensate.
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

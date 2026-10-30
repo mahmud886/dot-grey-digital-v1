@@ -56,6 +56,7 @@
   color-scheme: light;
   display: flow-root;
   min-height: 100vh;
+  min-height: 100svh;
   background: var(--bg);
   color: var(--fg);
   font-family: var(--site-sans), "Helvetica Neue", Arial, sans-serif;
@@ -290,10 +291,29 @@
   position: sticky;
   top: 0;
   z-index: 60;
-  background: color-mix(in srgb, var(--paper) 86%, transparent);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  /* Near-opaque: huge type (the Hello. and wordmark) scrolls underneath and, at 86%, ghosted
+     through the bar. 96% keeps a hint of depth while the blur + hairline make it read as a
+     deliberate bar rather than a smear. */
+  background: color-mix(in srgb, var(--paper) 96%, transparent);
+  backdrop-filter: blur(18px) saturate(1.1);
+  -webkit-backdrop-filter: blur(18px) saturate(1.1);
+  border-bottom: 1px solid color-mix(in srgb, var(--ink) 8%, transparent);
+  padding-top: env(safe-area-inset-top, 0px);
   color: var(--ink);
+}
+
+@supports not (backdrop-filter: blur(1px)) {
+  .header {
+    background: var(--paper);
+  }
+}
+
+/* On phones the giant Hello. and wordmark scroll right under the bar; any transparency shows
+   them as ghost strokes behind the logo. Solid paper there, glass only on wide screens. */
+@media (max-width: 1000px) {
+  .header {
+    background: var(--paper);
+  }
 }
 
 .headerInner {
@@ -1770,7 +1790,7 @@
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 10px;
-  padding-block: 18px 32px;
+  padding-block: 18px calc(32px + env(safe-area-inset-bottom, 0px));
   border-top: 1px solid var(--rule);
   color: var(--muted);
   font-size: 13px;
@@ -1867,9 +1887,9 @@
 
 @media (max-width: 520px) {
   .consent {
-    left: 12px;
-    bottom: 12px;
-    width: calc(100vw - 24px);
+    left: max(12px, env(safe-area-inset-left, 0px));
+    bottom: max(12px, env(safe-area-inset-bottom, 0px));
+    width: calc(100vw - 24px - env(safe-area-inset-left, 0px) - env(safe-area-inset-right, 0px));
   }
 }
 
@@ -1886,7 +1906,8 @@
   flex-direction: column;
   justify-content: space-between;
   gap: 40px;
-  min-height: calc(92svh - var(--header));
+  /* Tall on laptops, but capped so a portrait tablet (820x1180) doesn't get a 300px void. */
+  min-height: min(calc(92svh - var(--header)), 720px);
   padding-block: 24px clamp(28px, 4vw, 56px);
 }
 
@@ -2165,7 +2186,8 @@
     justify-content: flex-start;
     gap: 1.75rem;
     overflow-y: auto;
-    padding: calc(var(--header) + 2rem) var(--pad) 5.5rem;
+    padding: calc(var(--header) + env(safe-area-inset-top, 0px) + 2rem) max(var(--pad), env(safe-area-inset-right, 0px)) calc(5.5rem + env(safe-area-inset-bottom, 0px)) max(var(--pad), env(safe-area-inset-left, 0px));
+    overscroll-behavior: contain;
     background: var(--paper);
     color: var(--ink);
     opacity: 0;
@@ -2245,13 +2267,13 @@
   }
 
   .heroRow {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     align-items: start;
   }
 
   .shape,
   .faqWrap {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .steps {
@@ -2281,7 +2303,7 @@
   }
 
   .statementBody {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     padding-left: 0;
   }
 
@@ -2299,7 +2321,7 @@
   }
 
   .next {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -2316,13 +2338,43 @@
     font-size: clamp(1.7rem, 7.4vw, 2.2rem);
   }
 
+  /* Phones: a 4:3 panel (the word is wide, not tall) and legible labels. The label rows get
+     a solid strip of the panel colour so dots never run underneath the text. */
   .field {
-    height: 112vw;
+    height: clamp(300px, 82vw, 520px);
+    max-height: 62svh;
+    min-height: 280px;
     border-radius: 16px;
   }
 
   .fieldWord {
     font-size: 1.2rem;
+  }
+
+  .fieldTop,
+  .fieldCaption {
+    left: 0;
+    right: 0;
+    padding-inline: 16px;
+    background: var(--chap);
+  }
+
+  .fieldTop {
+    top: 0;
+    padding-block: 12px 14px;
+    border-bottom: 1px solid var(--chap-line);
+  }
+
+  .fieldCaption {
+    bottom: 0;
+    padding-block: 12px;
+    border-top: 1px solid var(--chap-line);
+  }
+
+  /* The canvas sits between the two strips so the word is centred in what you can see. */
+  .fieldCanvas {
+    inset: 46px 0 56px;
+    height: auto;
   }
 
   .stage {
@@ -2334,7 +2386,7 @@
   }
 
   .steps {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .step,
@@ -2361,7 +2413,7 @@
   }
 
   .moreGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
     gap: 48px;
   }
 
@@ -2454,7 +2506,7 @@
   }
 
   .statGrid3 {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .stat:nth-child(odd) {
@@ -2492,7 +2544,7 @@
 
   .caseIntro,
   .caseBlocks {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .caseMeta {
@@ -2500,7 +2552,7 @@
   }
 
   .gallery {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 
   .galA {
@@ -2510,7 +2562,7 @@
 
 @media (max-width: 420px) {
   .footGrid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
 
@@ -2599,15 +2651,28 @@
 }
 
 .pageHeadline {
-  font-size: clamp(3.4rem, 11.5vw, 12rem);
+  /* The floor is 15vw-ish at 320px (about 2.8rem) so a long word like "Development." still
+     fits the content width; it lifts to 3.4rem from ~420px as before. */
+  font-size: clamp(2.5rem, 11.5vw, 12rem);
   font-weight: 800;
   letter-spacing: -0.06em;
   line-height: 0.86;
   margin-left: -0.04em;
+  overflow-wrap: break-word;
 }
 
 .pageHeadline[data-size="m"] {
-  font-size: clamp(2.8rem, 7.6vw, 8rem);
+  font-size: clamp(2.3rem, 7.6vw, 8rem);
+}
+
+@media (min-width: 420px) {
+  .pageHeadline {
+    font-size: clamp(3.4rem, 11.5vw, 12rem);
+  }
+
+  .pageHeadline[data-size="m"] {
+    font-size: clamp(2.8rem, 7.6vw, 8rem);
+  }
 }
 
 .pageSentence {
@@ -2758,4 +2823,49 @@ a.note:hover .noteRead {
 
 .content:focus {
   outline: none;
+}
+
+/* ---------------------------------------------------------------- touch targets
+   On touch screens every control gets a >=44px hit area (WCAG 2.5.8 asks for 24, Apple and
+   Google for 44). Links keep their look: the extra area is an invisible pseudo-element, so
+   nothing shifts. */
+@media (pointer: coarse) {
+  .footMail,
+  .cookieLink,
+  .logo,
+  .textLink,
+  .nav a {
+    position: relative;
+  }
+
+  .footMail::after,
+  .cookieLink::after,
+  .logo::after,
+  .textLink::after,
+  .nav a::before {
+    content: "";
+    position: absolute;
+    inset: -14px -12px;
+  }
+
+  .fieldPause,
+  .pause {
+    min-height: 44px;
+    padding-inline: 16px;
+  }
+
+  .formList button {
+    min-height: 44px;
+    padding-block: 10px;
+  }
+
+  .crumbs a {
+    position: relative;
+  }
+
+  .crumbs a::after {
+    content: "";
+    position: absolute;
+    inset: -14px -10px;
+  }
 }

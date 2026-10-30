@@ -22,10 +22,32 @@ export function Wordmark({ text }: { text: string }) {
     const el = ref.current;
     if (!el) return;
     const parent = el.parentElement!;
+    const cv = document.createElement("canvas").getContext("2d")!;
+    // Fit the *ink* of the word to the container, exactly. The DOM box includes side bearings,
+    // the em-based tracking and the last letter's untracked span, so measuring it (as an earlier
+    // version did) left the word short on wide screens and clipped the final letter on phones.
+    // Canvas text metrics give the true ink extents for the face and tracking actually in use.
     const fit = () => {
-      el.style.fontSize = "100px";
-      const w = el.getBoundingClientRect().width;
-      if (w) el.style.fontSize = `${(100 * parent.clientWidth) / (w - 4.5)}px`;
+      const cs = getComputedStyle(el);
+      const ref = 200;
+      const track = -0.06 * ref;
+      cv.font = `${cs.fontWeight} ${ref}px ${cs.fontFamily}`;
+      let x = 0;
+      let left = Infinity;
+      let right = -Infinity;
+      [...text].forEach((ch, i) => {
+        const m = cv.measureText(ch);
+        left = Math.min(left, x - m.actualBoundingBoxLeft);
+        right = Math.max(right, x + m.actualBoundingBoxRight);
+        // The last letter carries no tracking, as in the markup below.
+        x += m.width + (i < text.length - 1 ? track : 0);
+      });
+      const ink = right - left;
+      if (!(ink > 0) || !parent.clientWidth) return;
+      const size = (ref * parent.clientWidth) / ink;
+      el.style.fontSize = `${size}px`;
+      // Pull the ink's left edge onto the container's left edge.
+      el.style.marginLeft = `${(-left / ref) * size}px`;
     };
     fit();
     document.fonts?.ready.then(fit);
@@ -37,7 +59,7 @@ export function Wordmark({ text }: { text: string }) {
       ro.disconnect();
       document.fonts?.removeEventListener("loadingdone", fit);
     };
-  }, []);
+  }, [text]);
   return (
     <span ref={ref} className={s.wordmark} aria-hidden="true">
       {text.slice(0, -1)}
@@ -152,8 +174,10 @@ export function HalftoneField({ words = FIELD_WORDS, caption = "Six disciplines,
 
     const build = () => {
       const dpr = Math.min(2, devicePixelRatio || 1);
-      W = box.clientWidth;
-      H = box.clientHeight;
+      // Measure the canvas itself: on phones it sits between the label strips, so it is
+      // shorter than the panel and the word must centre in what is actually visible.
+      W = cv.clientWidth;
+      H = cv.clientHeight;
       if (!W || !H) {
         masks = [];
         return;
@@ -161,8 +185,10 @@ export function HalftoneField({ words = FIELD_WORDS, caption = "Six disciplines,
       cv.width = Math.round(W * dpr);
       cv.height = Math.round(H * dpr);
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // Fewer, larger dots on small screens so each word still reads.
-      step = W < 640 ? 9 : W < 1100 ? 12 : 15;
+      // Phones get a *finer* grid, not a coarser one: the word is only ~350px wide, so a big
+      // pitch leaves ~40 columns and the letters dissolve. ~4.5px gives ~80 columns, enough
+      // for a legible dot-matrix face while staying cheap (cols*rows is capped below).
+      step = W < 480 ? 4.5 : W < 640 ? 6 : W < 1100 ? 11 : 15;
       cols = Math.ceil(W / step);
       rows = Math.ceil(H / step);
       const off = document.createElement("canvas");
@@ -172,10 +198,14 @@ export function HalftoneField({ words = FIELD_WORDS, caption = "Six disciplines,
       const family = getComputedStyle(cv).fontFamily;
       masks = words.map((w) => {
         o.clearRect(0, 0, cols, rows);
-        let size = rows * 0.62;
+        // Fit to the width first on narrow panels (the word is wide, the panel is not), then
+        // cap by height; on wide panels the height is the limit as before.
+        const fit = W < 640 ? 0.92 : 0.86;
+        let size = rows * (W < 640 ? 0.5 : 0.62);
         o.font = `900 ${size}px ${family}`;
         const tw = o.measureText(w).width;
-        if (tw > cols * 0.86) size *= (cols * 0.86) / tw;
+        if (tw > cols * fit || (W < 640 && tw < cols * fit)) size *= (cols * fit) / tw;
+        size = Math.min(size, rows * 0.7);
         o.font = `900 ${size}px ${family}`;
         o.textAlign = "center";
         o.textBaseline = "middle";
@@ -218,7 +248,7 @@ export function HalftoneField({ words = FIELD_WORDS, caption = "Six disciplines,
           const d = Math.hypot(x - pointer.x, y - pointer.y);
           const near = pointer.k * Math.exp(-(d * d) / 14000);
           const r = step * 0.5 * Math.min(1, 0.1 + wave * 0.1 + m * 0.82 + near * 0.55);
-          if (r < 0.5) continue;
+          if (r < (step < 7 ? 0.35 : 0.5)) continue;
           (bins[Math.round(r * 4)] ??= []).push(x, y);
         }
       }
@@ -268,14 +298,14 @@ export function HalftoneField({ words = FIELD_WORDS, caption = "Six disciplines,
       build();
       draw(performance.now());
     });
-    ro.observe(box);
+    ro.observe(cv);
     document.fonts?.ready.then(() => {
       if (!armed) return;
       build();
       draw(performance.now());
     });
     const move = (e: PointerEvent) => {
-      const r = box.getBoundingClientRect();
+      const r = cv.getBoundingClientRect();
       pointer.x = e.clientX - r.left;
       pointer.y = e.clientY - r.top;
       if (paused) draw(performance.now());
