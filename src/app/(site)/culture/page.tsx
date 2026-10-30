@@ -22,13 +22,13 @@ export default function CulturePage() {
             How a small studio <Em>spends its week.</Em>
           </>
         }
-        lead="How a small, senior studio spends its week — the habits that keep the work good and the people around."
+        lead="Where we work, how we keep the work good, and how we look after the people doing it."
       />
 
       <section className={`${s.wrap} ${s.sectionTight}`} aria-label="Studio">
         <figure className={s.cultureArt}>
           <ProjectArt slug="v13-culture" label="DotGrey" variant="contour" ink="var(--ink)" paper="var(--paper-2)" ratio={2.4} />
-          <figcaption className={s.note}>Generated artwork — studio photography to come.</figcaption>
+          <figcaption className={s.note}>Illustration, generated from the studio’s own work.</figcaption>
         </figure>
       </section>
 

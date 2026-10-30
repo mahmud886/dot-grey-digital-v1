@@ -39,12 +39,6 @@ export default function ContactPage() {
               {site.email}
             </a>
           </div>
-          <div>
-            <p className={s.label}>Or call</p>
-            <a href={`tel:${site.phone.replace(/\s/g, "")}`} className={s.textLink}>
-              {site.phone}
-            </a>
-          </div>
           {offices.map((o) => (
             <div key={o.label}>
               <p className={s.label}>{o.label}</p>

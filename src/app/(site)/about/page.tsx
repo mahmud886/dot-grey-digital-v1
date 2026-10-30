@@ -79,7 +79,7 @@ export default function AboutPage() {
           <h2 id="people" className={s.h2}>
             Who you&apos;ll <Em>meet.</Em>
           </h2>
-          <p className={s.note}>Portraits are generated artwork until real photography is in.</p>
+          <p className={s.note}>Portraits are generated illustrations, one per person.</p>
         </div>
         <ul className={s.people}>
           {team.map((m) => (

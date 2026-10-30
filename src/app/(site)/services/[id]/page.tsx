@@ -108,7 +108,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[id]"
           </div>
         ) : (
           <p className={s.empty}>
-            No published case study for {d.short.toLowerCase()} yet — most of it sits inside client systems we can&apos;t show.{" "}
+            No public case study for {d.title} yet — most of it sits inside client systems we can&apos;t show.{" "}
             <Link href="/contact" className={s.textLink}>
               Ask for a walkthrough
             </Link>

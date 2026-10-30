@@ -403,7 +403,7 @@ export function Newsletter({ email, id }: { email: string; id: string }) {
           ? "That doesn't look like an email address."
           : state === "sent"
             ? "Your email app should open — send it and we'll add you by hand."
-            : "A few times a year. No list software yet: this opens an email to us."}
+            : "A few times a year. Subscribing opens an email to us, and we add you by hand."}
       </small>
     </form>
   );

@@ -22,7 +22,7 @@ export default function IndustriesPage() {
             Sectors we know, <Em>problems we keep meeting.</Em>
           </>
         }
-        lead="Sectors our published work touches, and the problems we keep meeting there. Every project linked below is a real case study."
+        lead="Sectors our published work touches, and the problems we keep meeting there. Each project below links to its case study."
       />
       <section className={`${s.wrap} ${s.sectionTight}`} aria-label="Sectors">
         <ol className={s.sectors}>

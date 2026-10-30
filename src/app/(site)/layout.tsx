@@ -12,9 +12,14 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <div className={`${s.root} ${sans.variable} ${serif.variable}`}>
       <MotionProvider>
+        <a href="#content" className={s.skip}>
+          Skip to content
+        </a>
         <ScrollProgress />
         <Header />
-        {children}
+        <div id="content" tabIndex={-1} className={s.content}>
+          {children}
+        </div>
         <Cursor />
         <Magnet />
       </MotionProvider>

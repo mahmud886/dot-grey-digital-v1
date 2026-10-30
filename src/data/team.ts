@@ -6,7 +6,6 @@ export type Member = {
   slug: string;
   name: string;
   role: string;
-  portrait: string;
   bio: string[];
   skills: Skill[];
   socials: { label: string; href: string }[];

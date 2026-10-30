@@ -1,27 +1,203 @@
 {
   "privacy": {
     "title": "Privacy Policy",
-    "updated": "8 September 2026",
-    "notice": "Placeholder text. This page needs legal review before launch.",
+    "updated": "30 October 2026",
     "blocks": [
-      { "heading": "What we collect", "paragraphs": ["When you submit a project brief or a job application we collect the details you give us: your name, email address, company, budget range, timeline and message. We do not collect special-category data and we do not ask for payment details through this site."], "bullets": [] },
-      { "heading": "How we use it", "paragraphs": ["We use it to reply to you and, if we work together, to deliver the engagement. We do not sell your data and we do not use it for advertising."], "bullets": [] },
-      { "heading": "Analytics", "paragraphs": ["We measure aggregate traffic to understand which pages are useful. No individual visitor is identified from analytics data."], "bullets": [] },
-      { "heading": "How long we keep it", "paragraphs": ["Project briefs are kept for two years. Job applications are kept for twelve months unless you ask us to delete them sooner."], "bullets": [] },
-      { "heading": "Your rights", "paragraphs": [], "bullets": ["Ask for a copy of the data we hold about you", "Ask us to correct anything inaccurate", "Ask us to delete it", "Object to how we are using it"] },
-      { "heading": "Contact", "paragraphs": ["For anything on this page, write to us at the address below."], "bullets": [] }
+      {
+        "heading": "Who we are",
+        "paragraphs": [
+          "DotGrey Digital (“DotGrey”, “we”, “us”) is a design and engineering studio based in Dhaka, Bangladesh, working with clients worldwide. This policy explains what personal information we handle when you use dotgreydigital.com or contact us, and what you can ask us to do with it.",
+          "For anything in this policy, write to hello@dotgreydigital.com."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "What we collect",
+        "paragraphs": [
+          "We only collect what you choose to send us. This site has no accounts, no analytics and no advertising tags."
+        ],
+        "bullets": [
+          "Messages and project briefs you send by email, including through the contact form and the Start a project steps, which open your own email app with your answers filled in. Nothing you type is stored by this website.",
+          "Newsletter requests you send by email, so we can add your address to our list.",
+          "Job applications you email to us: your CV, portfolio links and anything else you include.",
+          "Two preference cookies that remember your colour mode and accent colour (see Cookies below)."
+        ]
+      },
+      {
+        "heading": "How we use it",
+        "paragraphs": [
+          "We use your information to reply to you, scope and deliver work you ask us for, send the newsletter you requested, and consider job applications. We do not sell personal information, and we do not use it for advertising or automated profiling."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Legal basis",
+        "paragraphs": [
+          "Where data protection law asks for a legal basis, we rely on your request (to answer you or prepare a proposal), on a contract (to deliver an engagement), on consent (for the newsletter, which you can withdraw at any time), and on our legitimate interest in running the studio and keeping basic business records."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Cookies",
+        "paragraphs": [
+          "This site sets two first-party cookies and nothing else: dg-theme remembers light or dark mode, and dg-accent remembers an accent colour. They contain no identifier, are not shared with anyone and expire after a year. You can clear them on the Cookies page or in your browser."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Who we share it with",
+        "paragraphs": [
+          "We share personal information only with services we use to run the studio, and only as much as each needs:"
+        ],
+        "bullets": [
+          "Our email and document providers, which store our correspondence.",
+          "Vercel, which hosts this website and keeps standard server logs (such as IP address and request time) for security and reliability.",
+          "Professional advisers such as accountants and lawyers, where required.",
+          "Authorities, where the law requires it."
+        ]
+      },
+      {
+        "heading": "International transfers",
+        "paragraphs": [
+          "We work with clients and providers in several countries, so your information may be processed outside Bangladesh or outside your own country. Where that happens we use reputable providers and, where the law requires it, appropriate safeguards such as standard contractual clauses."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "How long we keep it",
+        "paragraphs": [
+          "We keep enquiries that do not lead to work for up to two years, then delete them. Client correspondence and project records are kept for as long as the engagement lasts and for up to seven years afterwards, for legal and accounting reasons. Job applications are kept for up to one year unless you ask us to delete them sooner. Newsletter addresses are kept until you unsubscribe."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Your rights",
+        "paragraphs": [
+          "Depending on where you live, you may have the right to:"
+        ],
+        "bullets": [
+          "ask for a copy of the personal information we hold about you;",
+          "ask us to correct or delete it;",
+          "object to or restrict how we use it;",
+          "withdraw consent you have given, such as for the newsletter;",
+          "complain to your local data protection authority."
+        ]
+      },
+      {
+        "heading": "Security",
+        "paragraphs": [
+          "We use providers with strong security practices, keep access to client information to the people working on that engagement, and use two-factor authentication on our accounts. No system is perfectly secure; if we become aware of a breach that affects you, we will tell you promptly."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Children",
+        "paragraphs": [
+          "This site is meant for businesses and is not directed at children. We do not knowingly collect information from anyone under 16."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Changes to this policy",
+        "paragraphs": [
+          "If we change how we handle personal information, we will update this page and the date at the top. Significant changes will be highlighted here."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Contact",
+        "paragraphs": [
+          "DotGrey Digital, House 12, Road 7, Uttara, Dhaka 1230, Bangladesh. Email: hello@dotgreydigital.com."
+        ],
+        "bullets": []
+      }
     ]
   },
   "terms": {
     "title": "Terms of Use",
-    "updated": "8 September 2026",
-    "notice": "Placeholder text. This page needs legal review before launch.",
+    "updated": "30 October 2026",
     "blocks": [
-      { "heading": "Using this site", "paragraphs": ["You may browse and share this site freely. You may not copy its design, code or written content for commercial use without written permission."], "bullets": [] },
-      { "heading": "Our work", "paragraphs": ["Case studies are published with client permission. Project imagery and copy remain the property of the respective clients and of DotGrey Digital."], "bullets": [] },
-      { "heading": "Enquiries", "paragraphs": ["Nothing on this site is a binding offer. Pricing shown is indicative; the terms of an engagement are set out in a separate written agreement."], "bullets": [] },
-      { "heading": "Liability", "paragraphs": ["We publish this site in good faith but make no warranty that it is error-free or continuously available. We are not liable for decisions taken solely on the basis of information published here."], "bullets": [] },
-      { "heading": "Contact", "paragraphs": ["Questions about these terms go to the address below."], "bullets": [] }
+      {
+        "heading": "About these terms",
+        "paragraphs": [
+          "These terms apply to your use of dotgreydigital.com (the “site”), operated by DotGrey Digital, Dhaka, Bangladesh. By using the site you agree to them. If you do not agree, please do not use the site."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Using the site",
+        "paragraphs": [
+          "You may browse, read and share links to the site for any lawful purpose. Please do not:"
+        ],
+        "bullets": [
+          "copy, scrape or republish substantial parts of the site without permission;",
+          "try to break, overload or gain unauthorised access to the site or its hosting;",
+          "use the site to send spam or anything unlawful."
+        ]
+      },
+      {
+        "heading": "Our content",
+        "paragraphs": [
+          "The text, design, illustrations and code of this site belong to DotGrey Digital unless stated otherwise. Project names and trademarks belong to their owners and are shown to describe work we did with them. Some project visuals are illustrative concept images and are labelled as such. You may quote short passages with a link back to the source."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Engagements are separate",
+        "paragraphs": [
+          "Information on this site, including service descriptions and indicative prices, is general and is not an offer. Any work we do for you is governed by a separate written proposal or agreement, which takes priority over anything on this site."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Third-party links",
+        "paragraphs": [
+          "The site may link to other websites. We are not responsible for their content or how they handle your information."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "No warranty",
+        "paragraphs": [
+          "We work to keep the site accurate and available, but it is provided “as is”, without warranties of any kind. Content may change or be removed without notice."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Limitation of liability",
+        "paragraphs": [
+          "To the fullest extent the law allows, DotGrey Digital is not liable for any indirect or consequential loss arising from your use of the site, or for any loss caused by relying on general information on it. Nothing in these terms limits liability that cannot be limited by law."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Privacy",
+        "paragraphs": [
+          "How we handle personal information is explained in our Privacy Policy."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Governing law",
+        "paragraphs": [
+          "These terms are governed by the laws of Bangladesh, and the courts of Dhaka have jurisdiction over any dispute about them, without affecting any mandatory rights you have under the law of the country where you live."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Changes",
+        "paragraphs": [
+          "We may update these terms from time to time. The date at the top shows when they last changed; continuing to use the site after a change means you accept the updated terms."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Contact",
+        "paragraphs": [
+          "Questions about these terms: hello@dotgreydigital.com."
+        ],
+        "bullets": []
+      }
     ]
   }
 }

@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { pageMeta } from "@/site/meta";
 import Link from "next/link";
-import { plannedResources } from "@/site/agency";
+import { checklists } from "@/site/agency";
 import { formatPostDate, postCategories, posts, site } from "@/site/content";
 import { Closing, Head } from "@/site/Bits";
 import { Em, Footer } from "@/site/Chrome";
@@ -21,10 +21,10 @@ export default function ResourcesPage() {
         label="Resources"
         title={
           <>
-            What we&apos;ve written, <Em>and what&apos;s next.</Em>
+            Essays and <Em>checklists.</Em>
           </>
         }
-        lead="What we have written down about the work, grouped by topic — and the checklists we are preparing next."
+        lead="What we have written down about the work, grouped by topic, plus the short checklists we use on our own projects."
       />
 
       <section className={`${s.wrap} ${s.sectionTight}`} aria-label="Essays by topic">
@@ -51,15 +51,20 @@ export default function ResourcesPage() {
         </div>
       </section>
 
-      <section className={s.dark} aria-labelledby="soon">
+      <section className={s.dark} aria-labelledby="lists">
         <div className={s.wrap}>
-          <Head id="soon" label="Coming soon" title="Checklists, in" turn="progress." note="Not published yet — subscribe below and we'll send them when they are." />
+          <Head id="lists" label="Checklists" title="Three lists we" turn="use ourselves." note="Short enough to read before a meeting. Copy them, change them, make them yours." />
           <ol className={s.approachDark}>
-            {plannedResources.map((r, i) => (
-              <li key={r.title}>
-                <span className={s.stepNum}>{String(i + 1).padStart(2, "0")} — Coming soon</span>
-                <h3>{r.title}</h3>
-                <p>{r.body}</p>
+            {checklists.map((c, i) => (
+              <li key={c.title}>
+                <span className={s.stepNum}>{String(i + 1).padStart(2, "0")}</span>
+                <h3>{c.title}</h3>
+                <p>{c.body}</p>
+                <ul className={s.checklist}>
+                  {c.items.map((x) => (
+                    <li key={x}>{x}</li>
+                  ))}
+                </ul>
               </li>
             ))}
           </ol>

@@ -52,7 +52,7 @@ export default function CookiesPage() {
       <section className={`${s.wrap} ${s.sectionTight} ${s.twoUp}`}>
         <div>
           <p className={s.label}>Your choice</p>
-          <p className={s.prose}>Both cookies are set only when you use the theme or accent controls. Clear them here at any time; the site then follows your system setting.</p>
+          <p className={s.prose}>The theme cookie is set only when you use the light/dark switch; the accent cookie is only set if an accent colour is chosen. Clear them here at any time and the site follows your system setting again.</p>
           <p className={s.note} style={{ marginTop: "1rem" }}>
             More in the <Link href="/privacy">privacy policy</Link>.
           </p>

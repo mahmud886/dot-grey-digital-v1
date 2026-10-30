@@ -13,8 +13,6 @@ export type Work = {
   summary: string;
   tags: string[];
   services: string[];
-  cover: string;
-  gallery: string[];
   challenge: string;
   solution: string;
   stats: WorkStat[];

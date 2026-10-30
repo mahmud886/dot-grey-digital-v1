@@ -17,13 +17,7 @@ export function Legal({ page }: { page: LegalPage }) {
             {first} <Em>{rest.join(" ")}</Em>
           </>
         }
-      >
-        {page.notice && (
-          <p className={s.notice} role="note">
-            {page.notice}
-          </p>
-        )}
-      </PageHead>
+      />
       <section className={`${s.wrap} ${s.legal}`}>
         <nav aria-label="On this page" className={s.toc}>
           <p className={s.label}>On this page</p>

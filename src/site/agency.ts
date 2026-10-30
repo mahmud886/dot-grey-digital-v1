@@ -254,10 +254,46 @@ export const howWeWork = [
 
 /* ------------------------------------------------------------------ resources */
 
-export const plannedResources = [
-  { title: "Project brief template", body: "The questions we ask in every first call, as a one-page doc." },
-  { title: "Automation audit checklist", body: "How to find the manual work in your business that is worth automating." },
-  { title: "AI feature readiness checklist", body: "Data, evaluation and risk questions to answer before building with AI." },
+export type Checklist = { title: string; body: string; items: string[] };
+
+/** Short, practical checklists published on /resources. */
+export const checklists: Checklist[] = [
+  {
+    title: "Before you brief an agency",
+    body: "Ten minutes with these makes the first call twice as useful.",
+    items: [
+      "Write the problem in one sentence, without naming a solution",
+      "Name the one number that would prove it worked",
+      "List who decides, who signs off and who uses the result",
+      "Gather what exists: data, designs, code, past attempts",
+      "Decide your real deadline and why it is real",
+      "Set a budget range, even a wide one",
+    ],
+  },
+  {
+    title: "Is this process ready to automate?",
+    body: "Automation pays when the work is frequent, rule-based and costly to get wrong by hand.",
+    items: [
+      "It happens at least weekly, and the steps are the same each time",
+      "The inputs arrive in a predictable place and format",
+      "You can write the rules down, including the exceptions",
+      "Someone owns the process and can say what 'done' looks like",
+      "A mistake is noticeable, and someone is told when it happens",
+      "You know what an hour of this work costs today",
+    ],
+  },
+  {
+    title: "Shipping an AI feature responsibly",
+    body: "Questions to answer before a model touches a customer.",
+    items: [
+      "What does the feature decide, and what happens when it is wrong?",
+      "Do you have examples of good answers to test against?",
+      "Which data does it see, and are you allowed to use it that way?",
+      "How will you measure quality after launch, not just before?",
+      "Can a person review, override or switch it off?",
+      "Do users know when they are talking to a model?",
+    ],
+  },
 ];
 
 /* ------------------------------------------------------------------ policies */
@@ -272,9 +308,9 @@ export const accessibility = {
     "Forms label every field and announce errors",
   ],
   limits: [
-    "Generated project artwork is decorative and does not describe the real projects",
+    "Project images are illustrative concept visuals; the facts they show are also given in the text",
     "Some decorative motion effects are not available to screen readers by design",
-    "A full audit with assistive-technology users is planned",
+    "We test with keyboard and screen readers on each release, but have not yet run a formal audit with assistive-technology users",
   ],
 };
 

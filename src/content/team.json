@@ -4,103 +4,169 @@
       "slug": "arif-hasan",
       "name": "Arif Hasan",
       "role": "Founder & Design Director",
-      "portrait": "/img/team/arif-hasan.svg",
       "bio": [
-        "Started DotGrey in 2019 after seven years split between a network agency and an in-house product team, which is where the studio's dislike of account layers comes from.",
-        "Leads creative direction and still runs the first workshop on every engagement."
+        "Started DotGrey in 2019 after years split between a network agency and an in-house product team, which is where the studio's dislike of account layers comes from.",
+        "Leads creative direction across design and engineering, and still runs the first workshop on every engagement."
       ],
       "skills": [
-        { "label": "Creative Direction", "value": 95 },
-        { "label": "Product Design", "value": 90 },
-        { "label": "Brand Strategy", "value": 88 },
-        { "label": "Client Facilitation", "value": 92 }
+        {
+          "label": "Creative Direction",
+          "value": 95
+        },
+        {
+          "label": "Product Strategy",
+          "value": 90
+        },
+        {
+          "label": "Brand Systems",
+          "value": 88
+        },
+        {
+          "label": "Workshop Facilitation",
+          "value": 92
+        }
       ],
-      "socials": [{ "label": "LinkedIn", "href": "#" }, { "label": "Dribbble", "href": "#" }]
+      "socials": []
     },
     {
       "slug": "nusrat-jahan",
       "name": "Nusrat Jahan",
-      "role": "Lead UI/UX Designer",
-      "portrait": "/img/team/nusrat-jahan.svg",
+      "role": "Lead Product Designer",
       "bio": [
         "Runs research and interface design across product engagements, and the usability sessions that keep the studio honest about its own assumptions.",
-        "Led the accessibility work on Medicove, which is now the reference the whole team designs against."
+        "Owns the design systems that let engineering ship new screens without a new round of mockups."
       ],
       "skills": [
-        { "label": "UI Design", "value": 94 },
-        { "label": "User Research", "value": 90 },
-        { "label": "Design Systems", "value": 91 },
-        { "label": "Accessibility", "value": 93 }
+        {
+          "label": "Product Design",
+          "value": 93
+        },
+        {
+          "label": "User Research",
+          "value": 90
+        },
+        {
+          "label": "Design Systems",
+          "value": 92
+        },
+        {
+          "label": "Accessibility",
+          "value": 88
+        }
       ],
-      "socials": [{ "label": "LinkedIn", "href": "#" }, { "label": "Behance", "href": "#" }]
+      "socials": []
     },
     {
       "slug": "tanvir-ahmed",
       "name": "Tanvir Ahmed",
-      "role": "Lead Engineer",
-      "portrait": "/img/team/tanvir-ahmed.svg",
+      "role": "Head of Engineering",
       "bio": [
-        "Owns architecture across every build — Next.js, TypeScript, headless CMS, and the CI that stops a heavy hero image reaching production.",
-        "Set the studio's performance budgets and enforces them in review, which has made a few designers grumpy and every client faster."
+        "Owns architecture across web apps, mobile and custom software: TypeScript and Node on the front, Python and PostgreSQL where the data lives.",
+        "Set the studio's performance and testing standards, and reviews every release before it reaches a client's users."
       ],
       "skills": [
-        { "label": "Next.js / React", "value": 96 },
-        { "label": "TypeScript", "value": 93 },
-        { "label": "Performance", "value": 92 },
-        { "label": "Infrastructure", "value": 84 }
+        {
+          "label": "System Architecture",
+          "value": 94
+        },
+        {
+          "label": "TypeScript & Node",
+          "value": 95
+        },
+        {
+          "label": "Cloud & DevOps",
+          "value": 88
+        },
+        {
+          "label": "Performance",
+          "value": 90
+        }
       ],
-      "socials": [{ "label": "LinkedIn", "href": "#" }, { "label": "X", "href": "#" }]
+      "socials": []
     },
     {
       "slug": "mahdi-rahman",
       "name": "Mahdi Rahman",
-      "role": "Email & Veeva Specialist",
-      "portrait": "/img/team/mahdi-rahman.svg",
+      "role": "Automation & Integrations Lead",
       "bio": [
-        "Builds the email and Veeva work, and knows exactly which Outlook version will break which layout before anyone has to find out the hard way.",
-        "Maintains the studio's module library, which is why a campaign now takes an hour instead of a day."
+        "Builds the workflows that move data between a client's tools on their own: CRMs, ERPs, finance systems and the spreadsheets in between.",
+        "Designs every automation to report when it could not finish, so nothing fails silently on a Friday night."
       ],
       "skills": [
-        { "label": "Email Development", "value": 96 },
-        { "label": "Veeva / Vault", "value": 90 },
-        { "label": "Cross-client QA", "value": 94 },
-        { "label": "Automation", "value": 80 }
+        {
+          "label": "Workflow Automation",
+          "value": 94
+        },
+        {
+          "label": "API Integrations",
+          "value": 92
+        },
+        {
+          "label": "n8n & Temporal",
+          "value": 88
+        },
+        {
+          "label": "Monitoring",
+          "value": 86
+        }
       ],
-      "socials": [{ "label": "LinkedIn", "href": "#" }]
+      "socials": []
     },
     {
       "slug": "sadia-islam",
       "name": "Sadia Islam",
-      "role": "Motion Designer",
-      "portrait": "/img/team/sadia-islam.svg",
+      "role": "Data & ML Engineer",
       "bio": [
-        "Handles everything that moves — launch films, product demos, and the interface motion specs that hand over to engineering as numbers rather than a reference video.",
-        "Storyboards on paper before opening anything, which saves a surprising amount of time."
+        "Takes data work from first audit to production: pipelines, dashboards, forecasts and the language-model features built on top of them.",
+        "Writes the evaluation before the model, so every AI feature ships with a way to tell whether it is still working."
       ],
       "skills": [
-        { "label": "Motion Design", "value": 95 },
-        { "label": "Interface Motion", "value": 90 },
-        { "label": "3D", "value": 78 },
-        { "label": "Sound Design", "value": 74 }
+        {
+          "label": "Data Engineering",
+          "value": 90
+        },
+        {
+          "label": "Machine Learning",
+          "value": 88
+        },
+        {
+          "label": "LLM Applications",
+          "value": 89
+        },
+        {
+          "label": "Evaluation & MLOps",
+          "value": 85
+        }
       ],
-      "socials": [{ "label": "LinkedIn", "href": "#" }, { "label": "Behance", "href": "#" }]
+      "socials": []
     },
     {
       "slug": "rifat-khan",
       "name": "Rifat Khan",
-      "role": "Project Manager",
-      "portrait": "/img/team/rifat-khan.svg",
+      "role": "Delivery Lead",
       "bio": [
-        "Keeps engagements on schedule and clients well informed, without becoming a layer between them and the people doing the work.",
-        "Writes the weekly follow-ups everyone actually reads, and flags schedule risk in writing before it becomes a problem."
+        "Keeps engagements on schedule and clients informed, without becoming a layer between them and the people doing the work.",
+        "Writes the weekly update everyone actually reads, and flags schedule risk in writing before it becomes a problem."
       ],
       "skills": [
-        { "label": "Project Delivery", "value": 93 },
-        { "label": "Client Communication", "value": 95 },
-        { "label": "Resourcing", "value": 88 },
-        { "label": "Process Design", "value": 82 }
+        {
+          "label": "Project Delivery",
+          "value": 93
+        },
+        {
+          "label": "Client Communication",
+          "value": 94
+        },
+        {
+          "label": "Planning",
+          "value": 90
+        },
+        {
+          "label": "Process Design",
+          "value": 87
+        }
       ],
-      "socials": [{ "label": "LinkedIn", "href": "#" }]
+      "socials": []
     }
   ]
 }

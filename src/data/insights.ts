@@ -21,7 +21,6 @@ export type Post = {
   /** Team member slug, so the byline links to a real profile. */
   author: string;
   excerpt: string;
-  cover: string;
   blocks: PostBlock[];
 };
 
