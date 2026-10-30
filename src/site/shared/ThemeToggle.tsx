@@ -44,7 +44,7 @@ export function setTheme(next: Theme, origin?: { x: number; y: number }) {
  * Unstyled toggle: each design passes its own className and, optionally, its own label.
  * `data-theme-current` on the button lets CSS swap icons without JS.
  */
-export function ThemeToggle({ className, children }: { className?: string; children?: ReactNode }) {
+export function ThemeToggle({ className, children, label }: { className?: string; children?: ReactNode; label?: string }) {
   const theme = useTheme();
   const next: Theme = theme === "dark" ? "light" : "dark";
   return (
@@ -52,7 +52,8 @@ export function ThemeToggle({ className, children }: { className?: string; child
       type="button"
       className={className}
       data-theme-current={theme ?? undefined}
-      aria-label={theme ? `Switch to ${next} mode` : "Switch colour mode"}
+      // When the button shows a visible word, the accessible name starts with it (WCAG 2.5.3).
+      aria-label={label ? (theme ? `${label}: switch to ${next} mode` : label) : theme ? `Switch to ${next} mode` : "Switch colour mode"}
       onClick={(e) => {
         const b = e.currentTarget.getBoundingClientRect();
         setTheme(next, { x: b.left + b.width / 2, y: b.top + b.height / 2 });

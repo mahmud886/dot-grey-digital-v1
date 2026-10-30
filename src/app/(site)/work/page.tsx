@@ -30,7 +30,7 @@ export default function WorkPage() {
           items={works.map((w, i) => ({
             slug: w.slug,
             category: w.category,
-            card: <WorkCard work={w} index={i} />,
+            card: <WorkCard work={w} index={i} as="h2" />,
             row: <WorkRow work={w} index={i} />,
           }))}
         />

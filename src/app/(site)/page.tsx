@@ -4,7 +4,8 @@ import { pageMeta } from "@/site/meta";
 import Link from "next/link";
 import { disciplines, faqs, featuredWorks, formatPostDate, posts, process, stats, testimonials, works } from "@/site/content";
 import { Em, Footer, SecHead, Stop } from "@/site/Chrome";
-import { Deck, Form, Greeting, HalftoneField, Quotes, RotatingWord, ScrubText, Sculpture, TiltCard, Wordmark, WorkReel } from "@/site/Client";
+import { Form, Sculpture, TiltCard } from "@/site/Client";
+import { Deck, Greeting, HalftoneField, Quotes, RotatingWord, ScrubText, Wordmark, WorkReel } from "@/site/Home";
 import s from "@/site/site.module.css";
 
 // The reel carries the six featured projects; the grid below shows the rest, so nothing repeats.

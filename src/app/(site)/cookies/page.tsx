@@ -24,7 +24,7 @@ export default function CookiesPage() {
         lead="This site sets two small preference cookies and nothing else: no analytics, no advertising, no tracking."
       />
       <section className={`${s.wrap} ${s.sectionTight}`} aria-label="The cookies">
-        <div className={s.tableWrap}>
+        <div className={s.tableWrap} role="region" aria-label="Cookies this site sets" tabIndex={0}>
           <table className={s.compare}>
             <thead>
               <tr>

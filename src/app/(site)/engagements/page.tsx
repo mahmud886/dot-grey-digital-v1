@@ -64,7 +64,7 @@ export default function EngagementsPage() {
 
       <section className={`${s.wrap} ${s.section}`} aria-labelledby="compare">
         <Head id="compare" label="Side by side" title="Choose" turn="calmly." />
-        <div className={s.tableWrap}>
+        <div className={s.tableWrap} role="region" aria-label="Engagement models compared" tabIndex={0}>
           <table className={s.compare}>
             <thead>
               <tr>

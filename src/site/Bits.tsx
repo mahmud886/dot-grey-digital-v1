@@ -63,7 +63,7 @@ export function Head({ id, label, title, turn, note }: { id: string; label: stri
  * A work card: two tilted mockups on a stage that straighten and scale up on hover.
  * Frame colours are theme tokens, so the cards re-ink with the theme.
  */
-export function WorkCard({ work, index, size = "md" }: { work: Work; index: number; size?: "md" | "lg" }) {
+export function WorkCard({ work, index, size = "md", as: Title = "h3" }: { work: Work; index: number; size?: "md" | "lg"; as?: "h2" | "h3" }) {
   return (
     <Link href={`/work/${work.slug}`} className={p.card} data-size={size} data-cursor="view">
       <div className={p.stage2}>
@@ -75,7 +75,7 @@ export function WorkCard({ work, index, size = "md" }: { work: Work; index: numb
         </div>
       </div>
       <div className={p.cardMeta}>
-        <h3 className={p.cardTitle}>{work.title}</h3>
+        <Title className={p.cardTitle}>{work.title}</Title>
         <span className={p.cardCat}>
           {work.category} · {work.year}
         </span>

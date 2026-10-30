@@ -62,17 +62,27 @@ ErrorDocument 404 /404.html
 <IfModule mod_headers.c>
   Header always set X-Content-Type-Options "nosniff"
   Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
   # Hashed build assets never change: cache them for a year.
   <FilesMatch "\\.(js|css|woff2?|ttf)$">
     Header set Cache-Control "public, max-age=31536000, immutable"
+  </FilesMatch>
+  # Images and icons keep their names, so a month, then revalidate.
+  <FilesMatch "\\.(svg|png|jpe?g|webp|avif|ico)$">
+    Header set Cache-Control "public, max-age=2592000, stale-while-revalidate=86400"
   </FilesMatch>
   <FilesMatch "\\.(html|xml|txt)$">
     Header set Cache-Control "public, max-age=0, must-revalidate"
   </FilesMatch>
 </IfModule>
 
+# Brotli where the host has it (smaller than gzip), gzip everywhere else.
+<IfModule mod_brotli.c>
+  AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/javascript application/javascript application/json image/svg+xml text/xml application/xml text/plain
+</IfModule>
 <IfModule mod_deflate.c>
-  AddOutputFilterByType DEFLATE text/html text/css application/javascript application/json image/svg+xml text/xml text/plain
+  AddOutputFilterByType DEFLATE text/html text/css text/javascript application/javascript application/json image/svg+xml text/xml application/xml text/plain
 </IfModule>
 `,
 );

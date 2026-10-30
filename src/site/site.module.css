@@ -170,6 +170,8 @@
   --bg: var(--chap);
   --fg: var(--chap-ink);
   --muted: var(--chap-grey);
+  /* Inner-page CSS reads the raw --grey; inside a chapter it must be the chapter grey. */
+  --grey: var(--chap-grey);
   --rule: var(--chap-line);
   --tilt-stage: var(--chap-stage);
   --accent: var(--dg-accent, var(--chap-ink));
@@ -509,13 +511,18 @@
      measure a little wider, so never let that brief overshoot widen the page. */
   overflow-x: clip;
   overflow-clip-margin: 0.1em;
+  /* Lets the wordmark size itself from its container in CSS alone (below), so the first paint
+     already has the final height and nothing jumps when the fit script runs. */
+  container-type: inline-size;
 }
 
 .wordmark {
   display: inline-block;
   font-family: var(--site-sans), "Helvetica Neue", Arial, sans-serif;
   font-weight: 900;
+  /* 0.227 is the fitted size-to-width ratio of "DOTGREY" in this face (measured). */
   font-size: 23vw;
+  font-size: calc(100cqw * 0.227);
   letter-spacing: -0.06em;
   line-height: 0.78;
   margin-left: -0.035em;
@@ -554,6 +561,11 @@
 }
 
 .greetLine {
+  /* Four lines reserved, text sitting at the bottom: the line changes with the visitor's time
+     of day and must not push the page when it does. */
+  display: flex;
+  align-items: flex-end;
+  min-height: calc(4 * 1.02em);
   max-width: 17ch;
   font-size: clamp(1.9rem, 3.4vw, 3.6rem);
   font-weight: 600;
@@ -880,14 +892,16 @@
 }
 
 .scrub {
-  font-size: clamp(1.45rem, 2.5vw, 2.5rem);
+  /* 24px minimum: large text, so the not-yet-read words need 3:1, not 4.5:1. */
+  font-size: clamp(1.5rem, 2.5vw, 2.5rem);
   font-weight: 500;
   letter-spacing: -0.025em;
   line-height: 1.16;
 }
 
 .scrub span {
-  opacity: clamp(0.14, calc(var(--p, 0) * (var(--n) + 6) - var(--i)), 1);
+  /* Unread words rest at 50% ink (about 3.9:1 on paper), still clearly dimmer than read ones. */
+  opacity: clamp(0.5, calc(var(--p, 0) * (var(--n) + 6) - var(--i)), 1);
   transition: opacity 0.25s linear;
 }
 
@@ -1216,7 +1230,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  opacity: 0.55;
+  opacity: 0.68;
 }
 
 /* ---------------------------------------------------------------- process */

@@ -798,6 +798,9 @@
 /* ---------------------------------------------------------------- dark chapter */
 
 .dark {
+  /* Muted text on the deep chapter: the page-level greys are too dark against it. */
+  --muted: var(--chapter-muted);
+  --grey: var(--chapter-muted);
   --accent: var(--dg-accent, var(--chapter-ink));
   --accent-ink: var(--dg-accent-ink, var(--chapter));
   background: var(--chapter);

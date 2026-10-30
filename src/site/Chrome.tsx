@@ -102,7 +102,7 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
 
         <div className={s.footMap}>
           {SITE_MAP.map((col) => (
-            <nav key={col.label} aria-label={col.label}>
+            <nav key={col.label} aria-label={`Footer: ${col.label}`}>
               <p className={s.label}>{col.label}</p>
               <ul className={s.footList}>
                 {col.links.map((l) => (
@@ -127,7 +127,7 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
             <p className={s.footText}>
               <DhakaTime /> in Dhaka
             </p>
-            <ThemeToggle className={s.themeBtn}>
+            <ThemeToggle className={s.themeBtn} label="Colour mode">
               <ThemeIcon />
               <span className={s.modeLabel}>Colour mode</span>
             </ThemeToggle>

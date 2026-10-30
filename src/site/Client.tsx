@@ -2,8 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { createContext, Fragment, useContext, useEffect, useLayoutEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
-import { gsap, ScrollTrigger, useGSAP } from "@/lib/gsap";
+import { createContext, Fragment, useContext, useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { useReducedMotion } from "@/hooks/useReducedMotion";
 import { ProjectMockup } from "@/site/shared/ProjectMockup";
 import { useMotion } from "@/site/shared/useMotion";
@@ -25,7 +24,7 @@ export function MotionProvider({ children }: { children: ReactNode }) {
   return <MotionCtx.Provider value={motion}>{children}</MotionCtx.Provider>;
 }
 
-const useMotionCtx = () => useContext(MotionCtx);
+export const useMotionCtx = () => useContext(MotionCtx);
 
 /* ------------------------------------------------------------------ wireframe renderer */
 
@@ -79,6 +78,9 @@ function createWire(canvas: HTMLCanvasElement, initial: number, opts: { live: ()
   let raf = 0;
   let visible = true;
   let last = performance.now();
+  let lastDraw = 0;
+  let stride = 1;
+  let lineStep = 1;
   const paths: Path2D[] = [];
 
   const readInk = () => {
@@ -98,12 +100,13 @@ function createWire(canvas: HTMLCanvasElement, initial: number, opts: { live: ()
     const ox = w / 2;
     const oy = h / 2;
     for (let b = 0; b < BUCKETS; b++) paths[b] = new Path2D();
-    for (let l = 0; l < LINES; l++) {
+    for (let l = 0; l < LINES; l += lineStep) {
       let px = 0;
       let py = 0;
       let pz = 0;
       let lastBucket = -1;
-      for (let p = 0; p < PTS; p++) {
+      // Every `stride`-th point, always ending on the last so the line reaches its end.
+      for (let p = 0; p < PTS; p = p === PTS - 1 ? PTS : Math.min(PTS - 1, p + stride)) {
         const k = (l * PTS + p) * 3;
         const x0 = cur[k];
         const y0 = cur[k + 1];
@@ -129,7 +132,6 @@ function createWire(canvas: HTMLCanvasElement, initial: number, opts: { live: ()
       }
     }
     ctx.lineWidth = 0.8;
-    ctx.lineJoin = "round";
     ctx.strokeStyle = ink;
     for (let b = 0; b < BUCKETS; b++) {
       ctx.globalAlpha = 0.12 + (b / (BUCKETS - 1)) * 0.78;
@@ -160,7 +162,11 @@ function createWire(canvas: HTMLCanvasElement, initial: number, opts: { live: ()
       ry += dt * opts.speed;
       rx += (tx - rx) * 0.04;
     }
-    draw();
+    // Idle rotation is slow, so draw it at ~30 fps; morphs run at full rate.
+    if (morphing || now - lastDraw >= 42) {
+      lastDraw = now;
+      draw();
+    }
     raf = visible && (live || morphing) ? requestAnimationFrame(step) : 0;
   }
 
@@ -173,9 +179,14 @@ function createWire(canvas: HTMLCanvasElement, initial: number, opts: { live: ()
 
   const resize = () => {
     const r = canvas.getBoundingClientRect();
-    dpr = Math.min(2, window.devicePixelRatio || 1);
     w = r.width;
     h = r.height;
+    // Small canvases (phones): fewer points per line and a lower pixel ratio. The lines are
+    // 0.8px hairlines, so the difference is invisible but the raster cost is much lower.
+    const small = Math.min(w, h) < 520;
+    stride = small ? 2 : 1;
+    lineStep = small ? 2 : 1;
+    dpr = Math.min(small ? 1.5 : 2, window.devicePixelRatio || 1);
     canvas.width = Math.round(w * dpr);
     canvas.height = Math.round(h * dpr);
     draw();
@@ -197,7 +208,10 @@ function createWire(canvas: HTMLCanvasElement, initial: number, opts: { live: ()
   if (opts.follow) window.addEventListener("pointermove", onMove, { passive: true });
   readInk();
   resize();
-  start();
+  // First frame is drawn now; the rotation loop begins once the page has finished loading, so it
+  // never competes with first paint, hydration or the load event.
+  if (document.readyState === "complete") window.setTimeout(start, 1200);
+  else window.addEventListener("load", () => window.setTimeout(start, 1200), { once: true });
 
   return {
     goTo(i, instant) {
@@ -448,19 +462,29 @@ export function NavLinks({ links }: { links: NavLink[] }) {
 /** Mobile menu: a full-screen paper sheet with large links. The "+" turns into "×". */
 export function MenuToggle({ links }: { links: { href: string; label: string }[] }) {
   const [open, setOpen] = useState(false);
+  const btn = useRef<HTMLButtonElement>(null);
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key !== "Escape") return;
+      setOpen(false);
+      btn.current?.focus();
+    };
+    // While the sheet is open the page behind it is inert: Tab can't wander into content you
+    // can't see, and screen readers don't read it.
+    const behind = [...document.querySelectorAll<HTMLElement>("#content, #start")];
+    behind.forEach((el) => (el.inert = true));
     document.documentElement.style.overflow = "hidden";
     window.addEventListener("keydown", onKey);
     return () => {
+      behind.forEach((el) => (el.inert = false));
       document.documentElement.style.overflow = "";
       window.removeEventListener("keydown", onKey);
     };
   }, [open]);
   return (
     <>
-      <button type="button" className={s.menuBtn} aria-expanded={open} aria-controls="site-menu" onClick={() => setOpen(!open)}>
+      <button ref={btn} type="button" className={s.menuBtn} aria-expanded={open} aria-controls="site-menu" onClick={() => setOpen(!open)}>
         <span>{open ? "Close" : "Menu"}</span>
         <i aria-hidden="true" data-open={open} />
       </button>
@@ -490,340 +514,7 @@ export function ModeLabel() {
   return <span className={s.modeLabel}>{theme === "dark" ? "Light" : theme === "light" ? "Dark" : "Mode"}</span>;
 }
 
-/* ------------------------------------------------------------------ hero */
-
-/** DOTGREY sized by script so the ink spans the content width exactly. */
-export function Wordmark({ text }: { text: string }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  useLayoutEffect(() => {
-    const el = ref.current;
-    if (!el) return;
-    const parent = el.parentElement!;
-    const fit = () => {
-      el.style.fontSize = "100px";
-      const w = el.getBoundingClientRect().width;
-      if (w) el.style.fontSize = `${(100 * parent.clientWidth) / (w - 4.5)}px`;
-    };
-    fit();
-    document.fonts?.ready.then(fit);
-    // A face can finish loading after `ready` first resolves; refit whenever one does.
-    document.fonts?.addEventListener("loadingdone", fit);
-    const ro = new ResizeObserver(fit);
-    ro.observe(parent);
-    return () => {
-      ro.disconnect();
-      document.fonts?.removeEventListener("loadingdone", fit);
-    };
-  }, []);
-  return (
-    <span ref={ref} className={s.wordmark} aria-hidden="true">
-      {text.slice(0, -1)}
-      <span>{text.slice(-1)}</span>
-    </span>
-  );
-}
-
-function subscribeMinute(cb: () => void) {
-  const id = setInterval(cb, 20_000);
-  return () => clearInterval(id);
-}
-
-const timeFmt = (tz?: string) => new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: tz });
-
-function nowKey() {
-  const d = new Date();
-  return `${d.getDay()}|${d.getHours()}|${timeFmt().format(d)}|${timeFmt("Asia/Dhaka").format(d)}`;
-}
-
-function lineFor(day: number, h: number) {
-  const weekend = day === 0 || day === 6;
-  if (h < 5) return "Burning the midnight oil? Someone on our team is probably up too.";
-  if (weekend) return day === 0 && h >= 17 ? "Sunday evening. Let's make Monday lighter." : "Here on a weekend? Respect. Good ideas don't keep office hours.";
-  if (h < 9) return "You're up early. Coffee first, roadmap second.";
-  if (h < 12) return "Morning. Inbox open, ambitions high. Good time to talk.";
-  if (h < 17) return "Afternoon. The best hour to ship something small.";
-  if (h < 21) return "Evening. The day's done — the ideas aren't.";
-  return "Late one. Big ideas don't clock out either.";
-}
-
-/**
- * The hero row under the wordmark: a giant italic "Hello." and, beside it, a line written for
- * the visitor's time of day, both clocks and the two ways in. Neutral on the server.
- */
-export function Greeting() {
-  const key = useSyncExternalStore(subscribeMinute, nowKey, () => "");
-  const [day, hour, local, dhaka] = key.split("|");
-  const line = key ? lineFor(Number(day), Number(hour)) : "One studio for design, software, automation, data and machine learning.";
-  return (
-    <div className={s.heroRow}>
-      <p className={s.hello}>
-        Hello<span className={s.stop}>.</span>
-      </p>
-      <div className={s.greetSide}>
-        <p className={s.greetLine}>{line}</p>
-        <p className={s.greetMeta} suppressHydrationWarning>
-          {key ? (
-            <>
-              <span>{local} for you</span>
-              <span>{dhaka} in Dhaka</span>
-            </>
-          ) : (
-            <span>Dhaka · Worldwide</span>
-          )}
-        </p>
-        <div className={s.greetCtas}>
-          <Link href="/start" className={s.pillInk} data-magnetic>
-            Start a project <ArrowUpRight />
-          </Link>
-          <a href="#work" className={s.textLink}>
-            See the work
-          </a>
-        </div>
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ halftone field (from v8) */
-
-const FIELD_WORDS = ["Design", "Software", "Automation", "Data", "ML"];
-
-/** The page's one Pause control, as a small pill. */
-export function MotionPill({ className }: { className?: string }) {
-  const { paused, toggle } = useMotionCtx();
-  return (
-    <button type="button" className={className ?? s.fieldPause} onClick={toggle} aria-pressed={paused}>
-      <span aria-hidden="true" className={s.motionIcon} data-paused={paused} />
-      {paused ? "Play" : "Pause"}
-    </button>
-  );
-}
-
-/**
- * V8's signature panel: a field of dots that spells each discipline in turn, wiping from
- * left to right. Dots swell around the pointer. Ink comes from CSS, so it follows the theme;
- * it stops on Pause, offscreen and under reduced motion (first word, still).
- */
-export function HalftoneField({ words = FIELD_WORDS, caption = "Six disciplines, one team." }: { words?: string[]; caption?: string }) {
-  const wrap = useRef<HTMLDivElement>(null);
-  const canvas = useRef<HTMLCanvasElement>(null);
-  const { paused } = useMotionCtx();
-  const theme = useTheme();
-  const [word, setWord] = useState(0);
-
-  useEffect(() => {
-    const cv = canvas.current!;
-    const box = wrap.current!;
-    const ctx = cv.getContext("2d")!;
-    let W = 0;
-    let H = 0;
-    let step = 16;
-    let cols = 0;
-    let rows = 0;
-    let masks: Float32Array[] = [];
-    let raf = 0;
-    let visible = false;
-    let shown = -1;
-    const pointer = { x: -9999, y: -9999, k: 0 };
-    const start = performance.now();
-    const ink = getComputedStyle(cv).color;
-
-    const build = () => {
-      const dpr = Math.min(2, devicePixelRatio || 1);
-      W = box.clientWidth;
-      H = box.clientHeight;
-      if (!W || !H) {
-        masks = [];
-        return;
-      }
-      cv.width = Math.round(W * dpr);
-      cv.height = Math.round(H * dpr);
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-      // Fewer, larger dots on small screens so each word still reads.
-      step = W < 640 ? 9 : W < 1100 ? 12 : 15;
-      cols = Math.ceil(W / step);
-      rows = Math.ceil(H / step);
-      const off = document.createElement("canvas");
-      off.width = cols;
-      off.height = rows;
-      const o = off.getContext("2d", { willReadFrequently: true })!;
-      const family = getComputedStyle(cv).fontFamily;
-      masks = words.map((w) => {
-        o.clearRect(0, 0, cols, rows);
-        let size = rows * 0.62;
-        o.font = `900 ${size}px ${family}`;
-        const tw = o.measureText(w).width;
-        if (tw > cols * 0.86) size *= (cols * 0.86) / tw;
-        o.font = `900 ${size}px ${family}`;
-        o.textAlign = "center";
-        o.textBaseline = "middle";
-        o.fillStyle = "#fff";
-        o.fillText(w, cols / 2, rows / 2 + size * 0.04);
-        const data = o.getImageData(0, 0, cols, rows).data;
-        const m = new Float32Array(cols * rows);
-        for (let i = 0; i < m.length; i++) m[i] = data[i * 4 + 3] / 255;
-        return m;
-      });
-    };
-
-    const draw = (now: number) => {
-      if (!masks.length) return;
-      const t = (now - start) / 1000;
-      const hold = 2.6;
-      const phase = paused ? 0 : t / hold;
-      const a = Math.floor(phase) % words.length;
-      const b = (a + 1) % words.length;
-      const f = phase - Math.floor(phase);
-      // The label follows the word you can read: it switches once the wipe is mostly done.
-      const readable = f > 0.84 ? b : a;
-      if (readable !== shown) {
-        shown = readable;
-        setWord(readable);
-      }
-      ctx.clearRect(0, 0, W, H);
-      ctx.fillStyle = ink;
-      pointer.k += ((pointer.x > -999 ? 1 : 0) - pointer.k) * 0.08;
-      for (let j = 0; j < rows; j++) {
-        for (let i = 0; i < cols; i++) {
-          const x = (i + 0.5) * step;
-          const y = (j + 0.5) * step;
-          // Wipe from left to right during the last 35% of each hold.
-          const local = Math.min(1, Math.max(0, ((f - 0.65) / 0.35) * 1.6 - (i / cols) * 0.6));
-          const m = masks[a][j * cols + i] * (1 - local) + masks[b][j * cols + i] * local;
-          const wave = paused ? 0.5 : 0.5 + 0.5 * Math.sin(x * 0.011 + y * 0.007 - t * 1.4);
-          const d = Math.hypot(x - pointer.x, y - pointer.y);
-          const near = pointer.k * Math.exp(-(d * d) / 14000);
-          const r = step * 0.5 * Math.min(1, 0.1 + wave * 0.1 + m * 0.82 + near * 0.55);
-          if (r < 0.5) continue;
-          ctx.beginPath();
-          ctx.arc(x, y, r, 0, Math.PI * 2);
-          ctx.fill();
-        }
-      }
-    };
-
-    const loop = (now: number) => {
-      draw(now);
-      if (!paused && visible) raf = requestAnimationFrame(loop);
-    };
-
-    build();
-    draw(performance.now());
-    const io = new IntersectionObserver(([e]) => {
-      visible = e.isIntersecting;
-      cancelAnimationFrame(raf);
-      if (visible) raf = requestAnimationFrame(loop);
-    });
-    io.observe(box);
-    const ro = new ResizeObserver(() => {
-      build();
-      draw(performance.now());
-    });
-    ro.observe(box);
-    document.fonts?.ready.then(() => {
-      build();
-      draw(performance.now());
-    });
-    const move = (e: PointerEvent) => {
-      const r = box.getBoundingClientRect();
-      pointer.x = e.clientX - r.left;
-      pointer.y = e.clientY - r.top;
-      if (paused) draw(performance.now());
-    };
-    const leave = () => {
-      pointer.x = pointer.y = -9999;
-      if (paused) draw(performance.now());
-    };
-    box.addEventListener("pointermove", move);
-    box.addEventListener("pointerleave", leave);
-    return () => {
-      cancelAnimationFrame(raf);
-      io.disconnect();
-      ro.disconnect();
-      box.removeEventListener("pointermove", move);
-      box.removeEventListener("pointerleave", leave);
-    };
-  }, [paused, theme, words]);
-
-  const n = (x: number) => String(x).padStart(2, "0");
-  return (
-    <div ref={wrap} className={s.field} role="img" aria-label={`Dot field spelling ${words.join(", ")}`}>
-      <canvas ref={canvas} className={s.fieldCanvas} />
-      <div className={s.fieldTop} aria-hidden="true">
-        <span>
-          {n(word + 1)} / {n(words.length)}
-        </span>
-        <span className={s.fieldWord}>{words[word]}</span>
-      </div>
-      <div className={s.fieldCaption}>
-        <span>{caption}</span>
-        <MotionPill />
-      </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ statement */
-
-const AUDIENCE = ["people", "businesses", "founders", "teams", "users"];
-
-export function RotatingWord() {
-  const { paused } = useMotionCtx();
-  const [i, setI] = useState(0);
-  useEffect(() => {
-    if (paused) return;
-    const id = setInterval(() => setI((n) => (n + 1) % AUDIENCE.length), 2200);
-    return () => clearInterval(id);
-  }, [paused]);
-  return (
-    <span className={s.rotor}>
-      <span className={s.srOnly}>{AUDIENCE.join(", ")}.</span>
-      <span key={i} className={s.rotorWord} aria-hidden="true">
-        {AUDIENCE[i]}
-        <span className={s.stop}>.</span>
-      </span>
-    </span>
-  );
-}
-
-/** Paragraph whose words darken as it scrolls through the viewport. CSS vars, no re-renders. */
-export function ScrubText({ text }: { text: string }) {
-  const ref = useRef<HTMLParagraphElement>(null);
-  const { reduced } = useMotionCtx();
-  const words = text.split(" ");
-  useEffect(() => {
-    const el = ref.current!;
-    if (reduced) {
-      el.style.setProperty("--p", "1");
-      return;
-    }
-    const onScroll = () => {
-      const r = el.getBoundingClientRect();
-      const start = innerHeight * 0.88;
-      const end = innerHeight * 0.35;
-      const p = (start - r.top) / (start - end + r.height * 0.5);
-      el.style.setProperty("--p", String(Math.min(1, Math.max(0, p))));
-    };
-    onScroll();
-    addEventListener("scroll", onScroll, { passive: true });
-    addEventListener("resize", onScroll);
-    return () => {
-      removeEventListener("scroll", onScroll);
-      removeEventListener("resize", onScroll);
-    };
-  }, [reduced]);
-  return (
-    <p ref={ref} className={s.scrub} style={{ ["--n" as string]: words.length }}>
-      {words.map((w, i) => (
-        <span key={i} style={{ ["--i" as string]: i }}>
-          {w}{" "}
-        </span>
-      ))}
-    </p>
-  );
-}
-
-/* ------------------------------------------------------------------ work reel */
+/* ------------------------------------------------------------------ tilt card */
 
 /** Two tilted frames of a project that straighten and lift on hover. */
 export function TiltCard({ work, index, href }: { work: Work; index: number; href: string }) {
@@ -853,137 +544,15 @@ export function TiltCard({ work, index, href }: { work: Work; index: number; hre
   );
 }
 
-/**
- * "Our work." On wide screens with motion allowed the section pins and vertical scroll
- * moves the cards sideways. Otherwise a native swipe row with scroll-snap.
- */
-export function WorkReel({ items, title, note }: { items: Work[]; title: ReactNode; note: ReactNode }) {
-  const section = useRef<HTMLElement>(null);
-  const track = useRef<HTMLDivElement>(null);
-  const [native, setNative] = useState(true);
-
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(min-width: 900px) and (prefers-reduced-motion: no-preference)", () => {
-        setNative(false);
-        const el = track.current!;
-        const distance = () => el.scrollWidth - window.innerWidth;
-        const tween = gsap.to(el, {
-          x: () => -distance(),
-          ease: "none",
-          scrollTrigger: {
-            trigger: section.current,
-            start: "top top",
-            end: () => `+=${distance()}`,
-            pin: true,
-            scrub: 0.7,
-            invalidateOnRefresh: true,
-          },
-        });
-        return () => {
-          tween.scrollTrigger?.kill();
-          tween.kill();
-          setNative(true);
-        };
-      });
-      return () => mm.revert();
-    },
-    { scope: section },
-  );
-
-  useEffect(() => {
-    ScrollTrigger.refresh();
-  }, [native]);
-
-  return (
-    <section ref={section} id="work" className={s.reel} aria-labelledby="work-title">
-      <div className={s.reelHead}>
-        <h2 id="work-title" className={s.chapterTitle}>
-          {title}
-        </h2>
-        <p className={s.reelNote}>
-          {note}
-          <span className={s.reelHint} aria-hidden="true">
-            {native ? "Swipe →" : "Scroll →"}
-          </span>
-        </p>
-      </div>
-      <div ref={track} className={`${s.track} ${native ? s.trackNative : ""}`}>
-        {items.map((w, i) => (
-          <div key={w.slug} className={s.reelItem}>
-            <TiltCard work={w} index={i} href={`/work/${w.slug}`} />
-          </div>
-        ))}
-      </div>
-    </section>
-  );
-}
-
-/* ------------------------------------------------------------------ services deck */
-
-/** Sticky cards that stack like a deck; each covered card shrinks and dims a little. */
-export function Deck({ children }: { children: ReactNode }) {
-  const ref = useRef<HTMLDivElement>(null);
-  useGSAP(
-    () => {
-      const mm = gsap.matchMedia();
-      mm.add("(prefers-reduced-motion: no-preference)", () => {
-        const cards = gsap.utils.toArray<HTMLElement>(`.${s.deckCard}`, ref.current);
-        cards.slice(0, -1).forEach((card, i) => {
-          gsap.to(card, {
-            scale: 0.93,
-            "--dim": 0.35,
-            ease: "none",
-            scrollTrigger: { trigger: cards[i + 1], start: "top bottom", end: "top 20%", scrub: true },
-          });
-        });
-      });
-      return () => mm.revert();
-    },
-    { scope: ref },
-  );
-  return (
-    <div ref={ref} className={s.deck}>
-      {children}
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------ quotes */
-
-type Quote = { id: string; quote: string; author: string; role: string };
-
-export function Quotes({ items }: { items: Quote[] }) {
-  const [i, setI] = useState(0);
-  const q = items[i];
-  const go = (d: number) => setI((n) => (n + d + items.length) % items.length);
-  return (
-    <figure className={s.quoteFig}>
-      <blockquote className={s.quote} aria-live="polite">
-        “{q.quote}”
-      </blockquote>
-      <figcaption className={s.quoteFoot}>
-        <span>
-          <b>{q.author}</b> — {q.role}
-        </span>
-        <span className={s.quoteNav}>
-          <span className={s.quoteCount}>
-            {String(i + 1).padStart(2, "0")} / {String(items.length).padStart(2, "0")}
-          </span>
-          <button type="button" className={s.round} onClick={() => go(-1)} aria-label="Previous quote">
-            ←
-          </button>
-          <button type="button" className={s.round} onClick={() => go(1)} aria-label="Next quote">
-            →
-          </button>
-        </span>
-      </figcaption>
-    </figure>
-  );
-}
 
 /* ------------------------------------------------------------------ clocks */
+
+export function subscribeMinute(cb: () => void) {
+  const id = setInterval(cb, 20_000);
+  return () => clearInterval(id);
+}
+
+export const timeFmt = (tz?: string) => new Intl.DateTimeFormat("en-GB", { hour: "2-digit", minute: "2-digit", timeZone: tz });
 
 const dhakaNow = () => timeFmt("Asia/Dhaka").format(new Date());
 
