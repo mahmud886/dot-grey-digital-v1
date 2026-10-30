@@ -31,7 +31,7 @@ The `src/data/*.ts` files are thin typed wrappers around the JSON. Only edit the
 
 **Add real project screenshots.** Projects currently show coded "concept visual" mockups (`src/site/shared/ProjectMockup.tsx`, text in `src/site/shared/mockups.ts`). To use real images: put them in `public/work/<slug>/` (e.g. `cover.jpg`, `1.jpg`…), then in the card and case-study components replace `<ProjectMockup … />` with `next/image` pointing at those files. Keep images around 2400px wide, JPEG or WebP.
 
-**Add an article.** Add an entry to `posts` in `insights.json`: a unique `slug`, `category` (from `categories`), `date` (`YYYY-MM-DD`), `readingMinutes`, `author` (a team member's slug), `excerpt`, and `blocks`.
+**Add an article.** Add an entry to `posts` in `insights.json`: a unique `slug` (it becomes `/insights/<slug>`), `title`, `category` (one of the `categories` list at the top of the file: Design, Engineering, Automation, Data & AI, Studio), `date` (`YYYY-MM-DD`, newest first on the site), `readingMinutes` (words ÷ 200), `author` (a team member's slug from `team.json`, which links the byline), `excerpt` (one or two sentences, under about 180 characters; it is also the page description and the RSS summary) and `blocks`. The sitemap, the homepage "Notes." section, the Resources page, the related-articles list and the RSS feed (`/feed.xml`, built from the same file by `src/app/feed.xml/route.ts`) all update by themselves. To add a new topic filter, add it to `categories` and use the same spelling on the posts.
 
 **Add a job.** Add an entry to `jobs` in `jobs.json` with a unique `slug`. Applications go to the studio email.
 

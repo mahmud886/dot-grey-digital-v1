@@ -3,7 +3,8 @@
     "All",
     "Design",
     "Engineering",
-    "Email",
+    "Automation",
+    "Data & AI",
     "Studio"
   ],
   "posts": [
@@ -59,7 +60,7 @@
     {
       "slug": "email-still-runs-on-tables",
       "title": "Email still runs on tables, and that is fine",
-      "category": "Email",
+      "category": "Engineering",
       "date": "2026-07-02",
       "readingMinutes": 6,
       "author": "mahdi-rahman",
@@ -197,6 +198,627 @@
         {
           "type": "paragraph",
           "text": "If we cannot get those four things, that is worth knowing on day one rather than in the second round of revisions."
+        }
+      ]
+    },
+    {
+      "slug": "five-minute-automation-test",
+      "title": "The five-minute test: is this process worth automating?",
+      "category": "Automation",
+      "date": "2026-09-02",
+      "readingMinutes": 4,
+      "author": "mahdi-rahman",
+      "excerpt": "Not every repetitive task deserves a workflow. Five questions we ask in the first meeting to separate the automations that pay back from the ones that become a second job.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Almost every team we meet has a list of things they would like to automate. Almost none of the lists are in a sensible order. The loudest, most annoying task is rarely the most valuable one, and the easiest one to build is often the one that saves the least. So before we draw a single diagram, we run a short test. It takes about five minutes, and it has saved more projects than any tool we use."
+        },
+        {
+          "type": "heading",
+          "text": "Question one: how often, and how long?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Multiply the number of times the task happens in a month by the minutes it takes. That is your ceiling. If the answer is two hours a month, you are not looking at an automation project, you are looking at a checklist. We are not being dismissive of small savings; we are being honest that a workflow has to be built, monitored and fixed, and that costs hours too."
+        },
+        {
+          "type": "heading",
+          "text": "Question two: is the rule written down?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ask the person who does the task to explain how they decide what to do. If the answer is a clear sequence of if-this-then-that, the task is ready. If the answer starts with 'it depends' or 'you just get a feel for it', the task is judgement work, and judgement is where automation goes wrong quietly. That does not mean it is off the table. It means a person stays in the loop, and the automation does the preparation rather than the decision."
+        },
+        {
+          "type": "heading",
+          "text": "Question three: what happens when it is wrong?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Every automation will be wrong sometimes. The question is how expensive that is and how quickly someone would notice. A mis-tagged support ticket is cheap and visible. An invoice sent to the wrong customer is neither. The higher the cost of a mistake, the more we want an approval step, a dry-run mode or a daily summary that someone actually reads."
+        },
+        {
+          "type": "heading",
+          "text": "Questions four and five: who owns it, and does the data exist?"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Is there a named person who will notice when it breaks, and who is allowed to switch it off?",
+            "Does the information the process needs already live in a system with an interface we can talk to, or is it in someone's inbox and memory?",
+            "Is the process stable, or is it about to change when the next tool or policy arrives?"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "A process that will be reshaped in three months should be fixed first and automated later. An automation without an owner turns into a mystery that nobody dares to touch. And a process whose inputs live in people's heads needs a conversation before it needs code; sometimes the most valuable result of the project is simply writing the rule down."
+        },
+        {
+          "type": "heading",
+          "text": "Scoring it"
+        },
+        {
+          "type": "heading",
+          "text": "A worked example"
+        },
+        {
+          "type": "paragraph",
+          "text": "Imagine a small distributor that receives purchase orders as PDF attachments and re-types them into an accounting package. It happens about forty times a week and takes ten minutes each time. That is roughly sixteen hours a month, the rule is clear, the cost of a mistake is moderate and the data, once read, goes into a system with a proper interface. It passes the test, though not without a caveat: reading PDFs is the fragile part. So we would build the reading step to flag anything it is unsure about for a person to check, and let the rest flow straight through."
+        },
+        {
+          "type": "paragraph",
+          "text": "Now compare a task that sounds similar: deciding which customers deserve a discount. Here the frequency is high, but the rule is a matter of judgement, mistakes are costly to relationships and the policy changes every quarter. We would not automate the decision. We might prepare the information, such as order history and payment record, so that the person deciding can do it in half the time. That is a smaller win, and it is the right-sized one."
+        },
+        {
+          "type": "heading",
+          "text": "Count the upkeep honestly"
+        },
+        {
+          "type": "paragraph",
+          "text": "The costs of an automation do not stop at launch. Someone needs to watch it, update it when the other tool changes its interface and answer questions when it behaves unexpectedly. As a rough habit, we assume the upkeep will take a few hours a month and subtract that from the time saved. If the saving does not clearly exceed the upkeep, we say so, and we would rather you spend the money elsewhere."
+        },
+        {
+          "type": "paragraph",
+          "text": "We do not use a formula. If a task is frequent, rule-based, low-risk, owned and has accessible data, it goes to the top of the list. If it fails on two of those, we say so and suggest a smaller step, such as a template, a shared form or a weekly report, that gets most of the benefit with none of the maintenance. If you want to talk a list through, our Start a project page is the quickest way to reach us, and the first conversation is about the list, not about selling you a build."
+        }
+      ]
+    },
+    {
+      "slug": "plumbing-that-keeps-automations-alive",
+      "title": "Webhooks, queues and retries: the boring plumbing that keeps automations alive",
+      "category": "Automation",
+      "date": "2026-09-09",
+      "readingMinutes": 4,
+      "author": "tanvir-ahmed",
+      "excerpt": "Most broken automations were never wrong, just unlucky: a timeout, a duplicate, a deploy at the wrong moment. The unglamorous parts that make a workflow survive its first bad day.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "When an automation fails, the post-mortem is rarely dramatic. A partner's API was down for four minutes. A webhook was delivered twice. A deploy restarted the worker halfway through a batch. None of these are bugs in the sense of wrong logic. They are just the normal behaviour of networks, and a workflow that does not expect them will eventually lose or duplicate something that mattered."
+        },
+        {
+          "type": "heading",
+          "text": "Treat every incoming webhook as a rumour"
+        },
+        {
+          "type": "paragraph",
+          "text": "A webhook tells you that something probably happened. It can arrive late, out of order, or more than once, and sometimes it never arrives. So the first thing our handlers do is verify the signature, store the raw event, and answer immediately with a success code. Doing the real work inside the request is how you end up timing out, getting the same event redelivered, and doing the work twice."
+        },
+        {
+          "type": "heading",
+          "text": "Put a queue in the middle"
+        },
+        {
+          "type": "paragraph",
+          "text": "Storing the event and processing it later is the single most useful habit in this whole area. The queue absorbs bursts, lets you pause processing during an incident without losing anything, and gives you a place to look when somebody asks what happened to a particular order. It does not need to be fancy. A table with a status column and a worker that polls it is a perfectly respectable queue for a small business."
+        },
+        {
+          "type": "heading",
+          "text": "Make every step safe to repeat"
+        },
+        {
+          "type": "paragraph",
+          "text": "Retries only help if running a step twice is harmless. That property has a name, idempotency, and the practical version is simple: give every operation a key derived from the thing it is about, such as the order number plus the action, and check that key before acting. Creating an invoice for an order that already has one should return the existing invoice, not make a second."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Retry with increasing delays, and stop after a sensible limit",
+            "Keep failed events where a person can see them, rather than dropping them",
+            "Alert on the number of stuck items, not on every single failure",
+            "Record what was done and why, in plain language, next to the technical log"
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Decide what a human sees"
+        },
+        {
+          "type": "paragraph",
+          "text": "The last piece is the one people skip. When the machine gives up, somebody has to find out, understand the problem in under a minute, and fix it or push it through by hand. We build a simple screen or a daily message listing anything stuck, with a button or an instruction for each. It is not glamorous, and it is the difference between an automation people trust and one they quietly work around."
+        },
+        {
+          "type": "heading",
+          "text": "A small example"
+        },
+        {
+          "type": "paragraph",
+          "text": "Suppose a shop sends an order to a courier whenever a customer pays. The payment provider calls our webhook. If we booked the courier inside that call and the courier's service was slow, the provider would time out and call again, and we might book two collections. Instead we record the payment event, return success, and let a worker book the courier using the order number as the key. If the courier is down, the worker waits and tries again. If it is still down after an hour, a person gets a message with the order and a link to retry. Nothing was lost, nothing was doubled and nobody had to guess what happened."
+        },
+        {
+          "type": "heading",
+          "text": "Keep a trail you can read"
+        },
+        {
+          "type": "paragraph",
+          "text": "Logs written for machines are not enough at two in the morning. For each business event we keep a short, readable history: payment received, courier booked, label printed, customer notified. When a customer writes in asking where their order is, somebody can answer from that history without reading code. It costs very little to build and it is the part the operations team ends up using most."
+        },
+        {
+          "type": "heading",
+          "text": "Test the bad days"
+        },
+        {
+          "type": "paragraph",
+          "text": "It is tempting to test only that the workflow works when everything goes well. We also try the bad days on purpose: switch off a dependency, send the same event twice, restart the worker in the middle of a batch. If we have not seen the system recover in a test, we should not expect it to recover in production."
+        },
+        {
+          "type": "paragraph",
+          "text": "None of this is clever, and that is the point. The reliable automations we have built look dull from the outside: events in, a queue, small safe steps, a clear list of what went wrong. If yours is held together by one long chain of steps that has to succeed in a single go, it is worth an hour of looking at where it would hurt to be interrupted."
+        }
+      ]
+    },
+    {
+      "slug": "before-you-build-a-chatbot",
+      "title": "Before you build a chatbot: three questions about your data",
+      "category": "Data & AI",
+      "date": "2026-09-16",
+      "readingMinutes": 3,
+      "author": "sadia-islam",
+      "excerpt": "A chatbot is only as good as what it can look up. Three plain questions about your documents and records that decide whether an assistant will help or embarrass you.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Requests for a chatbot usually arrive as a feature: add a chat window, connect it to a model, ship it. The model is the easy part. What decides whether the result is useful is whether the assistant has something trustworthy to draw on, and most of the work we do on these projects happens before any model is chosen. We start with three questions."
+        },
+        {
+          "type": "heading",
+          "text": "Does the answer exist in writing?"
+        },
+        {
+          "type": "paragraph",
+          "text": "If a good answer to a customer question lives in the head of your most experienced colleague, a chatbot cannot find it. Gather the twenty questions people actually ask, and for each one point to the document, page or record that contains the answer. Where you cannot, you have found a content gap, and no amount of model cleverness will fill it. Sometimes the first deliverable is simply the missing documentation."
+        },
+        {
+          "type": "heading",
+          "text": "Is it current, and does anyone own it?"
+        },
+        {
+          "type": "paragraph",
+          "text": "An assistant will repeat an out-of-date policy as confidently as a correct one. Look at the sources you would feed it and check when they were last reviewed and who is responsible for them. Duplicated pages with different prices, old PDFs still sitting on the website, and spreadsheets with 'final_v3' in the name are the usual culprits. Decide which source wins when two disagree, and make sure someone will keep it up to date after launch."
+        },
+        {
+          "type": "heading",
+          "text": "What should it refuse to do?"
+        },
+        {
+          "type": "paragraph",
+          "text": "Decide the edges before the demo, not after the first awkward screenshot. Should it give legal or medical advice? Quote prices? Make promises about delivery dates? Talk about competitors? For each, write down what it should do instead, usually a polite handover to a person, and test those cases on purpose. The behaviour on the questions it should not answer matters more than the ones it gets right."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Start with a narrow job such as order status or internal policy lookup, not 'answer anything'",
+            "Show the source of each answer so a person can check it",
+            "Give people a clear way to reach a human, and measure how often they use it",
+            "Review a sample of real conversations every week for the first month"
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Two quick tests you can run this week"
+        },
+        {
+          "type": "paragraph",
+          "text": "First, take ten real questions from your inbox and try to answer each one using only your published documents, as if you were the assistant. Note how many you could answer, how long it took and how many needed a phone call. That fraction is a fair upper limit for what a lookup-based assistant can do on day one. Second, ask someone outside your team to search your help pages for three of those questions. If they cannot find the answers by searching, an assistant will have the same trouble, and better search might be the first improvement."
+        },
+        {
+          "type": "heading",
+          "text": "Privacy belongs in the first conversation"
+        },
+        {
+          "type": "paragraph",
+          "text": "If the assistant will see customer records, decide up front which fields it may read, where the conversations are stored and who can view them. Many of the risks in these projects are not about the model being wrong; they are about data being exposed to the wrong person or kept for longer than anyone intended. Settling this early is straightforward. Settling it after launch usually means rebuilding something."
+        },
+        {
+          "type": "paragraph",
+          "text": "It is worth saying that a chatbot is not the only way to put language models to work. Drafting replies for a person to review, tagging incoming messages, or summarising long threads are often safer, quicker to build and easier to measure, because a person is already part of the process."
+        },
+        {
+          "type": "paragraph",
+          "text": "If the three answers come back as yes, yes and yes, a retrieval-based assistant can be built quickly and will probably help. If they come back as no, the honest recommendation is often to spend a few weeks on the content, a search box or an FAQ first. It is less exciting, and it is usually what the customer would have chosen anyway. If you are weighing this up, our AI page lays out how we approach it, including what we will not build."
+        }
+      ]
+    },
+    {
+      "slug": "evaluating-an-llm-feature",
+      "title": "How we evaluate an LLM feature before it ships",
+      "category": "Data & AI",
+      "date": "2026-09-23",
+      "readingMinutes": 4,
+      "author": "sadia-islam",
+      "excerpt": "Impressive demos prove very little. A short, repeatable evaluation turns 'it seems good' into something you can measure, compare and monitor.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "It is easy to make a language model look good in a demo, because you choose the questions. It is much harder to know how it behaves on the ten thousand questions you did not choose. Before an LLM feature goes to real users, we want a way to say how good it is, and to notice when a change makes it worse. That needs a small amount of discipline and no special tooling."
+        },
+        {
+          "type": "heading",
+          "text": "Build a golden set first"
+        },
+        {
+          "type": "paragraph",
+          "text": "A golden set is a collection of realistic inputs with a note on what a good answer looks like. Start with fifty to a hundred, taken from real requests where possible: support emails, search queries, forms people filled in. Include the awkward ones on purpose, such as vague questions, questions with two parts, questions the system should decline, and a few written in a hurry with typos. Have someone who knows the domain write the expected outcome, not a developer guessing."
+        },
+        {
+          "type": "heading",
+          "text": "Decide what 'good' means before you score"
+        },
+        {
+          "type": "paragraph",
+          "text": "Different features need different measures. For a classifier, it is accuracy on each category, and which mistakes are expensive. For a summariser, it is whether the facts are right and whether anything important was dropped. For an assistant that looks things up, it is whether the answer is supported by the documents it cited. Write the criteria in a short checklist so two reviewers would score the same answer the same way."
+        },
+        {
+          "type": "heading",
+          "text": "Mix automatic checks with human review"
+        },
+        {
+          "type": "paragraph",
+          "text": "Some checks are cheap to automate: is the output valid JSON, does it include a source, is it under the length limit, does it avoid forbidden phrases. Others need a person, at least at first. Using a second model as a judge can save time, but only after you have compared its scores with human ones on a sample and found that they agree often enough to trust."
+        },
+        {
+          "type": "list",
+          "items": [
+            "Run the whole set every time the prompt, model or documents change",
+            "Keep the results, so you can compare this version with the last one",
+            "Look at the failures, not only the average",
+            "Add every real-world failure you find to the set"
+          ]
+        },
+        {
+          "type": "heading",
+          "text": "Plan for the model being wrong"
+        },
+        {
+          "type": "heading",
+          "text": "A small illustration"
+        },
+        {
+          "type": "paragraph",
+          "text": "Say we are building an assistant that answers staff questions about a leave policy. The golden set might hold sixty questions: simple ones like how many days of leave a new starter gets, awkward ones like what happens if a public holiday falls inside a leave period, and some the assistant should decline, such as a request to approve someone's leave. For each, the expected answer cites the relevant clause. We then score three things separately: whether the answer matches the policy, whether it cites the right section, and whether it declines when it should. A single overall score would hide which of those is failing."
+        },
+        {
+          "type": "heading",
+          "text": "Watch for drift"
+        },
+        {
+          "type": "paragraph",
+          "text": "Models, documents and user behaviour all change after launch. A provider may update a model, a policy may be rewritten, and people may start asking things nobody anticipated. We keep a smaller version of the evaluation running on a schedule and look at the trend, so a slow decline is noticed before a user reports it. When it does slip, the stored results show what changed and when, which turns a vague complaint into something we can fix."
+        },
+        {
+          "type": "heading",
+          "text": "Be honest about what the numbers mean"
+        },
+        {
+          "type": "paragraph",
+          "text": "An evaluation score is not a promise. A set of a hundred examples cannot cover everything, and a high score on easy questions says little about hard ones. We report results by category, show examples of failures alongside the percentages and say plainly what we have not tested. That keeps expectations realistic, and it makes the decision to launch, hold back or limit the feature a conversation about evidence."
+        },
+        {
+          "type": "paragraph",
+          "text": "Evaluation tells you how often the feature fails; design decides what that costs. We give every feature a way for a person to override or correct it, a visible indication of when the system is unsure, and a log of what it said and why. After launch, we sample real conversations on a schedule and feed the bad ones back into the set. The golden set is never finished; it is the memory of everything that has gone wrong so far, which is what makes the next change safer."
+        }
+      ]
+    },
+    {
+      "slug": "dashboards-nobody-opens",
+      "title": "Dashboards nobody opens: designing for decisions",
+      "category": "Data & AI",
+      "date": "2026-09-30",
+      "readingMinutes": 3,
+      "author": "nusrat-jahan",
+      "excerpt": "Most dashboards answer questions nobody asked. Start from the decision someone has to make on Monday morning, and the charts mostly choose themselves.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A dashboard is usually commissioned because somebody wants visibility. Months later it is open in one tab on one person's screen, and the rest of the team is still asking each other for numbers in chat. The charts are fine. The problem is that nobody decided what the dashboard is for."
+        },
+        {
+          "type": "heading",
+          "text": "Start from the decision, not the data"
+        },
+        {
+          "type": "paragraph",
+          "text": "Ask who will look at this, when, and what they will do differently depending on what they see. If the honest answer is 'nothing', it is a report, and a report can be an email once a week. If the answer is 'I will decide whether to hire another person for support', then you know the question: is the queue getting longer faster than we can clear it? That one sentence tells you which two or three numbers belong on the page."
+        },
+        {
+          "type": "heading",
+          "text": "Show change and context, not just totals"
+        },
+        {
+          "type": "paragraph",
+          "text": "A single number with no comparison is hard to read. Is 312 good? Compared with last week, with the target, with the same day last month? Show the direction, the comparison and the threshold at which someone should act. A line chart with a clearly marked target usually tells more than a dozen tiles, and it makes the page calmer."
+        },
+        {
+          "type": "heading",
+          "text": "Fewer things, in the order of the job"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Put the one or two numbers that drive the decision at the top, large",
+            "Group the rest by question rather than by data source",
+            "Keep filters few, and remember what people chose last time",
+            "Say how fresh the data is, and what happens when it is stale"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "The urge is to include everything because the data is there. Every extra chart makes the important one harder to find, and it adds another definition someone has to maintain. We tend to ship the smallest dashboard that supports the decision, then watch how it is used and add only what people ask for twice."
+        },
+        {
+          "type": "heading",
+          "text": "Make the definitions boring and visible"
+        },
+        {
+          "type": "heading",
+          "text": "A quick way to check an existing dashboard"
+        },
+        {
+          "type": "paragraph",
+          "text": "Pick one dashboard that already exists and ask three people what they last used it for. If they name different things, or cannot remember, it is trying to serve too many purposes. Then ask what they would do if one particular chart turned red. If nobody can say, that chart is decoration. This takes ten minutes and usually leads to deleting about half of what is on the page, which is where the improvement comes from."
+        },
+        {
+          "type": "heading",
+          "text": "Design for the glance and the dig"
+        },
+        {
+          "type": "paragraph",
+          "text": "People use a good dashboard in two modes. The glance takes five seconds: is everything all right, or is something off? The dig comes next, when something looks off and they need to find out why. Make the glance easy by putting status and the key trend at the top. Make the dig possible by letting people click from a number to the records behind it, instead of sending them to a different tool or to somebody who knows the query."
+        },
+        {
+          "type": "heading",
+          "text": "Do not forget the empty and the broken"
+        },
+        {
+          "type": "paragraph",
+          "text": "Designs usually show a dashboard with plenty of tidy data. Real ones spend time with no data yet, with partial data and with a feed that has quietly stopped. Show what each of those looks like and say it in words. A chart that is flat because nothing happened looks identical to a chart that is flat because the data stopped arriving, and mixing those up is how wrong decisions get made."
+        },
+        {
+          "type": "paragraph",
+          "text": "Arguments about dashboards are often arguments about definitions. What counts as an active customer, and when does a ticket count as resolved? Write each definition next to the number, in plain words, and keep one place where it is stored. When two teams see the same figure and trust it, the dashboard has done the thing that matters, which is to stop the argument about the numbers so the conversation can move on to what to do."
+        }
+      ]
+    },
+    {
+      "slug": "choosing-boring-technology",
+      "title": "Choosing boring technology on purpose",
+      "category": "Engineering",
+      "date": "2026-10-06",
+      "readingMinutes": 3,
+      "author": "tanvir-ahmed",
+      "excerpt": "New tools are exciting for the people who pick them and expensive for the people who inherit them. How we decide when to be adventurous and when to be dull.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "Every project has a limited supply of novelty. Spend it on the part of the product that makes it different, and the rest of the system should be as predictable as you can make it. We apply that rule to our own work: use well-understood technology by default, and make any exception earn its place."
+        },
+        {
+          "type": "heading",
+          "text": "What boring buys you"
+        },
+        {
+          "type": "paragraph",
+          "text": "A mature tool has known failure modes. Somebody has already hit the problem you will hit at two in the morning and written about it. It has documentation that matches the behaviour, a community large enough to find new hires in, and a track record of surviving its own upgrades. None of that is visible in a demo, and all of it shows up in year three."
+        },
+        {
+          "type": "heading",
+          "text": "The questions we ask about a new tool"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Who will maintain this in two years, and can they be hired?",
+            "What happens to us if the project is abandoned or changes its licence?",
+            "Which problem does it solve that the current tool cannot, in a way we can point to?",
+            "How do we get out if it turns out to be a mistake?"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "Often the answers are good enough. A newer framework might remove real friction, or a managed service might save us from running something ourselves. The point is to make the choice deliberately and to write down why, so that the next person understands the reasoning instead of inheriting a surprise."
+        },
+        {
+          "type": "heading",
+          "text": "Boring does not mean old-fashioned"
+        },
+        {
+          "type": "paragraph",
+          "text": "We are not arguing against progress. Modern, widely adopted tools are not boring in the way that matters; they are boring because they are well understood. What we try to avoid is adopting something because it is new to us, or because it will look good in a portfolio, at the client's expense. A client's product should not be where we learn a technology."
+        },
+        {
+          "type": "heading",
+          "text": "Where we do take risks"
+        },
+        {
+          "type": "heading",
+          "text": "A practical habit"
+        },
+        {
+          "type": "paragraph",
+          "text": "We keep a short decision log in each project: one paragraph per significant choice, saying what we picked, what we considered and why. It takes a few minutes to write and it pays off every time someone asks why we did not use something else. It also keeps us honest, because it is hard to write down a weak reason with a straight face. When the client's team takes over, the log is often the most useful document after the runbook."
+        },
+        {
+          "type": "heading",
+          "text": "The cost shows up later"
+        },
+        {
+          "type": "paragraph",
+          "text": "A common pattern is that an unusual tool saves a day in the first month and costs a week in the second year, when the person who knew it has moved on or the project has stopped receiving updates. Because the saving is immediate and the cost is deferred, it is easy to underestimate. Asking who will maintain it in two years is a simple way to bring that future cost into the conversation now."
+        },
+        {
+          "type": "heading",
+          "text": "Say yes when it is right"
+        },
+        {
+          "type": "paragraph",
+          "text": "Choosing boring technology is not the same as saying no to everything. Sometimes the established option really is the wrong fit, and the better course is to adopt the newer one with open eyes. The aim is that every choice is deliberate, written down and reversible where we can make it so."
+        },
+        {
+          "type": "paragraph",
+          "text": "There are places where a bolder choice is right: a prototype meant to be thrown away, an internal tool with a forgiving audience, or a clear need that nothing established can meet. In those cases we say so, keep the experiment contained, and plan the way out. Most systems we build are dull in the way a good kitchen is dull: everything has its place, nothing surprises you in the middle of service, and the interesting work happens on the plate."
+        }
+      ]
+    },
+    {
+      "slug": "runbook-before-code",
+      "title": "Why we write the runbook before the code",
+      "category": "Engineering",
+      "date": "2026-10-13",
+      "readingMinutes": 3,
+      "author": "rifat-khan",
+      "excerpt": "A page describing how the system will be operated, written before it is built, finds problems that no design review does and makes handover a non-event.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A runbook is the page someone opens when something is wrong and they did not build the system. It says what the thing does, how to tell whether it is healthy, what to do when it is not, and who to call. Most teams write it last, in a hurry, if at all. We write the first version before we write the code, and it has changed how our projects go."
+        },
+        {
+          "type": "heading",
+          "text": "It forces the awkward questions early"
+        },
+        {
+          "type": "paragraph",
+          "text": "Writing 'how do we know this is working?' on a blank page is uncomfortable if you have no answer. So is 'what do we do if this job fails halfway?' or 'who can turn this off?'. Those questions would otherwise appear during an incident. Raising them in week one costs a conversation; raising them in production costs a customer."
+        },
+        {
+          "type": "heading",
+          "text": "What goes in it"
+        },
+        {
+          "type": "list",
+          "items": [
+            "What the system does, in two paragraphs a new colleague could follow",
+            "Where it runs, what it depends on, and what happens if each dependency is down",
+            "How to see its health: the dashboards, the logs, the alerts, and what normal looks like",
+            "The common failures and the steps to recover from each",
+            "How to deploy, roll back, restore from a backup and rotate a secret",
+            "Who owns it, and how to reach them"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "It does not need to be long. A page or two is plenty at the start, and it grows as we learn. The test is whether a competent person who has never seen the system could follow it at night with a worried client waiting."
+        },
+        {
+          "type": "heading",
+          "text": "It makes handover boring"
+        },
+        {
+          "type": "paragraph",
+          "text": "The projects that end badly are the ones where knowledge lives in two people's heads. When the runbook has been used, tested and corrected during the build, handing the project over is a walk-through of a document the client has already read. We also ask someone on the client side to try the recovery steps once, in a calm moment. The first time is always instructive, and it is much better to find the missing step on a Tuesday afternoon than on a Saturday night."
+        },
+        {
+          "type": "heading",
+          "text": "What it looks like in practice"
+        },
+        {
+          "type": "paragraph",
+          "text": "Our first-draft runbook for an automation project might say: the system receives orders from the shop, books a courier and emails the customer. It is healthy when the queue is empty and the last order was processed within ten minutes. If orders stop arriving, check the shop's webhook settings first. If orders arrive but are not processed, look at the stuck items screen and retry them. If the courier service is down, orders will wait, and the customer does not need to be told unless it exceeds a day. That is perhaps a dozen lines, and yet writing it exposes at least three decisions that nobody had made."
+        },
+        {
+          "type": "heading",
+          "text": "Keep it honest and findable"
+        },
+        {
+          "type": "paragraph",
+          "text": "A runbook is only useful if people can find it and trust it. We store it where the team already works, link to it from alerts and dashboards, and put a date at the top. When something happens that the runbook did not cover, adding the lesson to it is part of closing the incident. Over a year it turns into a record of how the system really behaves, which is worth far more than the diagram from the kickoff."
+        },
+        {
+          "type": "paragraph",
+          "text": "The runbook stays in the repository next to the code, so a change to the system is not finished until the page is updated too. It is one of the cheapest habits we have, and it is the one clients mention most often when we ask what they would keep."
+        }
+      ]
+    },
+    {
+      "slug": "what-a-fixed-scope-sprint-can-do",
+      "title": "What a fixed-scope sprint can and can't do",
+      "category": "Studio",
+      "date": "2026-10-28",
+      "readingMinutes": 3,
+      "author": "rifat-khan",
+      "excerpt": "A sprint is the fastest way to get something real in front of people, and the wrong tool for some jobs. How we scope one honestly, and when we suggest something else.",
+      "blocks": [
+        {
+          "type": "paragraph",
+          "text": "A sprint is our name for a short, fixed-scope engagement: a few weeks, a clear outcome, a price that is agreed before we start. It suits a lot of problems, and it quietly does not suit others. Being straight about which is which saves everyone a disappointing third week."
+        },
+        {
+          "type": "heading",
+          "text": "What it is good for"
+        },
+        {
+          "type": "paragraph",
+          "text": "A sprint works when the goal can be described in a sentence and checked at the end. A landing page and its forms. A dashboard that answers one question. A working prototype to put in front of customers. An automation of a single, well-understood process. These are the jobs where a small team can get focused, make decisions quickly and finish. You can see more detail on our Work with us page, including the indicative starting points for each model."
+        },
+        {
+          "type": "heading",
+          "text": "What it cannot do"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Discover what the problem is: if the question is still open, start with discovery instead",
+            "Absorb new requirements: every addition either moves the date or removes something else",
+            "Replace a decision-maker: it needs one person who can say yes or no within a day",
+            "Cover everything: a sprint ships a focused first version, not a platform"
+          ]
+        },
+        {
+          "type": "paragraph",
+          "text": "When a request needs several of those, we say so. It is more useful to hear 'this is two projects' in the first call than to find out in week four that the scope never fitted."
+        },
+        {
+          "type": "heading",
+          "text": "How we keep it honest"
+        },
+        {
+          "type": "paragraph",
+          "text": "We write the scope as a short list of things that will exist at the end, and a second list of things that will not. We agree how the work will be reviewed, usually a weekly demo of something you can click. And we leave a little room: not every day is planned, because something always turns out to be harder than it looked. If we find out early that the scope is too large, we propose cutting something rather than working late and delivering something rushed."
+        },
+        {
+          "type": "heading",
+          "text": "What happens after"
+        },
+        {
+          "type": "heading",
+          "text": "A few examples of good and poor fits"
+        },
+        {
+          "type": "paragraph",
+          "text": "A founder who wants to test whether customers will pay for a booking tool is a good fit: a clear question, a small product and a quick answer. A company that wants to replace its entire operations system in six weeks is not; that is a series of projects and it needs discovery first. A team that has an existing website and wants a new set of landing pages with a form that sends leads to their inbox is a good fit. A team that is not yet sure what the leads should be is better served by a workshop."
+        },
+        {
+          "type": "heading",
+          "text": "The conversation we have before agreeing"
+        },
+        {
+          "type": "paragraph",
+          "text": "Before we agree a sprint, we ask what would make it a success, who decides, what has already been tried and what is the first thing that would go wrong. If those questions get clear answers, we price it and set a date. If not, we suggest a short discovery period instead, which costs less and often changes the shape of the project for the better. Nobody enjoys being told the plan needs another step, but the alternative is a sprint that spends its first two weeks finding out what it is about."
+        },
+        {
+          "type": "paragraph",
+          "text": "At the end you have working software, the source code, and a note on what we would do next. Some clients take it from there with their own team. Others continue with a monthly arrangement, or ask us for a second sprint on the next piece. All of those are fine. A good sprint leaves you with something real, and the freedom to decide what comes next with more information than you had at the start."
         }
       ]
     }

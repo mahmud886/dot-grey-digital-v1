@@ -77,6 +77,11 @@ ErrorDocument 404 /404.html
   </FilesMatch>
 </IfModule>
 
+# The RSS feed is a plain file; give it its own type (sitemap.xml keeps the default).
+<FilesMatch "^feed\\.xml$">
+  ForceType application/rss+xml
+</FilesMatch>
+
 # Brotli where the host has it (smaller than gzip), gzip everywhere else.
 <IfModule mod_brotli.c>
   AddOutputFilterByType BROTLI_COMPRESS text/html text/css text/javascript application/javascript application/json image/svg+xml text/xml application/xml text/plain

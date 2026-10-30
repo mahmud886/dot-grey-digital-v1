@@ -148,6 +148,9 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
       <div className={`${s.wrap} ${s.footBar}`}>
         <span>© {new Date().getFullYear()} DotGrey Digital</span>
         <CookieSettingsButton className={s.cookieLink} />
+        <a className={s.cookieLink} href="/feed.xml" type="application/rss+xml">
+          RSS
+        </a>
         <span>Design · Software · Automation · Data · ML</span>
       </div>
     </footer>
