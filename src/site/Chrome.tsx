@@ -9,6 +9,7 @@ import { Newsletter } from "./More";
 import { SITE_MAP, SITE_MOBILE } from "./nav";
 import s from "./site.module.css";
 import { ArrowUpRight } from "@/site/shared/Arrow";
+import { CookieSettingsButton } from "@/site/analytics/Analytics";
 
 const NAV: NavLink[] = [
   { href: "/work", label: "Work", id: "work" },
@@ -146,6 +147,7 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
 
       <div className={`${s.wrap} ${s.footBar}`}>
         <span>© {new Date().getFullYear()} DotGrey Digital</span>
+        <CookieSettingsButton className={s.cookieLink} />
         <span>Design · Software · Automation · Data · ML</span>
       </div>
     </footer>

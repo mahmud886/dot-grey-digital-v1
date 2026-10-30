@@ -49,3 +49,5 @@ The `src/data/*.ts` files are thin typed wrappers around the JSON. Only edit the
 ## Forms
 
 The contact form, the start-a-project steps, job applications and the newsletter field send to the studio inbox through a forms endpoint: Resend on Vercel, or `api/forms.php` on cPanel. If no email service is set up, they open the visitor's email app with the answers filled in instead, addressed to the email in `site.json`. Nothing is stored in a database. Setup for both hosts is in [`DEPLOY.md`](DEPLOY.md); the fields and limits all forms share are in `src/site/forms/schema.ts` (keep `php/forms.php` in step if you change them).
+
+Analytics and cookie consent: see [ANALYTICS.md](ANALYTICS.md).

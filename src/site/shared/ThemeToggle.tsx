@@ -1,6 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
+import { track } from "@/site/analytics/track";
 import { THEME_COOKIE, writeCookie, type Theme } from "./theme";
 import { useTheme } from "./useTheme";
 
@@ -13,6 +14,7 @@ type ViewTransitionDoc = Document & { startViewTransition?: (cb: () => void) => 
 export function setTheme(next: Theme, origin?: { x: number; y: number }) {
   const root = document.documentElement;
   writeCookie(THEME_COOKIE, next);
+  track("theme_change", { theme: next });
   const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
   const doc = document as ViewTransitionDoc;
 

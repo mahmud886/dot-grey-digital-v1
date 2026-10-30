@@ -306,6 +306,7 @@ export const accessibility = {
     "Animations respect the reduced-motion setting, and looping motion has a Pause control",
     "Colour contrast checked in light and dark themes",
     "Forms label every field and announce errors",
+    "The cookie banner, when shown, can be used by keyboard, never takes focus on its own and treats Accept and Decline alike",
   ],
   limits: [
     "Project images are illustrative concept visuals; the facts they show are also given in the text",
@@ -315,6 +316,9 @@ export const accessibility = {
 };
 
 export const cookies = [
-  { name: "dg-theme", purpose: "Remembers whether you chose the light or dark theme.", values: "light or dark", lasts: "1 year" },
-  { name: "dg-accent", purpose: "Remembers an accent colour, if one was set. The site is black and white by default.", values: "mono, orange, blue, lime or violet", lasts: "1 year" },
+  { name: "dg-theme", purpose: "Remembers whether you chose the light or dark theme.", values: "light or dark", lasts: "1 year", analytics: false },
+  { name: "dg-accent", purpose: "Remembers an accent colour, if one was set. The site is black and white by default.", values: "mono, orange, blue, lime or violet", lasts: "1 year", analytics: false },
+  { name: "dg-consent", purpose: "Remembers your answer to the analytics question, so we do not ask again.", values: "granted or denied", lasts: "1 year", analytics: false },
+  { name: "_ga", purpose: "Google Analytics: tells one browser from another, so visits can be counted. Only set if you accept analytics.", values: "A random identifier", lasts: "Up to 2 years", analytics: true },
+  { name: "_ga_<ID>", purpose: "Google Analytics: keeps the state of your current visit. Only set if you accept analytics.", values: "A random session identifier", lasts: "Up to 2 years", analytics: true },
 ];

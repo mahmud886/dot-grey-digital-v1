@@ -5,6 +5,7 @@ import { notFound } from "next/navigation";
 import { getNextWork, getWorkBySlug, works } from "@/site/content";
 import { ProjectMockup } from "@/site/shared/ProjectMockup";
 import { Footer, SecHead, Stop } from "@/site/Chrome";
+import { TrackView } from "@/site/analytics/Analytics";
 import { TiltCard } from "@/site/Client";
 import s from "@/site/site.module.css";
 
@@ -27,6 +28,7 @@ export default async function CasePage({ params }: PageProps<"/work/[slug]">) {
 
   return (
     <>
+      <TrackView name="project_view" params={{ slug }} />
       <main id="main">
         <section className={`${s.chapter} ${s.caseCover}`}>
           <div className={`${s.wrap} ${s.caseTop}`}>

@@ -6,6 +6,10 @@ import { ACCENT_COOKIE, THEME_COOKIE } from "@/site/shared/theme";
 import { useAccent, useTheme } from "@/site/shared/useTheme";
 import { Honeypot } from "@/site/forms/Honeypot";
 import { sentCopy } from "@/site/forms/Status";
+import { CookieSettingsButton } from "@/site/analytics/Analytics";
+import { GA_ID } from "@/site/analytics/config";
+import { clearChoice, deleteGaCookies } from "@/site/analytics/consent";
+import { track } from "@/site/analytics/track";
 import { submitForm, useFormGuard, type SubmitOutcome } from "@/site/forms/submit";
 import s from "./pages.module.css";
 import { ArrowUpRight } from "@/site/shared/Arrow";
@@ -133,6 +137,11 @@ export function StartWizard({ email, needs, stages, budgets, timelines }: { emai
     head.current?.focus();
   }, [step, sent]);
 
+  // One event per step reached (step 1 = the wizard was opened). No answers are sent.
+  useEffect(() => {
+    track("wizard_step", { step: step + 1, name: STEPS[step] });
+  }, [step]);
+
   const check = (i: number) => {
     const e: Record<string, string> = {};
     if (i === 0 && !d.needs.length) e.needs = "Pick at least one.";
@@ -179,6 +188,7 @@ export function StartWizard({ email, needs, stages, budgets, timelines }: { emai
       return;
     }
     if (r.status === "fallback") window.location.href = r.mailto;
+    if (r.status === "sent" || r.status === "fallback") track("wizard_complete");
     setOutcome(r);
   };
 
@@ -452,13 +462,17 @@ export function Newsletter({ email, id }: { email: string; id: string }) {
 
 /* ------------------------------------------------------------------ cookie control */
 
-/** Shows the two preference cookies as they are now, and clears them. */
+/** Shows the preference cookies as they are now, and clears them (and the analytics answer). */
 export function CookieReset() {
   const theme = useTheme();
   const accent = useAccent();
   const [done, setDone] = useState(false);
   const reset = () => {
     for (const n of [THEME_COOKIE, ACCENT_COOKIE]) document.cookie = `${n}=; path=/; max-age=0; samesite=lax`;
+    if (GA_ID) {
+      deleteGaCookies();
+      clearChoice(); // the banner asks again
+    }
     const root = document.documentElement;
     root.dataset.theme = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
     root.dataset.accent = "mono";
@@ -476,11 +490,20 @@ export function CookieReset() {
           <dd>{accent ?? "—"}</dd>
         </div>
       </dl>
-      <button type="button" className={s.pillInk} onClick={reset}>
-        Clear my preferences
-      </button>
+      <div style={{ display: "flex", flexWrap: "wrap", gap: "0.5rem" }}>
+        <button type="button" className={s.pillInk} onClick={reset}>
+          Clear my preferences
+        </button>
+        <CookieSettingsButton className={s.pill} />
+      </div>
       <small className={s.note} aria-live="polite">
-        {done ? "Cleared. The theme now follows your system setting again." : "Removes both cookies. Nothing else is stored."}
+        {done
+          ? GA_ID
+            ? "Cleared. The theme follows your system setting again, and the analytics question will be asked again."
+            : "Cleared. The theme now follows your system setting again."
+          : GA_ID
+            ? "Removes the preference and analytics cookies and forgets your analytics answer."
+            : "Removes both cookies. Nothing else is stored."}
       </small>
     </div>
   );

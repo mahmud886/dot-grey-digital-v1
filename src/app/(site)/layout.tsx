@@ -1,5 +1,6 @@
 import { Cormorant_Garamond, Inter_Tight } from "next/font/google";
 import { Header } from "@/site/Chrome";
+import { Analytics } from "@/site/analytics/Analytics";
 import { Cursor, Magnet, MotionProvider, ScrollProgress } from "@/site/Client";
 import "@/site/shared/theme.css";
 import s from "@/site/site.module.css";
@@ -20,6 +21,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
         <div id="content" tabIndex={-1} className={s.content}>
           {children}
         </div>
+        <Analytics />
         <Cursor />
         <Magnet />
       </MotionProvider>

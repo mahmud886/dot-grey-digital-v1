@@ -1,7 +1,7 @@
 {
   "privacy": {
     "title": "Privacy Policy",
-    "updated": "30 October 2026",
+    "updated": "31 October 2026",
     "blocks": [
       {
         "heading": "Who we are",
@@ -14,13 +14,13 @@
       {
         "heading": "What we collect",
         "paragraphs": [
-          "We only collect what you choose to send us. This site has no accounts, no analytics and no advertising tags."
+          "We mostly collect what you choose to send us. This site has no accounts and no advertising tags. If you accept analytics, we also measure how the site is used (see Analytics below)."
         ],
         "bullets": [
           "What you send through the contact form, the Start a project steps and the job application form: your name, email address, company, what you need, budget, timing, links and message. The form emails it to the studio inbox through our email delivery provider (Resend) or our web host's mail server. This website does not keep a copy in a database. If the form can't send, it opens your own email app instead. To block spam, the form server remembers how many messages came from your IP address in the last ten minutes, and nothing longer.",
           "The email address you give us when you sign up for occasional notes. It is added to our mailing list at Resend, or emailed to us so we can add it by hand.",
           "Job applications, through the form or by email: your CV or portfolio links and anything else you include.",
-          "Two preference cookies that remember your colour mode and accent colour (see Cookies below)."
+          "Preference cookies that remember your colour mode, your accent colour and your answer to the analytics question, and, only if you accept analytics, Google's analytics cookies (see Cookies below)."
         ]
       },
       {
@@ -33,14 +33,24 @@
       {
         "heading": "Legal basis",
         "paragraphs": [
-          "Where data protection law asks for a legal basis, we rely on your request (to answer you or prepare a proposal), on a contract (to deliver an engagement), on consent (for the newsletter, which you can withdraw at any time), and on our legitimate interest in running the studio and keeping basic business records."
+          "Where data protection law asks for a legal basis, we rely on your request (to answer you or prepare a proposal), on a contract (to deliver an engagement), on consent (for the newsletter and for analytics cookies, which you can withdraw at any time), and on our legitimate interest in running the studio and keeping basic business records."
         ],
         "bullets": []
       },
       {
         "heading": "Cookies",
         "paragraphs": [
-          "This site sets two first-party cookies and nothing else: dg-theme remembers light or dark mode, and dg-accent remembers an accent colour. They contain no identifier, are not shared with anyone and expire after a year. You can clear them on the Cookies page or in your browser."
+          "First-party cookies: dg-theme remembers light or dark mode, dg-accent remembers an accent colour, and, when analytics is switched on for the site, dg-consent remembers whether you accepted or declined it. They contain no identifier, are not shared with anyone and expire after a year.",
+          "Only if you accept analytics, Google Analytics sets _ga and _ga_<ID> (identifiers that tell browsers apart and keep the state of a visit, lasting up to two years). If you decline, or ignore the banner, Google's script is not even loaded and these cookies are not set.",
+          "You can change your mind at any time with Cookie settings in the footer (or on the Cookies page); choosing Decline stops analytics immediately and deletes Google's cookies. You can also clear every cookie in your browser. A browser that sends Global Privacy Control or Do Not Track is treated as having declined."
+        ],
+        "bullets": []
+      },
+      {
+        "heading": "Analytics",
+        "paragraphs": [
+          "When analytics is switched on for this site, and only if you accept it in the cookie banner, we use Google Analytics 4 to understand which pages are read and which links are used, so we can improve the site. It collects page views, the pages and links you use, your browser and device type, the language, your approximate location (country or city, worked out from your IP address, which Google truncates), and how you arrived. It does not receive your name, email address or anything you type into our forms.",
+          "We have switched off Google's advertising features and signals, so the data is not used for advertising or profiling. Google acts as our processor. The data is stored for 14 months and then deleted, and may be processed in countries outside Bangladesh and outside your own (see International transfers). To withdraw consent, use Cookie settings in the footer and choose Decline."
         ],
         "bullets": []
       },
@@ -52,6 +62,7 @@
         "bullets": [
           "Our email and document providers, which store our correspondence, and Resend, which delivers form submissions and newsletter emails on our behalf.",
           "Our web host (Vercel, or a standard web hosting provider), which serves this website, may deliver form emails through its mail server, and keeps standard server logs (such as IP address and request time) for security and reliability.",
+          "Google, which provides Google Analytics, only if you accept analytics. Google processes that data on our behalf.",
           "Professional advisers such as accountants and lawyers, where required.",
           "Authorities, where the law requires it."
         ]
@@ -66,7 +77,7 @@
       {
         "heading": "How long we keep it",
         "paragraphs": [
-          "We keep enquiries that do not lead to work for up to two years, then delete them. Client correspondence and project records are kept for as long as the engagement lasts and for up to seven years afterwards, for legal and accounting reasons. Job applications are kept for up to one year unless you ask us to delete them sooner. Newsletter addresses are kept until you unsubscribe."
+          "We keep enquiries that do not lead to work for up to two years, then delete them. Client correspondence and project records are kept for as long as the engagement lasts and for up to seven years afterwards, for legal and accounting reasons. Job applications are kept for up to one year unless you ask us to delete them sooner. Newsletter addresses are kept until you unsubscribe. Analytics data is kept in Google Analytics for 14 months."
         ],
         "bullets": []
       },
@@ -79,7 +90,7 @@
           "ask for a copy of the personal information we hold about you;",
           "ask us to correct or delete it;",
           "object to or restrict how we use it;",
-          "withdraw consent you have given, such as for the newsletter;",
+          "withdraw consent you have given, such as for the newsletter or analytics;",
           "complain to your local data protection authority."
         ]
       },

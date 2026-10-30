@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { site } from "@/data/site";
 import { siteUrl } from "@/lib/site-url";
 import { ThemeScript } from "@/site/shared/ThemeScript";
+import { ConsentDefaults } from "@/site/analytics/Defaults";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -29,6 +30,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     <html lang="en" suppressHydrationWarning className="antialiased">
       <head>
         <ThemeScript />
+        <ConsentDefaults />
       </head>
       <body>{children}</body>
     </html>

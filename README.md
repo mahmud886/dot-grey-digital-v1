@@ -58,3 +58,5 @@ privacy and terms text, which is marked as needing legal review.
 
 - `legacy` — the previous production site (CMS, forms, docs).
 - `prototypes-archive` — all thirteen redesign directions and the lab page they were compared on.
+
+Analytics (Google Analytics 4, consent-gated, off until you set an ID): see [ANALYTICS.md](ANALYTICS.md).

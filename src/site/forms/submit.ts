@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { trackForm } from "@/site/analytics/track";
 import { rowsFor, subjectFor, validate, type CleanData, type FormKind, type FormResult } from "./schema";
 
 /**
@@ -40,11 +41,16 @@ export async function submitForm(kind: FormKind, data: Record<string, unknown>, 
       body: JSON.stringify({ kind, data, hp: opts.hp ?? "", t: Date.now() - opts.startedAt }),
     });
     const body = (await res.json().catch(() => null)) as FormResult | null;
-    if (res.ok && body?.ok) return { status: "sent" };
+    if (res.ok && body?.ok) {
+      trackForm(kind);
+      return { status: "sent" };
+    }
     if (body && !body.ok && body.fields) return { status: "invalid", fields: body.fields, error: body.error };
     if (res.status === 429 && body && !body.ok) return { status: "error", error: body.error };
+    trackForm(kind); // the visitor's email app opens with the brief, which is still a lead
     return { status: "fallback", mailto };
   } catch {
+    trackForm(kind);
     return { status: "fallback", mailto };
   }
 }

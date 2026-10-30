@@ -117,3 +117,7 @@ running server are named `*.server.ts(x)` and are only routes in the Node build:
 route handler and the catch-all that renders the site 404 for unknown URLs. The static build
 uses `404.html` (from `src/app/not-found.tsx`) via `.htaccess` instead. `npm run build` for
 Vercel is unchanged.
+
+## Analytics
+
+To switch on Google Analytics, set `NEXT_PUBLIC_GA_ID` before building (on cPanel too: `NEXT_PUBLIC_GA_ID=G-… npm run build:static`). It works without a Node server. See [ANALYTICS.md](ANALYTICS.md).

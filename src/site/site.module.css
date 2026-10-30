@@ -1776,6 +1776,109 @@
   font-size: 13px;
 }
 
+/* Footer text button that reopens the cookie banner. */
+.cookieLink {
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font: inherit;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.cookieLink:hover {
+  color: var(--fg);
+}
+
+/* ---------------------------------------------------------------- cookie consent */
+
+.consent {
+  position: fixed;
+  left: 16px;
+  bottom: 16px;
+  z-index: 80;
+  width: min(420px, calc(100vw - 32px));
+  padding: 18px 20px 20px;
+  border: 1px solid var(--fg);
+  border-radius: 14px;
+  background: var(--paper-2);
+  color: var(--fg);
+  box-shadow: 0 18px 50px -18px var(--shadow-strong);
+  animation: consentIn 0.5s var(--ease) both;
+}
+
+@keyframes consentIn {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
+.consentTitle {
+  font-size: 0.8125rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.consentText {
+  margin-top: 8px;
+  font-size: 0.9375rem;
+  line-height: 1.45;
+  color: var(--ink-2);
+}
+
+.consentText a {
+  color: var(--fg);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.consentActions {
+  display: flex;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+/* Decline and Accept are the same button: neither is nudged. */
+.consentBtn {
+  flex: 1;
+  height: 44px;
+  border: 1px solid var(--fg);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--fg);
+  font: inherit;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    background 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+
+.consentBtn:hover {
+  background: var(--fg);
+  color: var(--bg);
+}
+
+@media (max-width: 520px) {
+  .consent {
+    left: 12px;
+    bottom: 12px;
+    width: calc(100vw - 24px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .consent {
+    animation: none;
+  }
+}
+
 /* ---------------------------------------------------------------- case study */
 
 .caseCover {
