@@ -1,6 +1,7 @@
 import Link from "next/link";
 import { Em, Footer, Stop } from "@/site/Chrome";
 import s from "@/site/site.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 export default function NotFoundPage() {
   return (
@@ -15,7 +16,7 @@ export default function NotFoundPage() {
         </p>
         <div className={s.ctas}>
           <Link href="/" className={s.pillInk}>
-            Back to the start <span aria-hidden="true">↗</span>
+            Back to the start <ArrowUpRight />
           </Link>
           <Link href="/#work" className={s.pill}>
             See the work

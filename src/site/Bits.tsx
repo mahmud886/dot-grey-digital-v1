@@ -7,6 +7,7 @@ import { Em, Stop } from "./Chrome";
 import { Reveal } from "./Client";
 import p from "./pages.module.css";
 import s from "./site.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 /**
  * Inner-page opening: V8's voice on top — a one-line headline ending in the accent full
@@ -33,7 +34,7 @@ export function Closing({ title, turn, primary = { href: "/start", label: "Start
       </h2>
       <div className={p.ctas}>
         <Link href={primary.href} className={s.pillInk}>
-          {primary.label} <span aria-hidden="true">↗</span>
+          {primary.label} <ArrowUpRight />
         </Link>
         {secondary && (
           <Link href={secondary.href} className={s.textLink}>

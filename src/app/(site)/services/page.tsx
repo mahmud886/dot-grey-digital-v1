@@ -5,6 +5,7 @@ import { disciplines, process } from "@/site/content";
 import { Em, Footer } from "@/site/Chrome";
 import { PageHead } from "@/site/Bits";
 import s from "@/site/pages.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 export const metadata: Metadata = pageMeta({ title: "Services", description: "Product and brand design, web and app development, custom software, automation, data science and machine learning.", path: "/services" });
 
@@ -69,7 +70,7 @@ export default function ServicesPage() {
         </h2>
         <div className={s.ctas}>
           <Link href="/contact" className={s.pillInk}>
-            Tell us the problem <span aria-hidden="true">↗</span>
+            Tell us the problem <ArrowUpRight />
           </Link>
           <Link href="/engagements" className={s.textLink}>
             How engagements work

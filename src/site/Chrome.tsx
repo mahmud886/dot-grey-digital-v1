@@ -8,6 +8,7 @@ import { DotWordmark } from "./DotWordmark";
 import { Newsletter } from "./More";
 import { SITE_MAP, SITE_MOBILE } from "./nav";
 import s from "./site.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 const NAV: NavLink[] = [
   { href: "/work", label: "Work", id: "work" },
@@ -61,7 +62,7 @@ export function Header() {
             <ThemeIcon />
           </ThemeToggle>
           <Link href="/start" className={`${s.pill} ${s.headerCta}`} data-magnetic>
-            Start a project <span aria-hidden="true">↗</span>
+            Start a project <ArrowUpRight />
           </Link>
           <MenuToggle links={MOBILE} />
         </div>
@@ -88,7 +89,7 @@ export function Footer({ signoff = "Bye." }: { signoff?: string }) {
           </a>
           <div className={s.footCtas}>
             <Link href="/start" className={s.pillInk} data-magnetic>
-              Start a project <span aria-hidden="true">↗</span>
+              Start a project <ArrowUpRight />
             </Link>
             <Link href="/work" className={s.pill} data-magnetic>
               See the work

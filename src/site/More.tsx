@@ -8,6 +8,7 @@ import { Honeypot } from "@/site/forms/Honeypot";
 import { sentCopy } from "@/site/forms/Status";
 import { submitForm, useFormGuard, type SubmitOutcome } from "@/site/forms/submit";
 import s from "./pages.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 const EMAIL = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
@@ -431,7 +432,7 @@ export function Newsletter({ email, id }: { email: string; id: string }) {
           aria-describedby={`${id}-msg`}
         />
         <button type="submit" disabled={state === "busy"}>
-          {state === "busy" ? "Adding…" : "Subscribe"} <span aria-hidden="true">↗</span>
+          {state === "busy" ? "Adding…" : "Subscribe"} <ArrowUpRight />
         </button>
       </div>
       <small id={`${id}-msg`} className={state === "error" || state === "failed" ? s.err : s.note} aria-live="polite">
@@ -576,7 +577,7 @@ export function ApplyForm({ email, role }: { email: string; role: string }) {
       {field("message", "A few lines about you", { area: true })}
       <div className={s.formFoot}>
         <button type="submit" className={s.pillInk} disabled={busy}>
-          {busy ? "Sending…" : "Send application"} <span aria-hidden="true">↗</span>
+          {busy ? "Sending…" : "Send application"} <ArrowUpRight />
         </button>
         <small role="status" aria-live="polite" className={outcome?.status === "error" ? s.err : undefined}>
           {outcome?.status === "error" ? outcome.error : "Goes straight to the people hiring for this role."}

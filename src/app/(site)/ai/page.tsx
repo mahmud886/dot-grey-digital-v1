@@ -8,6 +8,7 @@ import { Em, Footer, Stop } from "@/site/Chrome";
 import s13 from "@/site/site.module.css";
 import { Sculpture } from "@/site/Client";
 import s from "@/site/pages.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 export const metadata: Metadata = pageMeta({ title: "AI & automation", description: "LLM products, retrieval, agents, automation and MLOps — built with evaluation, privacy and a human in the loop.", path: "/ai" });
 
@@ -30,7 +31,7 @@ export default function AiPage() {
           <p className={s.heroLead}>Models and automations built into the work your team already does — evaluated before launch, monitored after it.</p>
           <div className={s.ctas}>
             <Link href="/start" className={s.pillInk}>
-              Start a project <span aria-hidden="true">↗</span>
+              Start a project <ArrowUpRight />
             </Link>
             <Link href="/services/ml" className={s.textLink}>
               The ML craft

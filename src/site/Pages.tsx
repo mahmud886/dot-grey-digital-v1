@@ -6,6 +6,7 @@ import { Honeypot } from "@/site/forms/Honeypot";
 import { sentCopy } from "@/site/forms/Status";
 import { submitForm, useFormGuard, type SubmitOutcome } from "@/site/forms/submit";
 import s from "./pages.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 /** Services as a hairline list. Rows invert on hover; click opens capabilities and stack. */
 export function ServiceList({ items }: { items: Discipline[] }) {
@@ -327,7 +328,7 @@ export function BriefForm({ email, needs, budgets, timelines }: { email: string;
       </div>
       <div className={s.formFoot}>
         <button type="submit" className={s.pillInk} disabled={busy}>
-          {busy ? "Sending…" : "Send the brief"} <span aria-hidden="true">↗</span>
+          {busy ? "Sending…" : "Send the brief"} <ArrowUpRight />
         </button>
         <small role="status" aria-live="polite" className={outcome?.status === "error" ? s.err : undefined}>
           {outcome?.status === "error" ? outcome.error : "Goes straight to our inbox. We reply within one working day."}

@@ -5,6 +5,7 @@ import { benefits, jobs, site } from "@/site/content";
 import { Em, Footer } from "@/site/Chrome";
 import { PageHead } from "@/site/Bits";
 import s from "@/site/pages.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 export const metadata: Metadata = pageMeta({ title: "Careers", description: "Open roles at DotGrey Digital, a senior team in Dhaka working with clients worldwide.", path: "/careers" });
 
@@ -68,7 +69,7 @@ export default function CareersPage() {
         </h2>
         <div className={s.ctas}>
           <a href={`mailto:${site.email}?subject=${encodeURIComponent("Open application")}`} className={s.pillInk}>
-            Send an open application <span aria-hidden="true">↗</span>
+            Send an open application <ArrowUpRight />
           </a>
         </div>
       </section>

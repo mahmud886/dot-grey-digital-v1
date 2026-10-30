@@ -6,6 +6,7 @@ import { Em, Footer } from "@/site/Chrome";
 import { PageHead } from "@/site/Bits";
 import { FaqTabs } from "@/site/Pages";
 import s from "@/site/pages.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 export const metadata: Metadata = pageMeta({ title: "FAQ", description: "Answers about how DotGrey works, pricing, AI and data, and support after launch.", path: "/faq" });
 
@@ -35,7 +36,7 @@ export default function FaqPage() {
         </h2>
         <div className={s.ctas}>
           <Link href="/contact" className={s.pillInk}>
-            Get in touch <span aria-hidden="true">↗</span>
+            Get in touch <ArrowUpRight />
           </Link>
         </div>
       </section>

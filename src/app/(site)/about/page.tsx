@@ -6,6 +6,7 @@ import { Em, Footer } from "@/site/Chrome";
 import { PageHead, Portrait } from "@/site/Bits";
 import { DhakaTime } from "@/site/Client";
 import s from "@/site/pages.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 export const metadata: Metadata = pageMeta({ title: "About", description: "A small, senior studio in Dhaka: the people, the values and the numbers behind DotGrey Digital.", path: "/about" });
 
@@ -124,7 +125,7 @@ export default function AboutPage() {
         </h2>
         <div className={s.ctas}>
           <Link href="/contact" className={s.pillInk}>
-            Start a project <span aria-hidden="true">↗</span>
+            Start a project <ArrowUpRight />
           </Link>
           <Link href="/careers" className={s.textLink}>
             See open roles

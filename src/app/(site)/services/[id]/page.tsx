@@ -10,6 +10,7 @@ import { WorkCard } from "@/site/Bits";
 import { Sculpture } from "@/site/Client";
 import { CRAFT_FAQ, RELATED } from "@/site/related";
 import s from "@/site/pages.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 export function generateStaticParams() {
   return disciplines.map((d) => ({ id: d.id }));
@@ -47,7 +48,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[id]"
           <p className={s.heroLead}>{d.line}</p>
           <div className={s.ctas}>
             <Link href="/start" className={s.pillInk}>
-              Start a project <span aria-hidden="true">↗</span>
+              Start a project <ArrowUpRight />
             </Link>
           </div>
         </div>
@@ -146,7 +147,7 @@ export default async function ServicePage({ params }: PageProps<"/services/[id]"
             How engagements work <span aria-hidden="true">→</span>
           </Link>
           <Link href="/start" className={s.pillInk}>
-            Start a project <span aria-hidden="true">↗</span>
+            Start a project <ArrowUpRight />
           </Link>
         </div>
       </section>

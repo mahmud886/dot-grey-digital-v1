@@ -12,6 +12,7 @@ import { useTheme } from "@/site/shared/useTheme";
 import type { Work } from "@/site/content";
 import { LINES, PTS, forms } from "./sculpture";
 import s from "./site.module.css";
+import { ArrowUpRight } from "@/site/shared/Arrow";
 
 /* ------------------------------------------------------------------ motion */
 
@@ -467,7 +468,7 @@ export function MenuToggle({ links }: { links: { href: string; label: string }[]
         <nav aria-label="Mobile">
           {links.map((l, i) => (
             <Link key={l.href} href={l.href} onClick={() => setOpen(false)} style={{ transitionDelay: `${60 + i * 40}ms` }}>
-              {l.label} <span aria-hidden="true">↗</span>
+              {l.label} <ArrowUpRight />
             </Link>
           ))}
         </nav>
@@ -572,7 +573,7 @@ export function Greeting() {
         </p>
         <div className={s.greetCtas}>
           <Link href="/start" className={s.pillInk} data-magnetic>
-            Start a project <span aria-hidden="true">↗</span>
+            Start a project <ArrowUpRight />
           </Link>
           <a href="#work" className={s.textLink}>
             See the work
