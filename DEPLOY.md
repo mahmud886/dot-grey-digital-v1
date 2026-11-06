@@ -121,3 +121,22 @@ Vercel is unchanged.
 ## Analytics
 
 To switch on Google Analytics, set `NEXT_PUBLIC_GA_ID` before building (on cPanel too: `NEXT_PUBLIC_GA_ID=G-… npm run build:static`). It works without a Node server. See [ANALYTICS.md](ANALYTICS.md).
+
+## Form emails landing in spam (cPanel / shared hosting)
+
+PHP `mail()` on shared hosting often sends from the server's own name, so Gmail and Outlook do not trust it even when your DNS (SPF, DKIM, DMARC) is correct. Fix it by sending through one of your own mailboxes:
+
+1. In cPanel / hPanel → **Email Accounts**, create `website@yourdomain.com` (or use an existing mailbox) and note its password.
+2. Open `public_html/api/config.php` and fill in:
+   ```php
+   'SMTP_HOST'   => 'smtp.hostinger.com',   // cPanel hosts: mail.yourdomain.com
+   'SMTP_PORT'   => 465,
+   'SMTP_SECURE' => 'ssl',
+   'SMTP_USER'   => 'website@yourdomain.com',
+   'SMTP_PASS'   => 'the mailbox password',
+   ```
+   Leave `MODE` and `RESEND_API_KEY` empty: SMTP is then chosen automatically. The "From" address of the emails becomes that mailbox.
+3. Submit a test form. If it fails, the site opens the visitor's email app instead; check the host / port / password.
+4. Optional: raise DMARC from `p=none` to `p=quarantine` once mail lands in the inbox for a week.
+
+Resend (verified domain) remains the other good option: set `RESEND_API_KEY` and it takes priority.

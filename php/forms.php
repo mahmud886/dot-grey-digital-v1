@@ -224,7 +224,12 @@ $fromName = (string) $cfg('CONTACT_FROM_NAME', 'DotGrey Digital');
 $studio = (string) $cfg('STUDIO_NAME', 'DotGrey Digital');
 $apiKey = (string) $cfg('RESEND_API_KEY', '');
 // With no key and no From address there is nothing to send with: tell the browser to use mailto.
-$mode = (string) $cfg('MODE', $apiKey !== '' ? 'resend' : ($from !== '' ? 'mail' : 'none'));
+$smtpHost = (string) $cfg('SMTP_HOST', '');
+$smtpUser = (string) $cfg('SMTP_USER', '');
+$smtpPass = (string) $cfg('SMTP_PASS', '');
+$smtpReady = $smtpHost !== '' && $smtpUser !== '' && $smtpPass !== '';
+// Automatic choice: Resend if a key is set, else authenticated SMTP if a mailbox is set up, else PHP mail().
+$mode = (string) $cfg('MODE', $apiKey !== '' ? 'resend' : ($smtpReady ? 'smtp' : ($from !== '' ? 'mail' : 'none')));
 
 /** POST to the Resend API with cURL. Returns [httpStatus, decodedBody]. */
 function resend_call(string $key, string $path, array $payload): array
@@ -276,6 +281,108 @@ function php_mail(string $to, string $fromAddr, string $fromName, string $replyT
     return @mail($to, $encSubject, $bodyOut, $headers, '-f' . $fromAddr);
 }
 
+/** Reads one SMTP reply (handles multi-line "250-..." replies). Returns [code, text]. */
+function smtp_read($fp): array
+{
+    $text = '';
+    while (($line = fgets($fp, 1024)) !== false) {
+        $text .= $line;
+        if (strlen($line) < 4 || $line[3] !== '-') {
+            break;
+        }
+    }
+    return [(int) substr($text, 0, 3), $text];
+}
+
+/** Sends one command and checks the reply code. */
+function smtp_cmd($fp, string $cmd, array $ok): bool
+{
+    if ($cmd !== '') {
+        fwrite($fp, $cmd . "\r\n");
+    }
+    [$code] = smtp_read($fp);
+    return in_array($code, $ok, true);
+}
+
+/**
+ * One plain-text + HTML email through an authenticated SMTP mailbox (no Composer needed).
+ * Because the message is signed in by your own mailbox, SPF and DKIM line up with your
+ * domain and it reaches the inbox instead of spam. Config: SMTP_HOST, SMTP_PORT,
+ * SMTP_SECURE ('ssl' for port 465, 'tls' for 587/STARTTLS, 'none' for tests), SMTP_USER, SMTP_PASS.
+ */
+function smtp_mail(array $c, string $to, string $fromName, string $replyTo, string $subject, string $text, string $html): bool
+{
+    $user = (string) ($c['user'] ?? '');
+    foreach ([$to, $user, $replyTo] as $h) {
+        if ($h === '' || preg_match('/[\r\n<>]/', $h)) {
+            return false;
+        }
+    }
+    $secure = (string) ($c['secure'] ?? 'ssl');
+    $port = (int) ($c['port'] ?? ($secure === 'ssl' ? 465 : 587));
+    $host = (string) ($c['host'] ?? '');
+    $target = ($secure === 'ssl' ? 'ssl://' : 'tcp://') . $host . ':' . $port;
+    $ctx = stream_context_create(['ssl' => ['verify_peer' => true, 'verify_peer_name' => true, 'SNI_enabled' => true]]);
+    $fp = @stream_socket_client($target, $errno, $errstr, 12, STREAM_CLIENT_CONNECT, $ctx);
+    if (!$fp) {
+        return false;
+    }
+    stream_set_timeout($fp, 15);
+    $helo = preg_replace('/[^A-Za-z0-9.\-]/', '', (string) ($_SERVER['HTTP_HOST'] ?? 'localhost')) ?: 'localhost';
+    $ok = false;
+    do {
+        [$code] = smtp_read($fp);
+        if ($code !== 220 || !smtp_cmd($fp, 'EHLO ' . $helo, [250])) {
+            break;
+        }
+        if ($secure === 'tls') {
+            if (!smtp_cmd($fp, 'STARTTLS', [220]) || !@stream_socket_enable_crypto($fp, true, STREAM_CRYPTO_METHOD_TLS_CLIENT)) {
+                break;
+            }
+            if (!smtp_cmd($fp, 'EHLO ' . $helo, [250])) {
+                break;
+            }
+        }
+        if (!smtp_cmd($fp, 'AUTH LOGIN', [334]) || !smtp_cmd($fp, base64_encode($user), [334]) || !smtp_cmd($fp, base64_encode((string) ($c['pass'] ?? '')), [235])) {
+            break;
+        }
+        if (!smtp_cmd($fp, 'MAIL FROM:<' . $user . '>', [250]) || !smtp_cmd($fp, 'RCPT TO:<' . $to . '>', [250, 251]) || !smtp_cmd($fp, 'DATA', [354])) {
+            break;
+        }
+        $domain = substr(strrchr($user, '@') ?: '@localhost', 1);
+        $boundary = 'dg_' . bin2hex(random_bytes(12));
+        $msg = implode("\r\n", [
+            'Date: ' . date('r'),
+            'Message-ID: <' . bin2hex(random_bytes(12)) . '@' . $domain . '>',
+            'From: =?UTF-8?B?' . base64_encode($fromName) . '?= <' . $user . '>',
+            'To: <' . $to . '>',
+            'Reply-To: <' . $replyTo . '>',
+            'Subject: =?UTF-8?B?' . base64_encode($subject) . '?=',
+            'MIME-Version: 1.0',
+            'Content-Type: multipart/alternative; boundary="' . $boundary . '"',
+            '',
+            "--$boundary",
+            'Content-Type: text/plain; charset=UTF-8',
+            'Content-Transfer-Encoding: base64',
+            '',
+            rtrim(chunk_split(base64_encode($text))),
+            "--$boundary",
+            'Content-Type: text/html; charset=UTF-8',
+            'Content-Transfer-Encoding: base64',
+            '',
+            rtrim(chunk_split(base64_encode($html))),
+            "--$boundary--",
+        ]);
+        $msg = preg_replace('/^\./m', '..', $msg); // dot-stuffing
+        fwrite($fp, $msg . "\r\n.\r\n");
+        [$code] = smtp_read($fp);
+        $ok = $code === 250;
+        @fwrite($fp, "QUIT\r\n");
+    } while (false);
+    @fclose($fp);
+    return $ok;
+}
+
 $sent = false;
 if ($mode === 'resend' && $apiKey !== '') {
     $fromHeader = $from !== '' ? "$fromName <$from>" : "$fromName <$to>";
@@ -303,6 +410,17 @@ if ($mode === 'resend' && $apiKey !== '') {
             'subject' => "Thanks — we have $what",
             'text' => "Hello $first,\n\nThanks — we have $what and a person will reply within one working day.\n\nIf anything changes, just reply to this email.\n\n$studio",
         ]);
+    }
+} elseif ($mode === 'smtp' && $smtpReady) {
+    $smtp = ['host' => $smtpHost, 'port' => $cfg('SMTP_PORT', ''), 'secure' => $cfg('SMTP_SECURE', 'ssl'), 'user' => $smtpUser, 'pass' => $smtpPass];
+    if ($smtp['port'] === '') {
+        unset($smtp['port']);
+    }
+    $sent = smtp_mail($smtp, $to, $fromName, $email, $subject, $text, $html);
+    if ($sent && $cfg('CONTACT_AUTOREPLY', false) === true) {
+        $first = explode(' ', (string) ($clean['name'] ?? ''))[0] ?: 'there';
+        $plain = "Hello $first,\n\nThanks — we have your message and a person will reply within one working day.\n\n$studio";
+        smtp_mail($smtp, $email, $fromName, $to, 'Thanks — we have your message', $plain, nl2br($esc($plain)));
     }
 } elseif ($mode === 'mail') {
     $sent = php_mail($to, $from, $fromName, $email, $subject, $text, $html);
